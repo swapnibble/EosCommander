@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="24dp"
+            android:orientation="vertical"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/tv_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/get_table"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:fillViewport="true" >
+                    <TextView
+                        android:id="@+id/tv_get_response"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:textIsSelectable="true"
+                        android:background="@color/colorLight"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="Response code" />
+            </ScrollView>
+
+
+            <TextView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:gravity="center_vertical"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/colorMithril"
+                android:text="@string/close"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

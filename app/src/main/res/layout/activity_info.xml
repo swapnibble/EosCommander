@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="io.mithrilcoin.eoscommander.ui.InfoActivity">
+
+    <ImageView
+        android:id="@+id/iv_eos_logo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:tint="@color/colorWhite"
+        app:srcCompat="@drawable/ic_eos_logo" />
+
+    <TextView
+        android:id="@+id/tv_desc_under_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/info_txt1"/>
+
+    <ImageView
+        android:id="@+id/iv_mithril_logo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:tint="@color/colorMithril"
+        app:srcCompat="@drawable/ic_mithril_logo" />
+
+    <TextView
+        android:id="@+id/iv_mithril_logo_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="48dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/info_txt2"/>
+
+    <TextView
+        android:id="@+id/iv_mithril_web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:autoLink="web"
+        android:text="@string/info_mithril_web"/>
+
+    <TextView
+        android:id="@+id/iv_mithril_github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:autoLink="web"
+        android:text="@string/info_mithril_github"/>
+
+    <TextView
+        android:id="@+id/iv_mithril_telegram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:autoLink="web"
+        android:text="@string/info_mithril_telegram"/>
+
+    <TextView
+        android:id="@+id/iv_mithril_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:autoLink="web"
+        android:text="@string/info_mithril_facebook"/>
+
+</LinearLayout>

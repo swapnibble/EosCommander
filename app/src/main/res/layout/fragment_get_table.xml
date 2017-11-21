@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
+
+    <EditText
+        style="@style/EosNameText"
+        android:id="@+id/et_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorLightGray"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:hint="@string/account" />
+
+    <EditText
+        style="@style/EosNameText"
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorLightGray"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:hint="@string/contract_code" />
+
+    <EditText
+        style="@style/EosNameText"
+        android:id="@+id/et_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorLightGray"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:hint="@string/table_name" />
+
+    <TextView
+        android:id="@+id/btn_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:background="@drawable/round_box_btn_dark"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:text="@string/get_table"/>
+
+</LinearLayout>

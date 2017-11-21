@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="io.mithrilcoin.eoscommander.ui.account.AccountMainFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorGray"
+        android:text="@string/command"/>
+
+    <TextView
+        android:id="@+id/btn_command_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableEnd="@drawable/ic_play_circle_outline"
+        android:drawableTint="@color/colorMithril"
+        android:background="@drawable/round_box_btn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:text="@string/create_account"/>
+
+    <TextView
+        android:id="@+id/btn_get_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableEnd="@drawable/ic_play_circle_outline"
+        android:drawableTint="@color/colorMithril"
+        android:background="@drawable/round_box_btn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:text="@string/get_account"/>
+
+    <TextView
+        android:id="@+id/btn_get_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableEnd="@drawable/ic_play_circle_outline"
+        android:drawableTint="@color/colorMithril"
+        android:background="@drawable/round_box_btn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:text="@string/get_transactions"/>
+
+    <TextView
+        android:id="@+id/btn_get_servants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableEnd="@drawable/ic_play_circle_outline"
+        android:drawableTint="@color/colorMithril"
+        android:background="@drawable/round_box_btn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:text="@string/get_servants"/>
+
+</LinearLayout>

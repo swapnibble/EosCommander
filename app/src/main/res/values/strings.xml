@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Eos Commander For Developers</string>
+    <string name="settings">Settings</string>
+    <string name="set_connection">Set connection</string>
+    <string name="about">About</string>
+
+    <string name="eosd_ip">eosd host address</string>
+    <string name="eosd_port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="desc_for_connect_result">EOS network information will be displayed here when you connect.</string>
+
+    <string name="info_txt1">EOS Commander for developers\n\nby</string>
+    <string name="info_txt2">mithrilcoin.io</string>
+
+    <string name="info_mithril_web">Web\nhttps://mithrilcoin.io</string>
+    <string name="info_mithril_github">Github\nhttps://github.com/mithrilcoin-io</string>
+    <string name="info_mithril_telegram">Telegram\nhttps://t.me/mithrilcoin</string>
+    <string name="info_mithril_facebook">Facebook\nhttps://www.facebook.com/mithrilteam</string>
+
+    <string name="input_account">Input account</string>
+    <string name="account_info_title_fmt">%s: %s</string>
+    <string name="create_account">Create account</string>
+    <string name="creator_name">Creator name</string>
+    <string name="new_account_name">New account name</string>
+    <string name="owner_public_key">Owner public key</string>
+    <string name="active_public_key">Active public key</string>
+    <string name="create">Create</string>
+    <string name="get_transactions">Get transactions</string>
+    <string name="transfer">Transfer</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="amount">Amount</string>
+    <string name="send">Send</string>
+    <string name="create_wallet">Create wallet</string>
+    <string name="create_wallet_default">Create default wallet\nand import key of sample inita</string>
+    <string name="new_wallet_name">New wallet name</string>
+    <string name="import_key">Import key</string>
+    <string name="input_private_key">Input private key</string>
+    <string name="import_label">Import</string>
+    <string name="view_wallet_keys">View wallet keys</string>
+    <string name="unlock_wallet">Unlock wallet</string>
+    <string name="input_wallet_password">Input wallet password</string>
+    <string name="unlock">Unlock</string>
+    <string name="command">Command</string>
+    <string name="import_file">Import file</string>
+    <string name="import_msg_json">Import message json file and edit.</string>
+    <string name="push_message_hint">Contract data\n(Firstly, Import your contract message json.)</string>
+    <string name="view_keys_unlocked_wallet">Keys in unlocked wallets</string>
+    <string name="wallet_list">Wallet list</string>
+    <string name="get_account">Get account</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="locked">Locked</string>
+
+    <string name="account">Account</string>
+    <string name="contract_code">Contract</string>
+    <string name="table_name">Table name</string>
+    <string name="get_table">Get table</string>
+    <string name="get_servants">Get servants</string>
+
+    <string name="wallet_password">Wallet password</string>
+    <string name="wallet_password_info">Save password to use in the future to unlock this wallet.\nWithout password keys will not be retrievable.</string>
+    <string name="wallet_already_exists">"Wallet : '%1$s' already exist!"</string>
+
+    <string name="invalid_connection_info">Invalid eosd host info!</string>
+    <string name="conn_failed">Could not connect!</string>
+
+    <string name="contract_account">Contract account</string>
+    <string name="contract_action">Contract action</string>
+
+    <string name="scope_hint">Scope accounts (separate by commas)</string>
+
+    <string name="permission_account_hint">Account for permission</string>
+    <string name="permission_level_active">active</string>
+
+    <string name="close">close</string>
+
+    <string name="set_skip_signature">Set skipping signatures</string>
+    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `eosd` must have started with --skip-transaction-signatures option.</string>
+
+    <string name="invalid_amount">Invalid amount !</string>
+
+    <string name="timeout">Timeout !</string>
+    <string name="network_err">Network error occurred !</string>
+    <string name="error">Error</string>
+    <string name="result">Result</string>
+    <string name="failed">Failed!</string>
+
+    <string name="should_unlock_to_import_key">You should unlock wallet to import key!</string>
+
+    <string name="no_wallet_unlocked_or_selected">You have no wallet unlocked or selected!</string>
+    <string name="key_empty_maybe_no_wallet_unlocked">Keys are empty. Maybe you have no wallet unlocked.</string>
+
+    <string name="save_password">Save password.\nThen the password will be filled automatically to unlock for easy testing.</string>
+
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="select_wallet_to_save_keys">Wallet to save keys</string>
+    <string name="no_keys">No keys!</string>
+</resources>

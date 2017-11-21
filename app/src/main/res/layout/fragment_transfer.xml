@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
+
+    <EditText
+        style="@style/EosNameText"
+        android:id="@+id/et_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorGray"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:hint="@string/from"/>
+
+    <EditText
+        style="@style/EosNameText"
+        android:id="@+id/et_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorGray"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:hint="@string/to"/>
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorGray"
+        android:background="@drawable/round_box_input"
+        android:padding="16dp"
+        android:inputType="number"
+        android:hint="@string/amount"/>
+
+    <TextView
+        android:id="@+id/btn_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:background="@drawable/round_box_btn_dark"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:text="@string/transfer"/>
+</LinearLayout>

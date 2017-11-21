@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical" >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay" >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/ToolBarFont"
+            app:popupTheme="@style/AppTheme.PopupOverlay"> <!-- app:layout_scrollFlags="scroll|enterAlways" -->
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".ui.settings.SettingsActivity">
+
+            <TextView
+                android:id="@+id/tv_subtitle_connection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textSize="12sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:text="@string/set_connection"/>
+
+            <EditText
+                android:id="@+id/et_port"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/tv_subtitle_connection"
+                android:gravity="center"
+                android:textColorHint="@color/colorLightGray"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="16dp"
+                android:inputType="number"
+                android:hint="@string/eosd_port" />
+
+            <EditText
+                android:id="@+id/et_host"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_subtitle_connection"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@id/et_port"
+                android:inputType="textVisiblePassword"
+                android:textColorHint="@color/colorLightGray"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="16dp"
+                android:hint="@string/eosd_ip" />
+
+            <TextView
+                android:id="@+id/btn_connect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_box_btn_dark"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:text="@string/connect"
+                android:layout_below="@id/et_host"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/tv_conn_status"
+                android:layout_width="match_parent"
+                android:layout_below="@id/btn_connect"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorRed"
+                android:textIsSelectable="false"
+                android:textSize="11sp"
+                android:text="@string/disconnected"/>
+
+            <TextView
+                android:id="@+id/tv_conn_msg"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@id/tv_conn_status"
+                android:padding="8dp"
+                android:textIsSelectable="true"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
+                android:textSize="11sp"
+                android:text="@string/desc_for_connect_result" />
+
+            <TextView
+                android:id="@+id/tv_label_skipsign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_conn_msg"
+                android:textSize="12sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:text="@string/set_skip_signature"/>
+
+            <CheckBox
+                android:id="@+id/cb_skip_signature"
+                android:layout_below="@id/tv_label_skipsign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:gravity="top"
+                android:textSize="12sp"
+                android:buttonTint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:text="@string/skip_signature_info" />
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,169 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.mithrilcoin.eoscommander.ui.push.PushFragment" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@color/colorLight" >
+
+        <EditText
+            style="@style/EosNameText"
+            android:id="@+id/et_contract_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorLightGray"
+            android:hint="@string/contract_account" />
+
+        <EditText
+            style="@style/EosNameText"
+            android:id="@+id/et_contract_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_contract_account"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:hint="@string/contract_action" />
+
+        <TextView
+            android:id="@+id/btn_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_contract_action"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_box_btn"
+            android:drawableLeft="@drawable/ic_push_file"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/colorGray"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="12sp"
+            android:text="@string/import_file"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/et_contract_action"
+            android:layout_toLeftOf="@id/btn_import"
+            android:layout_alignBaseline="@id/btn_import"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/import_msg_json" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/et_message_scroller"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@id/btn_import"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:fillViewport="true">
+            <EditText
+                android:id="@+id/et_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_box_input"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorGray"
+                android:textSize="12sp"
+                android:hint="@string/push_message_hint"/>
+        </android.support.v4.widget.NestedScrollView>
+
+        <EditText
+            android:id="@+id/et_scopes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_message_scroller"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:inputType="textVisiblePassword"
+            android:digits=",.12345abcdefghijklmnopqrstuvwxyz"
+            android:hint="@string/scope_hint" />
+
+        <LinearLayout android:id="@+id/permissions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_scopes"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+            <EditText
+                style="@style/EosNameText"
+                android:id="@+id/et_permission_account"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="58dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textColorHint="@color/colorLightGray"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="6dp"
+                android:textSize="14sp"
+                android:imeOptions="actionSend"
+                android:hint="@string/permission_account_hint" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="58dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:text="\@"/>
+
+            <EditText
+                style="@style/EosNameText"
+                android:id="@+id/et_permission_name"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="58dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textColorHint="@color/colorLightGray"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="6dp"
+                android:textSize="14sp"
+                android:text="@string/permission_level_active"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/permissions"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:background="@drawable/round_box_btn_dark"
+            android:textColor="@color/colorWhite"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:text="@string/send"/>
+    </RelativeLayout>
+</ScrollView>

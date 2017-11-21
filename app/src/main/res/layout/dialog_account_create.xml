@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="24dp"
+            android:orientation="vertical"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/create_account"/>
+
+            <EditText
+                android:id="@+id/et_creator_name"
+                style="@style/EosNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorLightGray"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="16dp"
+                android:hint="@string/creator_name"/>
+
+            <EditText
+                android:id="@+id/et_new_account"
+                style="@style/EosNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:textColorHint="@color/colorLightGray"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_box_input"
+                android:padding="16dp"
+                android:hint="@string/new_account_name"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/round_box_input">
+
+                <TextView
+                    android:id="@+id/tv_no_wallet_warn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textColor="@color/colorMithril"
+                    android:text="@string/no_wallet_unlocked_or_selected"
+                    android:visibility="gone"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_wallets_unlocked"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/arrow_gray"
+                    android:padding="8dp"/> <!-- unlock 된 지갑을 선택하는 스피너 -->
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorDarkGray"
+                android:text="@string/owner_public_key" />
+
+            <TextView
+                android:id="@+id/tv_owner_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="2dp"
+                android:padding="8dp"
+                android:background="@color/colorLight"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:text="EOS5qGhuzDoxmwZQakp4AfecqE82MF98ASiy2cUpZYf7EeqYuPdzM" />
+
+            <TextView
+                android:id="@+id/tv_active"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorDarkGray"
+                android:text="@string/active_public_key" />
+
+            <TextView
+                android:id="@+id/tv_active_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="2dp"
+                android:padding="8dp"
+                android:background="@color/colorLight"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:text="EOS5qGhuzDoxmwZQakp4AfecqE82MF98ASiy2cUpZYf7EeqYuPdzM" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/btn_create"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorMithril"
+                    android:text="@string/create"/>
+
+                <TextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_toStartOf="@id/btn_create"
+                    android:layout_marginEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorGray"
+                    android:text="@android:string/cancel"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
