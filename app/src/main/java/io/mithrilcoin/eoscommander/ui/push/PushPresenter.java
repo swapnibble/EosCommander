@@ -84,9 +84,13 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
         getMvpView().showLoading( true );
 
+        // can make
+        String[] permissions = ( StringUtils.isEmpty(permissionAccount) || StringUtils.isEmpty( permissionName))
+                            ? null : new String[]{permissionAccount + "@" + permissionName };
+
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
-                                , getArrayFromCsv(scopes), null)//new String[]{permissionAccount + "@" + permissionName })
+                                , getArrayFromCsv(scopes), permissions)
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
