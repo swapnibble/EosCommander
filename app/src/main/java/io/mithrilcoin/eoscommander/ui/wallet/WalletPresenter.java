@@ -98,20 +98,6 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
 
     public void onRequestShowKeys() {
         // show keys of unlocked wallets
-        /*
-        if ( null != keyPairs ){
-            StringBuilder outputBuilder = new StringBuilder( 128 * keyPairs.size());
-            outputBuilder.append('[');
-
-            for ( String pair : keyPairs ) {
-                outputBuilder.append("[\n  ").append( pair).append("\n  ],\n");
-            }
-
-            outputBuilder.append(']');
-
-            ((TextView)view.findViewById( R.id.tv_get_response)).setText( outputBuilder.toString());
-        }
-         */
         ArrayList<String> keyPairs = mDataManager.getWalletManager().listKeysAsPairString();
         if ( keyPairs.size() <= 0 ) {
             getMvpView().onError(R.string.no_keys);
@@ -154,6 +140,15 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
         if (! mDataManager.getWalletManager().isLocked( walletName )) {
             getMvpView().showToast(R.string.unlocked);
         }
+    }
+
+    public void onRequestImportKey(String walletName){
+        if ( mDataManager.getWalletManager().isLocked( walletName )) {
+            getMvpView().onError( R.string.should_unlock_to_import_key);
+            return;
+        }
+
+        getMvpView().getKeyToImport( walletName );
     }
 
     public void importKey( String walletName, String key ) {

@@ -42,5 +42,7 @@ public interface WalletMvpView extends MvpView {
 
     void getPassword( String walletName, String initialData );
 
+    void getKeyToImport( String walletName);
+
     void showCreateDefaultWalletButton( boolean show );
 }

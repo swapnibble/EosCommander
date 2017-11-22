@@ -33,7 +33,9 @@ import io.mithrilcoin.eoscommander.util.StringUtils;
  */
 
 public enum AccountInfoType {
-    REGISTRATION( R.string.get_account), TRANSACTIONS(R.string.get_transactions), SERVANTS(R.string.get_servants) ;
+    REGISTRATION( R.string.get_account), // eosc get account <account>
+    TRANSACTIONS(R.string.get_transactions), // eosc get transaction <account>
+    SERVANTS(R.string.get_servants) ; // eosc get servants <account>
 
     private final int mTitleRscId;
 

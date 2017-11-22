@@ -70,11 +70,12 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
     @Override
     protected void setUpView(View view) {
 
-        //  @id/et_from 와 @id/et_to 를 입력하고  @id/et_amount 에 보낼 금액 입력 후 @id/btn_send 누르면 전송.
+        //  from, to, amount edit text
         mEtFrom = view.findViewById( R.id.et_from);
         mEtTo   = view.findViewById( R.id.et_to);
         mEtAmount = view.findViewById( R.id.et_amount );
 
+        // click handler
         view.findViewById( R.id.btn_transfer).setOnClickListener( v ->
                 mPresenter.transfer( mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString()) );
     }

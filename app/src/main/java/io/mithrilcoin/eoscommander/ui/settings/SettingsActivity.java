@@ -56,7 +56,7 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
         setContentView(R.layout.activity_settings);
         setToolbarConfig(R.id.toolbar, true);
 
-        //IP, PORT 입력 후 @id/btn_connect 누르면 @id/tv_connect_status에 get info 를 보여준다.
+        //btn_connect 누르면 get info 를 보여준다.
         findViewById(R.id.btn_connect).setOnClickListener(
                 v -> mPresenter.tryConnectEosd(((TextView)findViewById(R.id.et_host)).getText()
                         , ((TextView)findViewById(R.id.et_port)).getText())

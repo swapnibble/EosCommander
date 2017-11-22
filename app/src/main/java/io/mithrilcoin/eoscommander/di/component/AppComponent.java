@@ -28,6 +28,4 @@ public interface AppComponent {
     Application application();
     EoscDataManager dataManager();
     HostInterceptor hostInterceptor();
-
-    EosdApi eosService();
 }

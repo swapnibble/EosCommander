@@ -1,6 +1,6 @@
-# EOS commander for developers 
+# EOS commander for developer 
 
-EOS commander is an Android client for EOS blockchain for EOS DApp developers. 
+EOS commander is an Android client for EOS blockchain for EOS DApp developer. 
 It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. Mithrilcoin team hopes this makes more EOS mobile DApps activated. 
 
 # Table of contents
@@ -17,8 +17,10 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 <a name="getting_started"></a>
 ## Getting Started
 ### Prerequisite
-You shoud have running eosd node.
-EOS Commander has been tested with EOS version [7e12d605](https://github.com/EOSIO/eos/tree/7e12d605db1ca77bcb9d07179e770cdaf421a85b).
+You shoud have running eosd node.  
+Set "http-server-endpoint" other than "127.0.0.1" in config.ini.  
+
+EOS Commander has been tested with EOS version [ec638a0](https://github.com/EOSIO/eos/tree/ec638a089f1e195fa83bfe5b0c8f677d04fae9a8).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 

@@ -4,6 +4,12 @@
     <string name="set_connection">Set connection</string>
     <string name="about">About</string>
 
+    <string name="wallet">Wallet</string>
+    <string name="account">Account</string>
+    <string name="transfer">Transfer</string>
+    <string name="push">Push</string>
+    <string name="get_table">Get table</string>
+
     <string name="eosd_ip">eosd host address</string>
     <string name="eosd_port">Port</string>
     <string name="connect">Connect</string>
@@ -26,7 +32,6 @@
     <string name="active_public_key">Active public key</string>
     <string name="create">Create</string>
     <string name="get_transactions">Get transactions</string>
-    <string name="transfer">Transfer</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="amount">Amount</string>
@@ -37,7 +42,7 @@
     <string name="import_key">Import key</string>
     <string name="input_private_key">Input private key</string>
     <string name="import_label">Import</string>
-    <string name="view_wallet_keys">View wallet keys</string>
+    <string name="view_wallet_keys">Keys in wallet</string>
     <string name="unlock_wallet">Unlock wallet</string>
     <string name="input_wallet_password">Input wallet password</string>
     <string name="unlock">Unlock</string>
@@ -51,10 +56,8 @@
     <string name="unlocked">Unlocked</string>
     <string name="locked">Locked</string>
 
-    <string name="account">Account</string>
     <string name="contract_code">Contract</string>
     <string name="table_name">Table name</string>
-    <string name="get_table">Get table</string>
     <string name="get_servants">Get servants</string>
 
     <string name="wallet_password">Wallet password</string>

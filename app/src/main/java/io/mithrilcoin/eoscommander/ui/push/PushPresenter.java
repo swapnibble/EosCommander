@@ -62,7 +62,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         getMvpView().openFileManager();
     }
 
-
+    // parse csv into array
     private String[] getArrayFromCsv(String csv) {
         csv = csv.trim();
 
@@ -86,7 +86,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
-                                , getArrayFromCsv(scopes), new String[]{permissionAccount + "@" + permissionName })
+                                , getArrayFromCsv(scopes), null)//new String[]{permissionAccount + "@" + permissionName })
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
@@ -114,11 +114,13 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         int read;
 
         try {
+            // read file to string
             reader = new BufferedReader(new FileReader (filePath));
             while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
                 builder.append(buffer, 0, read);
             }
 
+            // pretty print
             JSONObject json = new JSONObject(builder.toString()); // Convert text to object
             getMvpView().showContractMessage(json.toString(2)); // Print it with specified indentation
         }

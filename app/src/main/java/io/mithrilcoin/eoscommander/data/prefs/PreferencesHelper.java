@@ -56,9 +56,6 @@ public class PreferencesHelper {
 
     private static final String PREF_SKIP_SIGNING = "signing.skip";
 
-//    private static final String PREF_ACCOUNTS = "accounts";
-
-
     private final SharedPreferences mPrefs;
     private final File mWalletDirFile;
 
@@ -77,35 +74,6 @@ public class PreferencesHelper {
         mPrefs.edit().clear().apply();
     }
 
-
-
-    /*
-    public ArrayList<String> getAccounts( ) {
-        Set<String> accountsSet = mPrefs.getStringSet( PREF_ACCOUNTS, null);
-        if ( null == accountsSet ) {
-            return new ArrayList<>();
-        }
-
-        ArrayList<String> retSortedSet = new ArrayList<>( accountsSet );
-        Collections.sort( retSortedSet);
-
-        return retSortedSet;
-    }
-
-    public void addAccount( String account ) {
-        Set<String> accountsSet = mPrefs.getStringSet( PREF_ACCOUNTS, null);
-        if ( null == accountsSet ) {
-            accountsSet = new HashSet<>(); // SharedPreferences makes HashSet when it runs putStringSet()
-        }
-        else {
-            accountsSet = new HashSet<>( accountsSet); // should copy!
-        }
-
-        accountsSet.add( account );
-
-        mPrefs.edit().putStringSet( PREF_ACCOUNTS, accountsSet).apply();
-    }
-    */
 
 
     public File getWalletDirFile() {

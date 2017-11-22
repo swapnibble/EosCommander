@@ -133,16 +133,21 @@ public class WalletFragment extends BaseFragment
         mAdapter.notifyDataSetChanged();
     }
 
-
     @Override
-    public void onRequestImportKey(String walletName){
+    public void getKeyToImport( String walletName) {
         InputDataDialog.newInstance( walletName, null, InputDataDialog.Type.Key)
                 .setCallback( ( name, key) -> mPresenter.importKey( name, key) )
                 .show( getChildFragmentManager() );
     }
 
+
     @Override
-    public void onRequestChangeLockStatus( String walletName){
+    public void onClickImportKey(String walletName){
+        mPresenter.onRequestImportKey( walletName );
+    }
+
+    @Override
+    public void onClickChangeLockStatus(String walletName){
         mPresenter.changeLockStatus( walletName );
     }
 

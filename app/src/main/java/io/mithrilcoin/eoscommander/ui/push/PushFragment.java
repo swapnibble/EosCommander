@@ -89,7 +89,7 @@ public class PushFragment extends BaseFragment implements PushMvpView{
 
         view.findViewById(R.id.btn_ok).setOnClickListener( v ->
                 mPresenter.pushMessage(mEtContract.getText().toString(), mEtAction.getText().toString()      // contract, action
-                        , mEtMsg.getText().toString() // message, mEtMsg.getText().toString()
+                        , mEtMsg.getText().toString() // message,
                         , mEtScopes.getText().toString()   // scope
                         , mEtPermissionAccount.getText().toString()     // account for permission
                         , mEtPermissionName.getText().toString()     // permission name

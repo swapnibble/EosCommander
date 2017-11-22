@@ -28,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -98,14 +97,14 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
             // import
             itemView.findViewById( R.id.btn_import)
                     .setOnClickListener( v -> {
-                        if ( null != mCallback ) mCallback.onRequestImportKey( tvWalletName.getText().toString());
+                        if ( null != mCallback ) mCallback.onClickImportKey( tvWalletName.getText().toString());
                     });
 
             // lock/unlock
             itemView.findViewById( R.id.tv_lock_status)
                     .setOnClickListener( v -> {
                         if ( null != mCallback) {
-                            mCallback.onRequestChangeLockStatus( tvWalletName.getText().toString());
+                            mCallback.onClickChangeLockStatus( tvWalletName.getText().toString());
                         }
                     });
         }
@@ -113,7 +112,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
 
 
     interface ItemCallback {
-        void onRequestImportKey(String walletName);
-        void onRequestChangeLockStatus( String walletName);
+        void onClickImportKey(String walletName);
+        void onClickChangeLockStatus(String walletName);
     }
 }

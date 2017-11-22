@@ -59,6 +59,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
 
         RefValue<Integer> portRef = new RefValue<>(0);
 
+        // fetch connection info from preference
         String host = mDataManager.getPreferenceHelper().getEosdConnInfo( portRef );
         String port = String.valueOf(portRef.data);
         boolean connInfoOk = false;
@@ -67,9 +68,11 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
             connInfoOk = true;
         }
 
+        // get skip signing option
         boolean skipSigning = mDataManager.getPreferenceHelper().shouldSkipSigning();
         getMvpView().showCheckOptions( skipSigning );
 
+        // connect
         if ( connInfoOk ) {
             tryConnectEosd( host, port );
         }
@@ -126,6 +129,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
 
         getMvpView().hideKeyboard();
 
+        // change host info
         mHostInterceptor.setInterceptor("http", hostAddress , eosdPort);
 
         getMvpView().showLoading( true );

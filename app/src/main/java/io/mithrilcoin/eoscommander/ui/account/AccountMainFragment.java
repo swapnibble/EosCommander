@@ -71,16 +71,16 @@ public class AccountMainFragment extends BaseFragment
 
     @Override
     protected void setUpView(View view) {
-        //  account 생성하기
+        //  create account
         view.findViewById(R.id.btn_command_create_account).setOnClickListener(v -> CreateEosAccountDialog.newInstance().show(getChildFragmentManager()) );
 
-        // account 정보보기
+        // eosc get account <account>
         view.findViewById(R.id.btn_get_account).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.REGISTRATION));
 
-        // transactions 보기 (모든 트렌젝션 보기입니다.)
+        // eosc get transaction <account>
         view.findViewById(R.id.btn_get_transaction).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.TRANSACTIONS));
 
-        // servants 보기
+        // eosc get servants <account>
         view.findViewById(R.id.btn_get_servants).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.SERVANTS));
     }
 

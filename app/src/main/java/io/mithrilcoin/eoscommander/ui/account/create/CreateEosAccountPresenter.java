@@ -123,6 +123,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
 
         getMvpView().showLoading( true );
 
+        // create account and save keys if successful.
         addDisposable( mDataManager
                 .createAccount( new EosNewAccount(creator, newAccount
                         , mOwnerKey.getPublicKey().getBytesAsHexStr(), mActiveKey.getPublicKey().getBytesAsHexStr(), creator))

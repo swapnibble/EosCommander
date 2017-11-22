@@ -92,7 +92,7 @@ public class EosPrivateKey {
         Sha256 checkOne = Sha256.from( wifAsRaw, 0, wifAsRaw.length - 4 );
         Sha256 checkTwo = Sha256.from( checkOne.getBytes() );
 
-        // check 값이 맞는지 보자.  원본 eos 소스 코드에서 sha256 1번한 hash 도 체크하게 되어 있다.. 실수인지.. 그냥 원본 코드대로 포팅해 주자.
+        // check 값이 맞는지 보자.  원본 eos 소스 코드에서 sha256 1번한 hash 도 체크하게 되어 있다..
         if ( checkTwo.equalsFromOffset( wifAsRaw, wifAsRaw.length - 4, 4)
                 || checkOne.equalsFromOffset( wifAsRaw, wifAsRaw.length - 4, 4) ) {
 

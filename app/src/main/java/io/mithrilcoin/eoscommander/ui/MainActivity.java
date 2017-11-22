@@ -37,15 +37,14 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setToolbarConfig(R.id.toolbar, false);
 
-        //최초 또는 앱을 내렸다가 다시 접근시 SettingsActivity 를 보여준다
-        //오버플로우 옵션 메뉴에서도 SettingsActivity 호출가능 - onOptionsItemSelected() 참조
 
         TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.addTab(tabLayout.newTab().setText("Wallet"));
-        tabLayout.addTab(tabLayout.newTab().setText("Account"));
-        tabLayout.addTab(tabLayout.newTab().setText("Transfer"));
-        tabLayout.addTab(tabLayout.newTab().setText("Push"));
-        tabLayout.addTab(tabLayout.newTab().setText("Get table"));
+
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.wallet));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.account ));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.transfer ));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.push ));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.get_table));
         tabLayout.setTabGravity(TabLayout.MODE_SCROLLABLE);
 
         mViewPager =findViewById(R.id.container);
