@@ -20,7 +20,7 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 You shoud have running eosd node.  
 Set "http-server-endpoint" other than "127.0.0.1" in config.ini.  
 
-EOS Commander has been tested with EOS version [ec638a0](https://github.com/EOSIO/eos/tree/ec638a089f1e195fa83bfe5b0c8f677d04fae9a8).
+EOS Commander has been tested with EOS version [bd979dc](https://github.com/EOSIO/eos/tree/bd979dcff4a6f44ce200e6b3b0a9b0a28b1ea479).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
