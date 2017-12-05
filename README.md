@@ -17,8 +17,8 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 <a name="getting_started"></a>
 ## Getting Started
 ### Prerequisite
-For Testing on Public test net:
-Set test1.eos.io or test2.eos.io, port: 80 on EOS commander settings screen. 
+For Testing on Public test net:  
+Set testnet1.eos.io or testnet2.eos.io, port: 80 on EOS commander settings screen. 
 
 For Testing on private net:  
 You shoud have running eosd node.  
@@ -42,7 +42,7 @@ You can install the latest version from the Play store at: [link](https://play.g
 <a name="set_connection"></a>
 ## Set connection  
 For Public test net:  
-Set test1.eos.io or test2.eos.io, port: 80  
+Set testnet1.eos.io or testnet2.eos.io, port: 80  
 
 For Private test net:  
 You shoud have running eosd node.  
