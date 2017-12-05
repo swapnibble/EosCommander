@@ -17,11 +17,15 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 <a name="getting_started"></a>
 ## Getting Started
 ### Prerequisite
+For Testing on Public test net:
+Set test1.eos.io or test2.eos.io, port: 80 on EOS commander settings screen. 
+
+For Testing on private net:  
 You shoud have running eosd node.  
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOS version [7451e09](https://github.com/EOSIO/eos/tree/7451e0929a0a20364fb32657d126f08de912bc67).
+EOS Commander has been tested with EOS version [9703495](https://github.com/EOSIO/eos/tree/9703495c0ae896eed7bbc91bb44e64db5c4725d5).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -36,9 +40,18 @@ Open in Android studio 3.0 or later.
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)
 
 <a name="set_connection"></a>
-## Set connection
+## Set connection  
+For Public test net:  
+Set test1.eos.io or test2.eos.io, port: 80  
+
+For Private test net:  
+You shoud have running eosd node.  
+Set "http-server-address" other than "127.0.0.1" in config.ini.  
+
+ on EOS commander settings screen. 
+Set test1.eos.io or test2.eos.io, port: 80
 ### Connect
-Connect to eosd and check the status.
+Connect to eos network and check the status.
 On connected state, you can use the command function.
 
 ### Skipping signature
