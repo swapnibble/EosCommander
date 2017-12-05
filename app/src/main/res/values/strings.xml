@@ -70,7 +70,7 @@
     <string name="contract_account">Contract account</string>
     <string name="contract_action">Contract action</string>
 
-    <string name="scope_hint">Scope accounts (separate by commas)</string>
+    <string name="scope_hint">Scope accounts (separate by comma or space)</string>
 
     <string name="permission_account_hint">Account for permission</string>
     <string name="permission_level_active">active</string>
@@ -78,7 +78,7 @@
     <string name="close">close</string>
 
     <string name="set_skip_signature">Set skipping signatures</string>
-    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `eosd` must have started with --skip-transaction-signatures option.</string>
+    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `eosd` must have been started with --skip-transaction-signatures option.</string>
 
     <string name="invalid_amount">Invalid amount !</string>
 
@@ -97,6 +97,6 @@
 
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
-    <string name="select_wallet_to_save_keys">Wallet to save keys</string>
+    <string name="select_wallet_to_save_keys">Select wallet</string>
     <string name="no_keys">No keys!</string>
 </resources>

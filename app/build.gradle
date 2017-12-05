@@ -7,8 +7,8 @@ android {
         applicationId "io.mithrilcoin.eoscommander"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // 벡터 이미지
@@ -26,6 +26,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
     }
 
     configurations.all {

@@ -79,8 +79,10 @@
                     android:id="@+id/sp_wallets_unlocked"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/arrow_gray"
-                    android:padding="8dp"/> <!-- unlock 된 지갑을 선택하는 스피너 -->
+                    android:theme="@style/ThemeOverlay.AppCompat.Light"
+
+                    android:padding="8dp"
+                    android:spinnerMode="dropdown"/> <!-- android:background="@drawable/arrow_gray" unlock 된 지갑을 선택하는 스피너 -->
             </FrameLayout>
 
             <TextView

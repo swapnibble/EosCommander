@@ -102,7 +102,7 @@
             android:padding="16dp"
             android:textSize="14sp"
             android:inputType="textVisiblePassword"
-            android:digits=",.12345abcdefghijklmnopqrstuvwxyz"
+            android:digits=" ,.12345abcdefghijklmnopqrstuvwxyz"
             android:hint="@string/scope_hint" />
 
         <LinearLayout android:id="@+id/permissions"

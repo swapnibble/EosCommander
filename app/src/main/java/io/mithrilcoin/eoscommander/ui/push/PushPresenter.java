@@ -32,18 +32,16 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
-import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
-import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-11-08.
@@ -62,22 +60,26 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         getMvpView().openFileManager();
     }
 
-    // parse csv into array
-    private String[] getArrayFromCsv(String csv) {
+    // parse scopes into array
+    private String[] getArrayFromSeparatedCommaOrSpace(String csv) {
         csv = csv.trim();
 
         if (StringUtils.isEmpty(csv)) {
             return new String []{""};
         }
 
-        StringTokenizer tokenizer = new StringTokenizer( csv, ",");
-        String[] ret = new String[ tokenizer.countTokens() ];
+        StringTokenizer tokenizer = new StringTokenizer( csv, ", "); // added ' '. 2017.12.04.
+        int tokenCount = tokenizer.countTokens();
+        ArrayList<String> parsed = new ArrayList<>( tokenCount);
 
-        for ( int i = 0; i < ret.length; i++ ){
-            ret[i] = tokenizer.nextToken();
+        for ( int i = 0; i < tokenCount; i++ ){
+            String token = tokenizer.nextToken();
+            if ( ! StringUtils.isEmpty( token)) {
+                parsed.add( token );
+            }
         }
 
-        return ret;
+        return parsed.toArray( new String[ parsed.size()]);
     }
 
     public void pushMessage( String contract, String action, String message, String scopes, String permissionAccount, String permissionName ){
@@ -90,7 +92,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
-                                , getArrayFromCsv(scopes), permissions)
+                                , getArrayFromSeparatedCommaOrSpace(scopes), permissions)
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
