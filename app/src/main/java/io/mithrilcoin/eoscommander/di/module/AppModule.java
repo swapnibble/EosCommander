@@ -71,7 +71,7 @@ public class AppModule {
     }
 
 
-    private static final String ENDPOINT = "http://192.168.30.10:8888/";
+    private static final String ENDPOINT = "http://testnet1.eos.io";//http://192.168.30.10:8888/";
 
     @Provides
     @Singleton
