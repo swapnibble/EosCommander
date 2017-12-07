@@ -74,12 +74,12 @@ public class TypeName implements EosType.Packer {
     static String name_to_string( long nameAsLong ) {
         long tmp = nameAsLong;
 
-        char[] result = new char[13];
+        char[] result = new char[MAX_NAME_IDX + 1];
         Arrays.fill( result, ' ');
 
-        for( int i = 0; i <= 12; ++i ) {
+        for( int i = 0; i <= MAX_NAME_IDX; ++i ) {
             char c = CHAR_MAP.charAt( (int)(tmp & (i == 0 ? 0x0f : 0x1f)) );
-            result[12-i] = c;
+            result[MAX_NAME_IDX-i] = c;
             tmp >>= (i == 0 ? 4 : 5);
         }
 

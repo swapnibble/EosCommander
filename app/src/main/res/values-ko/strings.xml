@@ -40,7 +40,7 @@
     <string name="unlock_wallet">지갑 Unlock</string>
     <string name="input_wallet_password">지갑 비밀번호 입력</string>
     <string name="unlock">잠금해제</string>
-    <string name="command">컨맨드</string>
+    <string name="command">커맨드</string>
     <string name="import_file">파일 가져오기</string>
     <string name="import_msg_json">메시지 json을 가져오기 한 후, 편집.</string>
     <string name="push_message_hint">컨트랙트 데이터\n(먼저, 메시지 json 가져오기를 하세요.)</string>
