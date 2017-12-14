@@ -26,16 +26,16 @@ package io.mithrilcoin.eoscommander.util;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.MultiAutoCompleteTextView;
+
+import java.util.List;
 
 import io.mithrilcoin.eoscommander.R;
+import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
+import io.mithrilcoin.eoscommander.ui.suggestion.WhitSpaceTokenizer;
 
 /**
  * Created by swapnibble on 2017-08-24.
@@ -56,21 +56,20 @@ public class UiUtils {
         return progressDialog;
     }
 
-    public static String getTextFromChildEdit(View view, int id) {
-        if ( null != view ){
-            EditText et = view.findViewById( id );
-            if ( null != et ){
-                return et.getText().toString();
-            }
-        }
-
-        return "";
-    }
-
     public static void setTextAndMoveCursorToEnd(EditText editText, CharSequence data ){
         if ( null != data ) {
             editText.setText(data);
             editText.setSelection(data.length());
         }
+    }
+
+    public static void setupRecentAccountSuggest( AutoCompleteTextView autoTextView, List<String> accounts ) {
+        AccountSuggestAdapter adapter = new AccountSuggestAdapter( autoTextView.getContext(), R.layout.account_suggestion, R.id.eos_account);
+        adapter.addAll( accounts );
+        if ( autoTextView instanceof MultiAutoCompleteTextView ) {
+            ((MultiAutoCompleteTextView)autoTextView).setTokenizer( new WhitSpaceTokenizer());
+        }
+        autoTextView.setThreshold(1);
+        autoTextView.setAdapter( adapter );
     }
 }

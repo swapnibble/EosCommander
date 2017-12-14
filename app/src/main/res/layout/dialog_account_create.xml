@@ -30,7 +30,7 @@
                 android:textColor="@color/colorPrimary"
                 android:text="@string/create_account"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_creator_name"
                 style="@style/EosNameText"
                 android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:padding="16dp"
                 android:hint="@string/creator_name"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_new_account"
                 style="@style/EosNameText"
                 android:layout_width="match_parent"

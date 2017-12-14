@@ -26,11 +26,13 @@ package io.mithrilcoin.eoscommander.data;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
+import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.EosdApi;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
@@ -60,11 +62,13 @@ public class EoscDataManager {
     private final EosdApi mEosdApi;
     private final PreferencesHelper mPrefHelper;
     private final EosWalletManager  mWalletMgr;
+    private final EosAccountRepository mAccountRepository;
 
     @Inject
-    public EoscDataManager(EosdApi eosdApi, EosWalletManager walletManager, PreferencesHelper prefHelper) {
+    public EoscDataManager(EosdApi eosdApi, EosWalletManager walletManager, EosAccountRepository accountRepository, PreferencesHelper prefHelper) {
         mEosdApi = eosdApi;
         mWalletMgr  = walletManager;
+        mAccountRepository = accountRepository;
         mPrefHelper = prefHelper;
 
         mWalletMgr.setDir( mPrefHelper.getWalletDirFile() );
@@ -76,6 +80,21 @@ public class EoscDataManager {
     public PreferencesHelper getPreferenceHelper() { return mPrefHelper; }
 
 
+    public void addAccountHistory(String... accountNames){
+        mAccountRepository.addAll(accountNames);
+    }
+
+    public void addAccountHistory(List<String> accountNames){
+        mAccountRepository.addAll(accountNames);
+    }
+
+    public void deleteAccountHistory( String accountName ) {
+        mAccountRepository.delete( accountName );
+    }
+
+    public List<String> getAllAccountHistory( boolean getFromCacheIfPossible) {
+        return mAccountRepository.getAll(getFromCacheIfPossible);
+    }
 
     public Observable<EosChainInfo> getChainInfo(){
 

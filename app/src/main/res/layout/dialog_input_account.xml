@@ -30,7 +30,7 @@
                 android:textColor="@color/colorPrimary"
                 android:text="@string/get_account"/>
 
-            <EditText
+            <AutoCompleteTextView
                 style="@style/EosNameText"
                 android:id="@+id/et_account"
                 android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:textColorHint="@color/colorLightGray"
                 android:background="@drawable/round_box_input"
                 android:padding="16dp"
-                android:hint="@string/input_account"/>
+                android:hint="@string/input_account"/> <!-- EditText 2017.12.12. -->
 
             <RelativeLayout
                 android:layout_width="match_parent"

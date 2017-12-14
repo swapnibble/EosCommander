@@ -23,6 +23,7 @@
  */
 package io.mithrilcoin.eoscommander.ui.push;
 
+import java.util.List;
 import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 /**
@@ -33,4 +34,6 @@ public interface PushMvpView extends MvpView {
     void openFileManager();
 
     void showContractMessage( String msg);
+
+    void setupAccountHistory(List<String> recentAccounts);
 }

@@ -23,6 +23,7 @@
  */
 package io.mithrilcoin.eoscommander.ui.transfer;
 
+import java.util.List;
 import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 /**
@@ -30,4 +31,5 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
  */
 
 public interface TransferMvpView extends MvpView {
+    void setupAccountHistory(List<String> recentAccounts);
 }

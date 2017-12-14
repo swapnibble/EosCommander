@@ -92,4 +92,8 @@
     <string name="disconnected">연결 안됨</string>
     <string name="select_wallet_to_save_keys">키를 저장할 지갑 선택</string>
     <string name="no_keys">키가 없습니다!</string>
+
+    <string name="delete_confirm">삭제 확인</string>
+    <string name="ru_sure_delete">"계정: '%s' 의 입력 기록을 삭제할까요?"</string>
+    <string name="deleted">삭제되었습니다.</string>
 </resources>

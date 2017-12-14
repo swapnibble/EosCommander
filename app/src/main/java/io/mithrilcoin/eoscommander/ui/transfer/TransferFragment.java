@@ -27,21 +27,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
+import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class TransferFragment extends BaseFragment implements TransferMvpView{
 
     @Inject
     TransferPresenter mPresenter;
 
-    private EditText mEtFrom;
-    private EditText mEtTo;
+    private AutoCompleteTextView mEtFrom;
+    private AutoCompleteTextView mEtTo;
     private EditText mEtAmount;
 
 
@@ -66,7 +70,6 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
         return view;
     }
 
-
     @Override
     protected void setUpView(View view) {
 
@@ -78,6 +81,20 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
         // click handler
         view.findViewById( R.id.btn_transfer).setOnClickListener( v ->
                 mPresenter.transfer( mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString()) );
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // notify to presenter
+        mPresenter.onStart();
+    }
+
+    @Override
+    public void setupAccountHistory(List<String> recentAccounts){
+        UiUtils.setupRecentAccountSuggest( mEtFrom, recentAccounts );
+        UiUtils.setupRecentAccountSuggest( mEtTo, recentAccounts );
     }
 
     @Override

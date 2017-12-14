@@ -151,13 +151,6 @@ public class BaseActivity extends AppCompatActivity implements MvpView{
 
     @Override
     public void onError(String message) {
-//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this)
-//                .setTitle( R.string.error)
-//                .setMessage(message)
-//                .setPositiveButton(R.string.ok, null);
-//
-//        alertDialog.create().show();
-
         ShowResultDialog.newInstance( getString(R.string.error), message)
                 .show( getSupportFragmentManager());
     }

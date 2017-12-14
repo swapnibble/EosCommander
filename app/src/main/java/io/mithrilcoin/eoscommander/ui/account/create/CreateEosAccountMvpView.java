@@ -24,6 +24,8 @@
 package io.mithrilcoin.eoscommander.ui.account.create;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 /**
@@ -33,6 +35,8 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
 public interface CreateEosAccountMvpView extends MvpView {
 
     void showCreator( String creator );
+    void setupAccountHistory(List<String> recentAccounts);
+
     void showPubKeys( String ownerKey, String activeKey);
 
     void showUnlockedWallets(ArrayList<String> walletNames);

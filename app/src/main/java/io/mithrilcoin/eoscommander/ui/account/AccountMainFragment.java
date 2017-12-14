@@ -72,7 +72,7 @@ public class AccountMainFragment extends BaseFragment
     @Override
     protected void setUpView(View view) {
         //  create account
-        view.findViewById(R.id.btn_command_create_account).setOnClickListener(v -> CreateEosAccountDialog.newInstance().show(getChildFragmentManager()) );
+        view.findViewById(R.id.btn_command_create_account).setOnClickListener(v -> mPresenter.onClickCreateAccount() );
 
         // eosc get account <account>
         view.findViewById(R.id.btn_get_account).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.REGISTRATION));
@@ -89,6 +89,14 @@ public class AccountMainFragment extends BaseFragment
         mPresenter.detachView();
         super.onDestroy();
     }
+
+    @Override
+    public void openCreateAccountDialog() {
+        CreateEosAccountDialog.newInstance()
+                .show(getChildFragmentManager());
+    }
+
+
 
     private void openInputAccountDialog( AccountInfoType infoType ) {
         InputAccountDialog.newInstance( infoType)

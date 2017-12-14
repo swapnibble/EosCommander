@@ -28,11 +28,22 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import io.mithrilcoin.eoscommander.R;
+import io.mithrilcoin.eoscommander.data.EoscDataManager;
+import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
+import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
+import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by swapnibble on 2017-11-16.
@@ -42,9 +53,13 @@ public class InputAccountDialog extends BaseDialog {
     private static final String TAG = InputAccountDialog.class.getSimpleName();
     private static final String ARG_INFO_TYPE = "type.for";
 
+    @Inject
+    EoscDataManager mDataManager;
+
     private AccountInfoType mAccountInfoType = AccountInfoType.REGISTRATION;
     private Callback mCallback;
-    private EditText mEtAccount;
+    private AutoCompleteTextView mEtAccount;
+    private CompositeDisposable mCompositeDisposable;
 
     public static InputAccountDialog newInstance(AccountInfoType infoType ) {
         InputAccountDialog fragment = new InputAccountDialog();
@@ -66,7 +81,16 @@ public class InputAccountDialog extends BaseDialog {
         Bundle args = getArguments();
         mAccountInfoType = AccountInfoType.safeValueOf( args.getString( ARG_INFO_TYPE));
 
-        return inflater.inflate(R.layout.dialog_input_account, container, false);
+        mCompositeDisposable = new CompositeDisposable();
+
+        View view = inflater.inflate(R.layout.dialog_input_account, container, false);
+
+        ActivityComponent component = getActivityComponent();
+        if (component != null) {
+            component.inject(this);
+        }
+
+        return view;
     }
 
     @Override
@@ -88,8 +112,37 @@ public class InputAccountDialog extends BaseDialog {
         view.findViewById( R.id.btn_cancel ).setOnClickListener( v -> dismiss());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        setupRecentAccountSuggest( mEtAccount);
+    }
+
+    private void setupRecentAccountSuggest( AutoCompleteTextView autoTextView) {
+
+        AccountSuggestAdapter adapter = new AccountSuggestAdapter(autoTextView.getContext(), R.layout.account_suggestion, R.id.eos_account);
+
+        mCompositeDisposable.add(
+                Observable.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe( list -> adapter.addAll( list ), e -> onError(e.getMessage()))
+        );
+
+
+        autoTextView.setThreshold(1);
+        autoTextView.setAdapter( adapter );
+    }
+
     public void show(FragmentManager fragmentManager) {
         super.show(fragmentManager, TAG );
+    }
+
+    @Override
+    public void onDestroyView() {
+        mCompositeDisposable.clear();
+        super.onDestroyView();
     }
 
     public interface Callback {

@@ -25,6 +25,8 @@ package io.mithrilcoin.eoscommander.ui.transfer;
 
 import com.google.gson.JsonObject;
 
+import java.util.Observable;
+
 import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
@@ -32,6 +34,9 @@ import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.Utils;
+import io.reactivex.Single;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by swapnibble on 2017-11-07.
@@ -46,6 +51,26 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
     public TransferPresenter(){
     }
 
+    public void onStart(){
+        getMvpView().showLoading( true );
+        addDisposable(
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                    .subscribeOn( getSchedulerProvider().io())
+                    .observeOn( getSchedulerProvider().ui())
+                    .subscribe( list -> {
+                                if ( ! isViewAttached() ) return;
+
+                                getMvpView().showLoading( false );
+                                getMvpView().setupAccountHistory( list );
+                            }
+                            , e -> {
+                                if ( ! isViewAttached() ) return;
+
+                                notifyErrorToMvpView( e );
+                            } )
+        );
+    }
+
     public void transfer(String from, String to, String amount){
         long amountAsLong = Utils.parseLongSafely( amount, 0);
         if ( amountAsLong < 0 ) {
@@ -57,6 +82,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
 
         addDisposable( mDataManager
                 .transferEos( from, to, amountAsLong, null)
+                .doOnNext( jsonObject -> mDataManager.addAccountHistory( from, to ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith( new RxCallbackWrapper<JsonObject>( this){

@@ -25,11 +25,14 @@ package io.mithrilcoin.eoscommander.ui.push;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,6 +40,7 @@ import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.ui.file.FileChooserActivity;
+import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class PushFragment extends BaseFragment implements PushMvpView{
     private static final int REQ_SELECT_MSG_FILE = 10;
@@ -44,10 +48,10 @@ public class PushFragment extends BaseFragment implements PushMvpView{
     @Inject
     PushPresenter mPresenter;
 
-    private EditText mEtContract;
+    private AutoCompleteTextView mEtContract;
     private EditText mEtAction;
-    private EditText mEtScopes;
-    private EditText mEtPermissionAccount;
+    private MultiAutoCompleteTextView mEtScopes;
+    private AutoCompleteTextView mEtPermissionAccount;
     private EditText mEtPermissionName;
     private EditText mEtMsg;
 
@@ -94,6 +98,21 @@ public class PushFragment extends BaseFragment implements PushMvpView{
                         , mEtPermissionAccount.getText().toString()     // account for permission
                         , mEtPermissionName.getText().toString()     // permission name
                         ));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // notify to presenter
+        mPresenter.onStart();
+    }
+
+    @Override
+    public void setupAccountHistory(List<String> recentAccounts){
+        UiUtils.setupRecentAccountSuggest( mEtContract, recentAccounts );
+        UiUtils.setupRecentAccountSuggest( mEtScopes, recentAccounts );
+        UiUtils.setupRecentAccountSuggest( mEtPermissionAccount, recentAccounts );
     }
 
     @Override

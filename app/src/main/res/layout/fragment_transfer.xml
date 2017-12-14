@@ -6,7 +6,7 @@
     android:padding="16dp"
     tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
 
-    <EditText
+    <AutoCompleteTextView
         style="@style/EosNameText"
         android:id="@+id/et_from"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:padding="16dp"
         android:hint="@string/from"/>
 
-    <EditText
+    <AutoCompleteTextView
         style="@style/EosNameText"
         android:id="@+id/et_to"
         android:layout_width="match_parent"

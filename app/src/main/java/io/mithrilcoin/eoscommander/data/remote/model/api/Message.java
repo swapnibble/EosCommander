@@ -38,7 +38,6 @@ import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountName;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountPermission;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeFuncName;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-11.

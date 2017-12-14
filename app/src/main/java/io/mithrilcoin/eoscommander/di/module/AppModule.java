@@ -1,6 +1,7 @@
 package io.mithrilcoin.eoscommander.di.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -10,6 +11,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.mithrilcoin.eoscommander.data.local.db.AppDatabase;
+import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
+import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepositoryImpl;
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.EosdApi;
 import io.mithrilcoin.eoscommander.data.remote.HostInterceptor;
@@ -21,7 +25,6 @@ import io.mithrilcoin.eoscommander.di.ApplicationContext;
 import io.mithrilcoin.eoscommander.util.RefValue;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -71,7 +74,7 @@ public class AppModule {
     }
 
 
-    private static final String ENDPOINT = "http://testnet1.eos.io";//http://192.168.30.10:8888/";
+    private static final String ENDPOINT = "http://testnet1.eos.io";
 
     @Provides
     @Singleton
@@ -96,5 +99,18 @@ public class AppModule {
     @Singleton
     EosWalletManager providesWalletManager() {
         return new EosWalletManager();
+    }
+
+    @Provides
+    @Singleton
+    AppDatabase provideAppDatabase( @ApplicationContext  Context context){
+        return Room.databaseBuilder( context.getApplicationContext(), AppDatabase.class, "eosc.db")
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    EosAccountRepository provideAccountRepository(AppDatabase database ) {
+        return new EosAccountRepositoryImpl(database);
     }
 }

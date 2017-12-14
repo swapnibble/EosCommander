@@ -23,6 +23,7 @@
  */
 package io.mithrilcoin.eoscommander.ui.account.create;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatSpinner;
@@ -30,10 +31,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -56,8 +59,8 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     @Inject
     CreateEosAccountPresenter mPresenter;
 
-    private EditText mEtCreator;
-    private EditText mEtNewAccount;
+    private AutoCompleteTextView mEtCreator;
+    private AutoCompleteTextView mEtNewAccount;
     private TextView mTvOwner;
     private TextView mTvActive;
 
@@ -118,6 +121,12 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     @Override
     public void showCreator( String creator ) {
         UiUtils.setTextAndMoveCursorToEnd( mEtCreator, creator );
+    }
+
+    @Override
+    public void setupAccountHistory(List<String> recentAccounts){
+        UiUtils.setupRecentAccountSuggest( mEtCreator, recentAccounts );
+        UiUtils.setupRecentAccountSuggest( mEtNewAccount, recentAccounts );
     }
 
 

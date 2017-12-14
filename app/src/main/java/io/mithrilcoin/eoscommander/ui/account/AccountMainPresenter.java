@@ -25,13 +25,20 @@ package io.mithrilcoin.eoscommander.ui.account;
 
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
+import io.mithrilcoin.eoscommander.data.wallet.EosWallet;
 import io.mithrilcoin.eoscommander.ui.account.info.AccountInfoType;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
+import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 
 /**
  * Created by swapnibble on 2017-11-16.
@@ -46,7 +53,21 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
     public AccountMainPresenter(){
     }
 
+    public void onClickCreateAccount(){
+        // check any opened wallet
+        if ( mDataManager.getWalletManager().listWallets( false ).size() <= 0 ) {
+            getMvpView().showToast( R.string.no_wallet_unlocked_or_selected);
+            return ;
+        }
+
+        getMvpView().openCreateAccountDialog();
+    }
+
     public void loadAccountInfo(String account, AccountInfoType infoType ){
+        if (StringUtils.isEmpty(account)) {
+            return;
+        }
+
         switch ( infoType ) {
             case REGISTRATION:
                 getRegistrationInfo( account );
@@ -62,7 +83,17 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
         }
     }
 
-    private void getRegistrationInfo( String account ) {
+    private void showResult( int titleId, String account, String result ) {
+        addDisposable(
+                Completable.fromAction( () -> mDataManager.addAccountHistory( account ))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn( getSchedulerProvider().ui())
+                    .doOnComplete(() -> getMvpView().showAccountInfo( titleId, account, result) )
+                    .subscribe()
+        );
+    }
+
+    private void getRegistrationInfo( String account) {
         getMvpView().showLoading( true );
 
         addDisposable( mDataManager
@@ -76,7 +107,8 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
 
                         getMvpView().showLoading( false );
 
-                        getMvpView().showAccountInfo( AccountInfoType.REGISTRATION.getTitleId(), account,  Utils.prettyPrintJson( result) );
+                        showResult( AccountInfoType.REGISTRATION.getTitleId(), account, Utils.prettyPrintJson( result) );
+                        //getMvpView().showAccountInfo( AccountInfoType.REGISTRATION.getTitleId(), account,  Utils.prettyPrintJson( result) );
                     }
 
                 })
@@ -97,7 +129,8 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
 
                         getMvpView().showLoading( false );
 
-                        getMvpView().showAccountInfo( AccountInfoType.TRANSACTIONS.getTitleId(), account, Utils.prettyPrintJson(result ) );
+                        showResult( AccountInfoType.TRANSACTIONS.getTitleId(), account, Utils.prettyPrintJson( result) );
+                        //getMvpView().showAccountInfo( AccountInfoType.TRANSACTIONS.getTitleId(), account, Utils.prettyPrintJson(result ) );
                     }
 
                 })
@@ -118,7 +151,8 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
 
                         getMvpView().showLoading( false );
 
-                        getMvpView().showAccountInfo( AccountInfoType.SERVANTS.getTitleId(), account, Utils.prettyPrintJson(result ) );
+                        showResult( AccountInfoType.SERVANTS.getTitleId(), account, Utils.prettyPrintJson( result) );
+                        //getMvpView().showAccountInfo( AccountInfoType.SERVANTS.getTitleId(), account, Utils.prettyPrintJson(result ) );
                     }
 
                 })

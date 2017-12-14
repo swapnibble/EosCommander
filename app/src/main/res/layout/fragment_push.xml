@@ -10,7 +10,7 @@
         android:padding="16dp"
         android:background="@color/colorLight" >
 
-        <EditText
+        <AutoCompleteTextView
             style="@style/EosNameText"
             android:id="@+id/et_contract_account"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                 android:hint="@string/push_message_hint"/>
         </android.support.v4.widget.NestedScrollView>
 
-        <EditText
+        <MultiAutoCompleteTextView
             android:id="@+id/et_scopes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             android:layout_below="@id/et_scopes"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
-            <EditText
+            <AutoCompleteTextView
                 style="@style/EosNameText"
                 android:id="@+id/et_permission_account"
                 android:layout_width="0dp"

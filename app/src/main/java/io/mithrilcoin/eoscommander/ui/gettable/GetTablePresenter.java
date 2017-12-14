@@ -29,6 +29,7 @@ import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
+import io.reactivex.Single;
 
 /**
  * Created by swapnibble on 2017-11-17.
@@ -42,9 +43,32 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
     public GetTablePresenter(){
     }
 
+    public void onStart() {
+        getMvpView().showLoading( true );
+        addDisposable(
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                        .subscribeOn( getSchedulerProvider().io())
+                        .observeOn( getSchedulerProvider().ui())
+                        .subscribe( list -> {
+                                    if ( ! isViewAttached() ) return;
+
+                                    getMvpView().showLoading( false );
+                                    getMvpView().setupAccountHistory( list );
+                                }
+                                , e -> {
+                                    if ( ! isViewAttached() ) return;
+
+                                    notifyErrorToMvpView( e );
+                                } )
+        );
+    }
+
+
+
     public void getTable(String accountName, String contract, String table ) {
         addDisposable(
             mDataManager.getTable( accountName, contract, table)
+                    .doOnNext( result -> mDataManager.addAccountHistory( accountName, contract) )
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribeWith( new RxCallbackWrapper<String>( this ) {

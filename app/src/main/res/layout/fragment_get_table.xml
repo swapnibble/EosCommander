@@ -6,7 +6,7 @@
     android:padding="16dp"
     tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
 
-    <EditText
+    <AutoCompleteTextView
         style="@style/EosNameText"
         android:id="@+id/et_account"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:padding="16dp"
         android:hint="@string/account" />
 
-    <EditText
+    <AutoCompleteTextView
         style="@style/EosNameText"
         android:id="@+id/et_code"
         android:layout_width="match_parent"

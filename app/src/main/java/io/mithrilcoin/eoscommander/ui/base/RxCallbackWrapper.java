@@ -62,7 +62,8 @@ public class RxCallbackWrapper<T> extends DisposableObserver<T> {
 
         if (e instanceof HttpException) {
             ResponseBody responseBody = ((HttpException) e).response().errorBody();
-            presenter.getMvpView().onError( getErrorMessage(responseBody));
+
+            presenter.getMvpView().onError( String.format( "HttpCode:%d\n\n%s", ((HttpException) e).code(), getErrorMessage(responseBody)));
         } else if (e instanceof SocketTimeoutException) {
             presenter.getMvpView().onError(R.string.timeout);
         } else if (e instanceof IOException) {

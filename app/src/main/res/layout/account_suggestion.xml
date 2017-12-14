@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:padding="8dp"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:id="@+id/del_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        app:srcCompat="@drawable/ic_delete_white_24px"
+        android:tint="@color/colorMithril"/>
+
+    <TextView
+        android:id="@+id/eos_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="24dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/del_history"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/colorMithril"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        tools:text="account"/>
+</RelativeLayout>

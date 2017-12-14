@@ -27,7 +27,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -35,6 +38,7 @@ import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.ui.result.ShowResultDialog;
+import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class GetTableFragment extends BaseFragment
         implements GetTableMvpView {
@@ -42,8 +46,8 @@ public class GetTableFragment extends BaseFragment
     @Inject
     GetTablePresenter mPresenter;
 
-    private TextView mTvAccountName;
-    private TextView mTvCode;
+    private AutoCompleteTextView mTvAccountName;
+    private AutoCompleteTextView mTvCode;
     private TextView mTvTable;
 
 
@@ -77,6 +81,16 @@ public class GetTableFragment extends BaseFragment
 
         view.findViewById( R.id.btn_get).setOnClickListener( v ->
                 mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTvTable.getText().toString()) );
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // notify to presenter
+        mPresenter.onStart();
     }
 
     @Override
@@ -91,5 +105,11 @@ public class GetTableFragment extends BaseFragment
         String title = String.format("%s: %s", getString(R.string.get_table), mTvTable.getText() );
 
         ShowResultDialog.newInstance( title, result).show( getChildFragmentManager());
+    }
+
+    @Override
+    public void setupAccountHistory(List<String> recentAccounts){
+        UiUtils.setupRecentAccountSuggest( mTvAccountName, recentAccounts );
+        UiUtils.setupRecentAccountSuggest( mTvCode, recentAccounts );
     }
 }

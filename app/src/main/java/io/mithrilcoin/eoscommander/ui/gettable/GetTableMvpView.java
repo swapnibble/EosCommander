@@ -23,6 +23,7 @@
  */
 package io.mithrilcoin.eoscommander.ui.gettable;
 
+import java.util.List;
 import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 /**
@@ -31,4 +32,5 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 public interface GetTableMvpView extends MvpView {
     void showTableResult(String result);
+    void setupAccountHistory(List<String> recentAccounts);
 }

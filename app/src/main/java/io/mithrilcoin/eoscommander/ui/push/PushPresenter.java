@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import javax.inject.Inject;
@@ -42,6 +43,12 @@ import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by swapnibble on 2017-11-08.
@@ -54,6 +61,26 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
     @Inject
     public PushPresenter(){
+    }
+
+    public void onStart() {
+        getMvpView().showLoading( true );
+        addDisposable(
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                .subscribeOn( getSchedulerProvider().io())
+                .observeOn( getSchedulerProvider().ui())
+                .subscribe( list -> {
+                            if ( ! isViewAttached() ) return;
+
+                            getMvpView().showLoading( false );
+                            getMvpView().setupAccountHistory( list );
+                        }
+                        , e -> {
+                            if ( ! isViewAttached() ) return;
+
+                            notifyErrorToMvpView( e );
+                        } )
+        );
     }
 
     public void onImportFileClicked(){
@@ -82,6 +109,14 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         return parsed.toArray( new String[ parsed.size()]);
     }
 
+    private ArrayList<String> getAccountListForHistory( String[] scopeAccounts, String contract, String permissionAccount ){
+        ArrayList<String> historyAccounts = new ArrayList<>(Arrays.asList( scopeAccounts ));
+        historyAccounts.add( contract );
+        historyAccounts.add( permissionAccount );
+
+        return historyAccounts;
+    }
+
     public void pushMessage( String contract, String action, String message, String scopes, String permissionAccount, String permissionName ){
 
         getMvpView().showLoading( true );
@@ -90,9 +125,12 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         String[] permissions = ( StringUtils.isEmpty(permissionAccount) || StringUtils.isEmpty( permissionName))
                             ? null : new String[]{permissionAccount + "@" + permissionName };
 
+        String[] scopeAccounts = getArrayFromSeparatedCommaOrSpace(scopes);
+
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
-                                , getArrayFromSeparatedCommaOrSpace(scopes), permissions)
+                                , scopeAccounts , permissions)
+                .mergeWith( jsonObject -> mDataManager.addAccountHistory( getAccountListForHistory(scopeAccounts, contract, permissionAccount) ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
@@ -143,4 +181,6 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
             Utils.closeSilently( reader );
         }
     }
+
+
 }

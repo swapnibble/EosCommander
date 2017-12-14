@@ -24,6 +24,7 @@
 package io.mithrilcoin.eoscommander.ui.account.create;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -71,7 +72,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
         return true;
     }
 
-    public void onStart(){
+    public void onStartOld(){
 
         if ( ! loadUnlockedWallets() ){
             getMvpView().exitWithResult( false );
@@ -105,6 +106,50 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
                     }
                 )
         );
+    }
+
+    public void onStart(){
+        if ( ! loadUnlockedWallets() ){
+            getMvpView().exitWithResult( false );
+            return;
+        }
+
+        String defaultAccountCreator = mDataManager.getPreferenceHelper().getDefaultAccountCreator();
+        if ( !StringUtils.isEmpty(defaultAccountCreator)) {
+            getMvpView().showCreator(defaultAccountCreator);
+        }
+
+        getMvpView().showLoading( true);
+
+        // generate keys..
+        addDisposable(
+                mDataManager.createKey(2)
+                .map( keys -> {
+                    mOwnerKey = keys[0];
+                    mActiveKey= keys[1];
+
+                    return mDataManager.getAllAccountHistory( true );
+                })
+                .subscribeOn( getSchedulerProvider().io())
+                .observeOn( getSchedulerProvider().ui())
+                .subscribeWith( new RxCallbackWrapper<List<String>>(this) {
+                    @Override
+                    public void onNext(List<String> recentAccounts ) {
+                        if (!isViewAttached()) return;
+
+                        if ( ! isViewAttached() ) return;
+
+                        getMvpView().showLoading( false );
+
+                        // setup recent accounts
+                        getMvpView().setupAccountHistory( recentAccounts );
+
+                        // show generated keys
+                        getMvpView().showPubKeys( mOwnerKey.getPublicKey().toString(), mActiveKey.getPublicKey().toString());
+                    }
+                })
+
+        );
 
     }
 
@@ -123,10 +168,12 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
 
         getMvpView().showLoading( true );
 
+
         // create account and save keys if successful.
         addDisposable( mDataManager
                 .createAccount( new EosNewAccount(creator, newAccount
                         , mOwnerKey.getPublicKey().getBytesAsHexStr(), mActiveKey.getPublicKey().getBytesAsHexStr(), creator))
+                .doOnNext( jsonObject -> mDataManager.addAccountHistory( creator, newAccount ))
                 .subscribeOn(getSchedulerProvider().io())
                 .doOnNext( pushTxnResult -> {
                     mDataManager.getWalletManager().importKeys( walletName, new EosPrivateKey[]{mOwnerKey, mActiveKey});

@@ -14,7 +14,6 @@ import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.ui.base.BaseActivity;
 import io.mithrilcoin.eoscommander.ui.settings.SettingsActivity;
 import io.mithrilcoin.eoscommander.util.StringUtils;
-import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity {
@@ -71,7 +70,29 @@ public class MainActivity extends BaseActivity {
         if (StringUtils.isEmpty( mDataManager.getPreferenceHelper().getEosdConnInfo( null)) ) {
             openSettingsActivity();
         }
+
+
+//        test();
     }
+
+//    private Completable getComp(){
+//        String[] accountNames = {"hehe", "huhu"};
+//        return Observable.fromArray( accountNames )
+//                .doOnNext( name -> Timber.w("ADD account to cache22:%s", name) )
+//                .toList()
+//                .toCompletable();
+//    }
+//
+//    private void test(){
+//        Timber.e("============ GO, Go, Go!");
+//        String[] accountNames = {"haha", "hoho"};
+//        Observable.fromArray( accountNames )
+//                //.mergeWith( name -> getComp() )
+//                .toList()
+//                //.flatMapCompletable()
+//                .toCompletable()
+//                .subscribe( () ->  Timber.w("ADD accountlist COMPLETED") );
+//    }
 
 
     @Override

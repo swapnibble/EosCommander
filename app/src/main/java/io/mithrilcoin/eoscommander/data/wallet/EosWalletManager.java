@@ -35,7 +35,6 @@ import io.mithrilcoin.eoscommander.crypto.ec.EosPublicKey;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
 import io.mithrilcoin.eoscommander.util.Consts;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-19.

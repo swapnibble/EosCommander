@@ -23,10 +23,16 @@
  */
 package io.mithrilcoin.eoscommander.ui.base;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
+import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.util.rx.EoscSchedulerProvider;
 import io.mithrilcoin.eoscommander.util.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by swapnibble on 2017-08-24.
@@ -36,7 +42,6 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     private V mMvpView;
 
     private SchedulerProvider mSchedulerProvider;
-
     private CompositeDisposable mCompositeDisposable;
 
     @Override
@@ -46,6 +51,10 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     @Override
     public void detachView() {
+        if ( null != mMvpView ) {
+            mMvpView.showLoading(false);
+        }
+
         mMvpView = null;
 
         if ( null != mCompositeDisposable) {
@@ -85,6 +94,36 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     public void checkViewAttached() throws MvpViewNotAttachedException{
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
+    }
+
+    protected void safeTurnOffLoading(){
+        if ( ! isViewAttached() ) return;
+
+        getMvpView().showLoading( false );
+    }
+
+    protected void notifyErrorToMvpView( Throwable e){
+        getMvpView().showLoading(false);
+
+        if (e instanceof HttpException) {
+            ResponseBody responseBody = ((HttpException) e).response().errorBody();
+
+            getMvpView().onError( String.format( "HttpCode:%d\n\n%s", ((HttpException) e).code(), getErrorMessage(responseBody)));
+        } else if (e instanceof SocketTimeoutException) {
+            getMvpView().onError(R.string.timeout);
+        } else if (e instanceof IOException) {
+            getMvpView().onError(R.string.network_err);
+        } else {
+            getMvpView().onError(e.getMessage());
+        }
+    }
+
+    private String getErrorMessage(ResponseBody responseBody) {
+        try {
+            return responseBody.string();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     public static class MvpViewNotAttachedException extends RuntimeException {

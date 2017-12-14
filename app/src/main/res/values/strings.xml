@@ -99,4 +99,8 @@
     <string name="disconnected">Disconnected</string>
     <string name="select_wallet_to_save_keys">Select wallet</string>
     <string name="no_keys">No keys!</string>
+
+    <string name="delete_confirm">Delete confirmation</string>
+    <string name="ru_sure_delete">"Are you sure to delete history: '%s' ?"</string>
+    <string name="deleted">Deleted</string>
 </resources>
