@@ -133,7 +133,7 @@
                 android:textColor="@color/colorWhite"
                 android:text="@string/set_skip_signature"/>
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/cb_skip_signature"
                 android:layout_below="@id/tv_label_skipsign"
                 android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                 android:paddingTop="5dp"
                 android:gravity="top"
                 android:textSize="12sp"
-                android:buttonTint="@color/colorWhite"
+                app:buttonTint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
                 android:text="@string/skip_signature_info" />
         </RelativeLayout>

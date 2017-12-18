@@ -36,7 +36,6 @@ import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
-import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;

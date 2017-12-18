@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Observable;
-
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.app.EosCommanderApp;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;

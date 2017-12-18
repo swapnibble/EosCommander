@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TintVtDrTextView">
+        <attr name="vectorLeft" format="reference"/>
+        <attr name="vectorRight" format="reference"/>
+        <attr name="vectorTop" format="reference"/>
+        <attr name="vectorBottom" format="reference"/>
+        <attr name="vectorTint" format="reference" />
+    </declare-styleable>
+</resources>

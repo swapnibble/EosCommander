@@ -43,12 +43,8 @@ import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
-import io.reactivex.Observable;
 import io.reactivex.Single;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 
-import static java.util.Arrays.asList;
 
 /**
  * Created by swapnibble on 2017-11-08.

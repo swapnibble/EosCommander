@@ -31,8 +31,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
 

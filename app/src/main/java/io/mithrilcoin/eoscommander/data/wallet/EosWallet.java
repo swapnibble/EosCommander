@@ -141,7 +141,7 @@ public class EosWallet implements EosType.Packer, EosType.Unpacker {
      * private key must already be in the wallet.
      */
     public EosPrivateKey getPrivateKey( EosPublicKey pubKey ) {
-        return new EosPrivateKey( mKeys.get( pubKey ).toString() );
+        return new EosPrivateKey( mKeys.get( pubKey ) );
     }
 
     public boolean importKey( String wif ) {

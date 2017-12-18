@@ -115,6 +115,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
             }
         }
         catch (MvpViewNotAttachedException e){
+            e.printStackTrace();
         }
     }
 

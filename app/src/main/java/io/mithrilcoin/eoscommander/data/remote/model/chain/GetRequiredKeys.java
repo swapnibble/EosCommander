@@ -29,7 +29,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 
 /**
  * Created by swapnibble on 2017-11-15.

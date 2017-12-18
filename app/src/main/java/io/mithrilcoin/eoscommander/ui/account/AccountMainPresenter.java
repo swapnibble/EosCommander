@@ -25,20 +25,17 @@ package io.mithrilcoin.eoscommander.ui.account;
 
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
-import io.mithrilcoin.eoscommander.data.wallet.EosWallet;
 import io.mithrilcoin.eoscommander.ui.account.info.AccountInfoType;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 
 /**
  * Created by swapnibble on 2017-11-16.

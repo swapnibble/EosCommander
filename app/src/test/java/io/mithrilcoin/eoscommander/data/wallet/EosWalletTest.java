@@ -25,7 +25,6 @@ package io.mithrilcoin.eoscommander.data.wallet;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;

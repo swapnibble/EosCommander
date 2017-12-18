@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -37,6 +38,7 @@ import io.mithrilcoin.eoscommander.ui.result.ShowResultDialog;
 import io.mithrilcoin.eoscommander.ui.account.info.AccountInfoType;
 import io.mithrilcoin.eoscommander.ui.account.info.InputAccountDialog;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
+import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class AccountMainFragment extends BaseFragment
         implements AccountMainMvpView {
@@ -82,6 +84,11 @@ public class AccountMainFragment extends BaseFragment
 
         // eosc get servants <account>
         view.findViewById(R.id.btn_get_servants).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.SERVANTS));
+
+//        int[] tvIdsToTint = { R.id.btn_command_create_account, R.id.btn_get_account, R.id.btn_get_transaction, R.id.btn_get_servants};
+//        for ( int tvId : tvIdsToTint ) {
+//            UiUtils.setCompoundDrawableTint( view.findViewById( tvId), R.color.colorMithril);
+//        }
     }
 
     @Override

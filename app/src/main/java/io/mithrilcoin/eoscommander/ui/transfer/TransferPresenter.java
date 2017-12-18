@@ -25,8 +25,6 @@ package io.mithrilcoin.eoscommander.ui.transfer;
 
 import com.google.gson.JsonObject;
 
-import java.util.Observable;
-
 import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
