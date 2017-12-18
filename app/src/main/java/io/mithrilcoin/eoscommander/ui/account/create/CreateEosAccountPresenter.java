@@ -72,42 +72,6 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
         return true;
     }
 
-    public void onStartOld(){
-
-        if ( ! loadUnlockedWallets() ){
-            getMvpView().exitWithResult( false );
-            return;
-        }
-
-        String defaultAccountCreator = mDataManager.getPreferenceHelper().getDefaultAccountCreator();
-        if ( !StringUtils.isEmpty(defaultAccountCreator)) {
-            getMvpView().showCreator(defaultAccountCreator);
-        }
-
-        getMvpView().showLoading( true);
-
-        // generate keys..
-        addDisposable( mDataManager
-                .createKey(2)
-                .subscribeOn(getSchedulerProvider().computation())
-                .observeOn( getSchedulerProvider().ui())
-                .subscribeWith( new RxCallbackWrapper<EosPrivateKey[]>(this) {
-                        @Override
-                        public void onNext(EosPrivateKey[] keys) {
-                            if ( !isViewAttached() ) return;
-
-                            getMvpView().showLoading( false);
-
-                            mOwnerKey = keys[0];
-                            mActiveKey= keys[1];
-
-                            getMvpView().showPubKeys( mOwnerKey.getPublicKey().toString(), mActiveKey.getPublicKey().toString());
-                        }
-                    }
-                )
-        );
-    }
-
     public void onStart(){
         if ( ! loadUnlockedWallets() ){
             getMvpView().exitWithResult( false );

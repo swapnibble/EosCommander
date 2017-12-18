@@ -12,8 +12,9 @@
         android:background="@color/colorLight" >
 
         <AutoCompleteTextView
-            style="@style/EosNameText"
+            style="@style/EosNameTextWithNext"
             android:id="@+id/et_contract_account"
+            android:nextFocusDown="@+id/et_contract_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -25,8 +26,9 @@
             android:hint="@string/contract_account" />
 
         <EditText
-            style="@style/EosNameText"
+            style="@style/EosNameTextWithNext"
             android:id="@+id/et_contract_action"
+            android:nextFocusDown="@+id/et_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/et_contract_account"
@@ -88,11 +90,12 @@
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorGray"
                 android:textSize="12sp"
-                android:hint="@string/push_message_hint"/>
+                android:hint="@string/push_message_hint" />
         </android.support.v4.widget.NestedScrollView>
 
         <MultiAutoCompleteTextView
             android:id="@+id/et_scopes"
+            android:nextFocusDown="@+id/permissions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/et_message_scroller"
@@ -104,6 +107,9 @@
             android:textSize="14sp"
             android:inputType="textVisiblePassword"
             android:digits=" ,.12345abcdefghijklmnopqrstuvwxyz"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:maxLines="1"
             android:hint="@string/scope_hint" />
 
         <LinearLayout android:id="@+id/permissions"
@@ -151,7 +157,8 @@
                 android:background="@drawable/round_box_input"
                 android:padding="6dp"
                 android:textSize="14sp"
-                android:text="@string/permission_level_active"/>
+                android:text="@string/permission_level_active"
+                android:imeOptions="actionSend" />
         </LinearLayout>
 
         <TextView

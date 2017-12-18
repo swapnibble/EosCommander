@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
@@ -38,6 +39,7 @@ import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.util.UiUtils;
+import timber.log.Timber;
 
 public class TransferFragment extends BaseFragment implements TransferMvpView{
 
@@ -74,13 +76,25 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
     protected void setUpView(View view) {
 
         //  from, to, amount edit text
-        mEtFrom = view.findViewById( R.id.et_from);
-        mEtTo   = view.findViewById( R.id.et_to);
-        mEtAmount = view.findViewById( R.id.et_amount );
+        mEtFrom = view.findViewById(R.id.et_from);
+        mEtTo = view.findViewById(R.id.et_to);
+        mEtAmount = view.findViewById(R.id.et_amount);
 
         // click handler
-        view.findViewById( R.id.btn_transfer).setOnClickListener( v ->
-                mPresenter.transfer( mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString()) );
+        view.findViewById(R.id.btn_transfer).setOnClickListener(v -> onSend() );
+
+        mEtAmount.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (EditorInfo.IME_ACTION_SEND == actionId) {
+                onSend();
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    private void onSend() {
+        mPresenter.transfer(mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString());
     }
 
     @Override

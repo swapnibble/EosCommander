@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
@@ -79,10 +80,20 @@ public class GetTableFragment extends BaseFragment
         mTvCode = view.findViewById( R.id.et_code);
         mTvTable= view.findViewById( R.id.et_table);
 
-        view.findViewById( R.id.btn_get).setOnClickListener( v ->
-                mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTvTable.getText().toString()) );
+        mTvTable.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (EditorInfo.IME_ACTION_DONE == actionId) {
+                onGetTable();
+                return true;
+            }
 
+            return false;
+        });
 
+        view.findViewById( R.id.btn_get).setOnClickListener( v -> onGetTable() );
+    }
+
+    private void onGetTable() {
+        mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTvTable.getText().toString());
     }
 
     @Override

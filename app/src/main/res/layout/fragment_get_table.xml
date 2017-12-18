@@ -7,8 +7,9 @@
     tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
 
     <AutoCompleteTextView
-        style="@style/EosNameText"
+        style="@style/EosNameTextWithNext"
         android:id="@+id/et_account"
+        android:nextFocusDown="@+id/et_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorLightGray"
@@ -19,8 +20,9 @@
         android:hint="@string/account" />
 
     <AutoCompleteTextView
-        style="@style/EosNameText"
+        style="@style/EosNameTextWithNext"
         android:id="@+id/et_code"
+        android:nextFocusDown="@+id/et_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorLightGray"
@@ -31,7 +33,7 @@
         android:hint="@string/contract_code" />
 
     <EditText
-        style="@style/EosNameText"
+        style="@style/EosNameTextWithDone"
         android:id="@+id/et_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

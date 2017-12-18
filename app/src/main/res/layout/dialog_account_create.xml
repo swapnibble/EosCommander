@@ -31,8 +31,9 @@
                 android:text="@string/create_account"/>
 
             <AutoCompleteTextView
+                style="@style/EosNameTextWithNext"
                 android:id="@+id/et_creator_name"
-                style="@style/EosNameText"
+                android:nextFocusDown="@+id/et_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/colorLightGray"
@@ -45,8 +46,8 @@
                 android:hint="@string/creator_name"/>
 
             <AutoCompleteTextView
+                style="@style/EosNameTextWithDone"
                 android:id="@+id/et_new_account"
-                style="@style/EosNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

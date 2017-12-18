@@ -25,12 +25,15 @@ package io.mithrilcoin.eoscommander.ui.push;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -42,7 +45,7 @@ import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.ui.file.FileChooserActivity;
 import io.mithrilcoin.eoscommander.util.UiUtils;
 
-public class PushFragment extends BaseFragment implements PushMvpView{
+public class PushFragment extends BaseFragment implements PushMvpView, EditText.OnEditorActionListener{
     private static final int REQ_SELECT_MSG_FILE = 10;
 
     @Inject
@@ -86,18 +89,34 @@ public class PushFragment extends BaseFragment implements PushMvpView{
         mEtMsg          = view.findViewById(R.id.et_message);
         mEtScopes = view.findViewById( R.id.et_scopes );
         mEtPermissionAccount= view.findViewById( R.id.et_permission_account );
+        mEtPermissionAccount.setOnEditorActionListener( this);
+
         mEtPermissionName   = view.findViewById( R.id.et_permission_name );
+        mEtPermissionName.setOnEditorActionListener( this);
 
 
         view.findViewById(R.id.btn_import).setOnClickListener( v -> mPresenter.onImportFileClicked());
 
-        view.findViewById(R.id.btn_ok).setOnClickListener( v ->
-                mPresenter.pushMessage(mEtContract.getText().toString(), mEtAction.getText().toString()      // contract, action
-                        , mEtMsg.getText().toString() // message,
-                        , mEtScopes.getText().toString()   // scope
-                        , mEtPermissionAccount.getText().toString()     // account for permission
-                        , mEtPermissionName.getText().toString()     // permission name
-                        ));
+        view.findViewById(R.id.btn_ok).setOnClickListener( v -> onPushAction() );
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (EditorInfo.IME_ACTION_SEND == actionId) {
+            onPushAction();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void onPushAction() {
+        mPresenter.pushMessage(mEtContract.getText().toString(), mEtAction.getText().toString()      // contract, action
+                , mEtMsg.getText().toString() // message,
+                , mEtScopes.getText().toString()   // scope
+                , mEtPermissionAccount.getText().toString()     // account for permission
+                , mEtPermissionName.getText().toString()     // permission name
+        );
     }
 
     @Override

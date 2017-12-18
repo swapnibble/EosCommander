@@ -70,7 +70,9 @@ public class MainActivity extends BaseActivity {
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabUnselected(TabLayout.Tab tab) {
+                hideKeyboard();
+            }
 
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });

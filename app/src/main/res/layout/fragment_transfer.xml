@@ -7,8 +7,9 @@
     tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
 
     <AutoCompleteTextView
-        style="@style/EosNameText"
+        style="@style/EosNameTextWithNext"
         android:id="@+id/et_from"
+        android:nextFocusDown="@+id/et_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
@@ -19,8 +20,9 @@
         android:hint="@string/from"/>
 
     <AutoCompleteTextView
-        style="@style/EosNameText"
+        style="@style/EosNameTextWithNext"
         android:id="@+id/et_to"
+        android:nextFocusDown="@+id/et_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -40,6 +42,9 @@
         android:background="@drawable/round_box_input"
         android:padding="16dp"
         android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:imeOptions="actionSend"
         android:hint="@string/amount"/>
 
     <TextView

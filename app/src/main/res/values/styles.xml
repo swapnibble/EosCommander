@@ -32,9 +32,18 @@
 
     <style name="EosNameText" parent="@style/Widget.AppCompat.EditText" >
         <item name="android:maxLines">1</item>
-        <item name="android:maxLength">12</item>
+        <item name="android:maxLength">13</item>
         <item name="android:inputType">textVisiblePassword</item>
         <item name="android:digits">.12345abcdefghijklmnopqrstuvwxyz</item>
     </style>
 
+    <style name="EosNameTextWithNext" parent="@style/EosNameText" >
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionNext</item>
+    </style>
+
+    <style name="EosNameTextWithDone" parent="@style/EosNameText" >
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
 </resources>

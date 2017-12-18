@@ -38,6 +38,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
@@ -105,6 +107,8 @@ public abstract class BaseDialog extends DialogFragment implements DialogMvpView
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getDialog().getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setUpView(view);
     }
 
@@ -168,6 +172,12 @@ public abstract class BaseDialog extends DialogFragment implements DialogMvpView
 
     @Override
     public void hideKeyboard() {
+        View view = this.getDialog().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         if (mActivity != null) {
             mActivity.hideKeyboard();
         }

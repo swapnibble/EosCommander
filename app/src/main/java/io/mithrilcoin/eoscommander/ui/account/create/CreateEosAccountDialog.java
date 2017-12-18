@@ -29,6 +29,8 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -65,7 +67,6 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     private TextView mTvNoWalletWarn;
     private AppCompatSpinner mWalletSpinner;
 
-
     public static CreateEosAccountDialog newInstance() {
         CreateEosAccountDialog fragment = new CreateEosAccountDialog();
         Bundle bundle = new Bundle();
@@ -95,17 +96,40 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
 
         mEtCreator      = view.findViewById( R.id.et_creator_name);
         mEtNewAccount   = view.findViewById( R.id.et_new_account);
+        mEtNewAccount.setOnEditorActionListener( (textView, actionId, keyEvent) -> {
+                    if (EditorInfo.IME_ACTION_DONE == actionId) {
+                        onClickCreate();
+                        return true;
+                    }
+
+                    return false;
+                });
+
         mTvOwner        = view.findViewById( R.id.tv_owner_key );
         mTvActive       = view.findViewById( R.id.tv_active_key );
 
 
-        view.findViewById( R.id.btn_create).setOnClickListener( v ->
-                mPresenter.createAccount(mEtCreator.getText().toString(), mEtNewAccount.getText().toString()));
+        view.findViewById( R.id.btn_create).setOnClickListener( v -> onClickCreate() );
 
         view.findViewById( R.id.btn_cancel).setOnClickListener( v -> dismissDialog( TAG ));
 
         mTvNoWalletWarn= view.findViewById( R.id.tv_no_wallet_warn );
         mWalletSpinner = view.findViewById( R.id.sp_wallets_unlocked);
+
+        mWalletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                hideKeyboard();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+    }
+
+    private void onClickCreate() {
+
+        mPresenter.createAccount(mEtCreator.getText().toString(), mEtNewAccount.getText().toString());
     }
 
     @Override
@@ -124,6 +148,7 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     @Override
     public void setupAccountHistory(List<String> recentAccounts){
         UiUtils.setupRecentAccountSuggest( mEtCreator, recentAccounts );
+
         UiUtils.setupRecentAccountSuggest( mEtNewAccount, recentAccounts );
     }
 
@@ -146,13 +171,20 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
         mWalletSpinner.setVisibility( View.VISIBLE );
         mTvNoWalletWarn.setVisibility( View.GONE );
 
-        if ( WALLET_SPINNER_SELECT_NOTICE_INDEX >= 0 ) {
-            walletNames.add(WALLET_SPINNER_SELECT_NOTICE_INDEX, getString( WALLET_SPINNER_SELECT_NOTICE_STR_RSC ));
-        }
+        int autoSelectPosition = ( walletNames.size() == 1 ) ? ( WALLET_SPINNER_SELECT_NOTICE_INDEX + 1) : -1;
+
+        // select wallet notice..
+        walletNames.add(WALLET_SPINNER_SELECT_NOTICE_INDEX, getString( WALLET_SPINNER_SELECT_NOTICE_STR_RSC ));
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>( getContext(), android.R.layout.simple_spinner_item, walletNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mWalletSpinner.setAdapter( adapter);
+
+        // select
+        if ( autoSelectPosition >= 0 ) {
+            mWalletSpinner.setSelection( autoSelectPosition );
+        }
     }
 
     @Override
@@ -161,7 +193,7 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
             return null;
         }
 
-        if ( mWalletSpinner.getSelectedItemPosition() == WALLET_SPINNER_SELECT_NOTICE_INDEX) {
+        if ( mWalletSpinner.getSelectedItemPosition() == WALLET_SPINNER_SELECT_NOTICE_INDEX) { // select wallet notice
             return null;
         }
 
