@@ -25,7 +25,7 @@ You shoud have running eosd node.
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOS version [4d744e5](https://github.com/EOSIO/eos/tree/4d744e5105f1deb8bea08e14e62033fd0b013546).
+EOS Commander has been tested with EOS version [f5c1732](https://github.com/EOSIO/eos/tree/f5c1732526c35e1037488beb133cf205757ee860).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
