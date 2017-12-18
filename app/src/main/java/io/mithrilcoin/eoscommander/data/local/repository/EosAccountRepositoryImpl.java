@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import io.mithrilcoin.eoscommander.data.local.db.AppDatabase;
 import io.mithrilcoin.eoscommander.data.local.db.EosAccount;
+import io.mithrilcoin.eoscommander.util.RefValue;
 
 /**
  * Created by swapnibble on 2017-12-14.
@@ -17,10 +18,15 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
 
     private AppDatabase mAppDatabase;
 
-    private Set<String> mAccountCache;
+    private Set<String> mAccountCache = new TreeSet<>();
+
+    private long        mDataVersion;
+    private boolean     mShouldSyncWithDb;
 
     public EosAccountRepositoryImpl( AppDatabase appDatabase ) {
         mAppDatabase = appDatabase;
+        mDataVersion = 1L;
+        mShouldSyncWithDb = true;
     }
 
 
@@ -35,6 +41,7 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
 
         mAppDatabase.eosAccountDao().insertAll(eosAccounts);
 
+        mDataVersion++;
         Collections.addAll(mAccountCache, accountNames);
     }
 
@@ -48,33 +55,44 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
 
         mAppDatabase.eosAccountDao().insertAll(eosAccounts);
 
+        mDataVersion++;
         mAccountCache.addAll( accountNames);
     }
 
     @Override
     public void addAccount(String accountName) {
         mAppDatabase.eosAccountDao().insert( EosAccount.from(accountName) );
+
+        mDataVersion++;
         mAccountCache.add(accountName);
     }
 
     @Override
     public void deleteAll() {
         mAppDatabase.eosAccountDao().deleteAll();
+
+        mDataVersion++;
         mAccountCache.clear();
     }
 
     @Override
     public void delete(String accountName) {
         mAppDatabase.eosAccountDao().delete( EosAccount.from(accountName));
+
+        mDataVersion++;
         mAccountCache.remove( accountName );
     }
 
     @Override
-    public List<String> getAll(boolean getFromCacheIfPossible) {
-        if ( null == mAccountCache ) {
-            mAccountCache = new TreeSet<>();
+    public List<String> getAll(boolean getFromCacheIfPossible, RefValue<Long> dataVersion) {
 
+        if ( mShouldSyncWithDb ){
             getFromCacheIfPossible = false;
+            mShouldSyncWithDb = false;
+        }
+
+        if ( null != dataVersion ){
+            dataVersion.data = mDataVersion;
         }
 
         if ( getFromCacheIfPossible ) {
@@ -86,5 +104,10 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
 
             return retList;
         }
+    }
+
+    @Override
+    public long getDataVersion() {
+        return mDataVersion;
     }
 }

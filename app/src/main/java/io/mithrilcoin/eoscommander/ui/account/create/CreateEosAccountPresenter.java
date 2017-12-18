@@ -128,7 +128,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
                     mOwnerKey = keys[0];
                     mActiveKey= keys[1];
 
-                    return mDataManager.getAllAccountHistory( true );
+                    return mDataManager.getAllAccountHistory( true, mAccountHistoryVersion );
                 })
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
@@ -148,9 +148,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
                         getMvpView().showPubKeys( mOwnerKey.getPublicKey().toString(), mActiveKey.getPublicKey().toString());
                     }
                 })
-
         );
-
     }
 
     public void createAccount( String creator, String newAccount) {
@@ -167,7 +165,6 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
         }
 
         getMvpView().showLoading( true );
-
 
         // create account and save keys if successful.
         addDisposable( mDataManager

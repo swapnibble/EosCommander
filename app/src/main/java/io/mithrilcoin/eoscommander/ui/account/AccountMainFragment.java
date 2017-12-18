@@ -85,9 +85,9 @@ public class AccountMainFragment extends BaseFragment
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         mPresenter.detachView();
-        super.onDestroy();
+        super.onDestroyView();
     }
 
     @Override

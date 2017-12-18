@@ -76,6 +76,10 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         super.onDetach();
     }
 
+    public void onSelected(){
+        // child should override if need
+    }
+
 
     public ActivityComponent getActivityComponent() {
         if (mActivity != null) {

@@ -88,7 +88,14 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
         super.onStart();
 
         // notify to presenter
-        mPresenter.onStart();
+        mPresenter.onMvpViewShown();
+    }
+
+    @Override
+    public void onSelected() {
+        if ( null != mPresenter ) {
+            mPresenter.onMvpViewShown();
+        }
     }
 
     @Override

@@ -10,20 +10,21 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Observable;
+
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.app.EosCommanderApp;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.util.rx.EoscSchedulerProvider;
 import io.mithrilcoin.eoscommander.util.rx.SchedulerProvider;
 import io.reactivex.Completable;
-import io.reactivex.Single;
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by swapnibble on 2017-12-12.
  */
 
-public class AccountSuggestAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+public class AccountSuggestAdapter extends ArrayAdapter<String>
+        implements View.OnClickListener{
 
     public AccountSuggestAdapter(@NonNull Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId);
@@ -85,20 +86,16 @@ public class AccountSuggestAdapter extends ArrayAdapter<String> implements View.
 
         SchedulerProvider schedulerProvider = new EoscSchedulerProvider();
 
-        Completable.fromAction (() -> getDataMgr().deleteAccountHistory(accountName))
+        Completable.fromAction (() -> getDataMgr().deleteAccountHistory(accountName)) // delete history item
                 .subscribeOn( schedulerProvider.io())
                 .observeOn( schedulerProvider.ui())
                 .subscribe(() -> {
-                            reloadHistory();
+                            // reload history
+                            AccountSuggestAdapter.this.clear();
+                            AccountSuggestAdapter.this.addAll( getDataMgr().getAllAccountHistory(true, null) );
                             Toast.makeText(getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                         }
                         , e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-    }
-
-    private void reloadHistory() {
-        this.clear();
-
-        this.addAll( getDataMgr().getAllAccountHistory(true) );
     }
 
     private class ViewHolder {

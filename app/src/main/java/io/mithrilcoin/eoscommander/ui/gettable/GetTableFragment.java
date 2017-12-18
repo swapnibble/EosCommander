@@ -90,13 +90,20 @@ public class GetTableFragment extends BaseFragment
         super.onStart();
 
         // notify to presenter
-        mPresenter.onStart();
+        mPresenter.onMvpViewShown();
     }
 
     @Override
-    public void onDestroy() {
+    public void onSelected() {
+        if ( null != mPresenter ) {
+            mPresenter.onMvpViewShown();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
         mPresenter.detachView();
-        super.onDestroy();
+        super.onDestroyView();
     }
 
 

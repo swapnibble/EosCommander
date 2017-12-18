@@ -40,6 +40,7 @@ import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
+import io.mithrilcoin.eoscommander.util.RefValue;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -60,6 +61,8 @@ public class InputAccountDialog extends BaseDialog {
     private Callback mCallback;
     private AutoCompleteTextView mEtAccount;
     private CompositeDisposable mCompositeDisposable;
+
+    protected RefValue<Long> mAccountHistoryVersion = new RefValue<>(0L);
 
     public static InputAccountDialog newInstance(AccountInfoType infoType ) {
         InputAccountDialog fragment = new InputAccountDialog();
@@ -120,11 +123,14 @@ public class InputAccountDialog extends BaseDialog {
     }
 
     private void setupRecentAccountSuggest( AutoCompleteTextView autoTextView) {
+        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
+            return;
+        }
 
         AccountSuggestAdapter adapter = new AccountSuggestAdapter(autoTextView.getContext(), R.layout.account_suggestion, R.id.eos_account);
 
         mCompositeDisposable.add(
-                Observable.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                Observable.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe( list -> adapter.addAll( list ), e -> onError(e.getMessage()))

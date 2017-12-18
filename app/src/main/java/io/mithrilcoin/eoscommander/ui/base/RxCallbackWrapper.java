@@ -69,6 +69,7 @@ public class RxCallbackWrapper<T> extends DisposableObserver<T> {
         } else if (e instanceof IOException) {
             presenter.getMvpView().onError(R.string.network_err);
         } else {
+            e.printStackTrace();
             presenter.getMvpView().onError(e.getMessage());
         }
     }

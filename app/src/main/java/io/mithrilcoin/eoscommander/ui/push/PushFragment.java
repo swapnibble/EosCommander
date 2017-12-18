@@ -103,9 +103,15 @@ public class PushFragment extends BaseFragment implements PushMvpView{
     @Override
     public void onStart() {
         super.onStart();
-
         // notify to presenter
-        mPresenter.onStart();
+        mPresenter.onMvpViewShown();
+    }
+
+    @Override
+    public void onSelected() {
+        if ( null != mPresenter ) {
+            mPresenter.onMvpViewShown();
+        }
     }
 
     @Override
@@ -116,9 +122,9 @@ public class PushFragment extends BaseFragment implements PushMvpView{
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         mPresenter.detachView();
-        super.onDestroy();
+        super.onDestroyView();
     }
 
     @Override

@@ -43,10 +43,15 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
     public GetTablePresenter(){
     }
 
-    public void onStart() {
+    public void onMvpViewShown(){
+        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
+            return;
+        }
+
+
         getMvpView().showLoading( true );
         addDisposable(
-                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
                         .subscribeOn( getSchedulerProvider().io())
                         .observeOn( getSchedulerProvider().ui())
                         .subscribe( list -> {

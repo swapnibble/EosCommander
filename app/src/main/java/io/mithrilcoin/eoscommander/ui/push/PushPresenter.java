@@ -63,23 +63,27 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
     public PushPresenter(){
     }
 
-    public void onStart() {
+    public void onMvpViewShown(){
+        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
+            return;
+        }
+
         getMvpView().showLoading( true );
         addDisposable(
-                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
-                .subscribeOn( getSchedulerProvider().io())
-                .observeOn( getSchedulerProvider().ui())
-                .subscribe( list -> {
-                            if ( ! isViewAttached() ) return;
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
+                        .subscribeOn( getSchedulerProvider().io())
+                        .observeOn( getSchedulerProvider().ui())
+                        .subscribe( list -> {
+                                    if ( ! isViewAttached() ) return;
 
-                            getMvpView().showLoading( false );
-                            getMvpView().setupAccountHistory( list );
-                        }
-                        , e -> {
-                            if ( ! isViewAttached() ) return;
+                                    getMvpView().showLoading( false );
+                                    getMvpView().setupAccountHistory( list );
+                                }
+                                , e -> {
+                                    if ( ! isViewAttached() ) return;
 
-                            notifyErrorToMvpView( e );
-                        } )
+                                    notifyErrorToMvpView( e );
+                                } )
         );
     }
 

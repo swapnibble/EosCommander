@@ -51,49 +51,39 @@ public class MainActivity extends BaseActivity {
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if ( null != mPagerAdapter.getFragment( position ) ) {
+                    mPagerAdapter.getFragment( position ).onSelected();
+                }
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {}
+        });
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         if (StringUtils.isEmpty( mDataManager.getPreferenceHelper().getEosdConnInfo( null)) ) {
             openSettingsActivity();
         }
-
-
-//        test();
     }
 
-//    private Completable getComp(){
-//        String[] accountNames = {"hehe", "huhu"};
-//        return Observable.fromArray( accountNames )
-//                .doOnNext( name -> Timber.w("ADD account to cache22:%s", name) )
-//                .toList()
-//                .toCompletable();
-//    }
-//
-//    private void test(){
-//        Timber.e("============ GO, Go, Go!");
-//        String[] accountNames = {"haha", "hoho"};
-//        Observable.fromArray( accountNames )
-//                //.mergeWith( name -> getComp() )
-//                .toList()
-//                //.flatMapCompletable()
-//                .toCompletable()
-//                .subscribe( () ->  Timber.w("ADD accountlist COMPLETED") );
-//    }
+    // should call before any
+    private void loadAccountHistory() {
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

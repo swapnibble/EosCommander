@@ -48,6 +48,7 @@ import io.mithrilcoin.eoscommander.data.remote.model.types.EosTransfer;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
 import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.util.Consts;
+import io.mithrilcoin.eoscommander.util.RefValue;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Observable;
 
@@ -92,8 +93,12 @@ public class EoscDataManager {
         mAccountRepository.delete( accountName );
     }
 
-    public List<String> getAllAccountHistory( boolean getFromCacheIfPossible) {
-        return mAccountRepository.getAll(getFromCacheIfPossible);
+    public List<String> getAllAccountHistory( boolean getFromCacheIfPossible, RefValue<Long> dataVersion) {
+        return mAccountRepository.getAll(getFromCacheIfPossible, dataVersion);
+    }
+
+    public boolean shouldUpdateAccountHistory( long versionCallerKnows ){
+        return mAccountRepository.getDataVersion() > versionCallerKnows ;
     }
 
     public Observable<EosChainInfo> getChainInfo(){

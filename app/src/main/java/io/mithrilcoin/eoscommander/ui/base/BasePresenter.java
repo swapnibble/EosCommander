@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import io.mithrilcoin.eoscommander.R;
+import io.mithrilcoin.eoscommander.util.RefValue;
 import io.mithrilcoin.eoscommander.util.rx.EoscSchedulerProvider;
 import io.mithrilcoin.eoscommander.util.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
@@ -43,6 +44,8 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     private SchedulerProvider mSchedulerProvider;
     private CompositeDisposable mCompositeDisposable;
+
+    protected RefValue<Long> mAccountHistoryVersion = new RefValue<>(0L);
 
     @Override
     public void attachView(V mvpView) {

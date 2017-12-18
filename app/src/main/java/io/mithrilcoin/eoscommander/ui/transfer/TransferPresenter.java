@@ -35,8 +35,6 @@ import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Single;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 
 /**
  * Created by swapnibble on 2017-11-07.
@@ -51,10 +49,14 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
     public TransferPresenter(){
     }
 
-    public void onStart(){
+    public void onMvpViewShown(){
+        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
+            return;
+        }
+
         getMvpView().showLoading( true );
         addDisposable(
-                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true ) )
+                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
                     .subscribeOn( getSchedulerProvider().io())
                     .observeOn( getSchedulerProvider().ui())
                     .subscribe( list -> {
