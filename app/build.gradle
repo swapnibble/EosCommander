@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
     defaultConfig {
         applicationId "io.mithrilcoin.eoscommander"
         minSdkVersion 17
-        targetSdkVersion 26
-        versionCode 5
-        versionName "1.0.5"
+        targetSdkVersion 27
+        versionCode 6
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // 벡터 이미지
@@ -44,7 +44,7 @@ android {
 // dependency version 관리.
 ext {
     espressoVer = '2.2.2'
-    supportLibVer = '26.1.0'
+    supportLibVer = '27.0.2'
     constraintLayoutVer = '1.0.2'
     roomVer = '1.0.0'
 
