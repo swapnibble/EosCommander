@@ -77,14 +77,12 @@ public class MainActivity extends BaseActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+
+        mDataManager.clearAbiObjects();
+
         if (StringUtils.isEmpty( mDataManager.getPreferenceHelper().getEosdConnInfo( null)) ) {
             openSettingsActivity();
         }
-    }
-
-    // should call before any
-    private void loadAccountHistory() {
-
     }
 
     @Override

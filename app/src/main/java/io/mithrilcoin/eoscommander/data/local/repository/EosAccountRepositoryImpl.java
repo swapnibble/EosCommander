@@ -18,15 +18,8 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
 
     private AppDatabase mAppDatabase;
 
-    private Set<String> mAccountCache = new TreeSet<>();
-
-    private long        mDataVersion;
-    private boolean     mShouldSyncWithDb;
-
     public EosAccountRepositoryImpl( AppDatabase appDatabase ) {
         mAppDatabase = appDatabase;
-        mDataVersion = 1L;
-        mShouldSyncWithDb = true;
     }
 
 
@@ -40,9 +33,6 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
         }
 
         mAppDatabase.eosAccountDao().insertAll(eosAccounts);
-
-        mDataVersion++;
-        Collections.addAll(mAccountCache, accountNames);
     }
 
     @Override
@@ -54,60 +44,30 @@ public class EosAccountRepositoryImpl implements EosAccountRepository {
         }
 
         mAppDatabase.eosAccountDao().insertAll(eosAccounts);
-
-        mDataVersion++;
-        mAccountCache.addAll( accountNames);
     }
 
     @Override
     public void addAccount(String accountName) {
         mAppDatabase.eosAccountDao().insert( EosAccount.from(accountName) );
-
-        mDataVersion++;
-        mAccountCache.add(accountName);
     }
 
     @Override
     public void deleteAll() {
         mAppDatabase.eosAccountDao().deleteAll();
-
-        mDataVersion++;
-        mAccountCache.clear();
     }
 
     @Override
     public void delete(String accountName) {
         mAppDatabase.eosAccountDao().delete( EosAccount.from(accountName));
-
-        mDataVersion++;
-        mAccountCache.remove( accountName );
     }
 
     @Override
-    public List<String> getAll(boolean getFromCacheIfPossible, RefValue<Long> dataVersion) {
-
-        if ( mShouldSyncWithDb ){
-            getFromCacheIfPossible = false;
-            mShouldSyncWithDb = false;
-        }
-
-        if ( null != dataVersion ){
-            dataVersion.data = mDataVersion;
-        }
-
-        if ( getFromCacheIfPossible ) {
-            return new ArrayList<>(mAccountCache); // get accounts from cache
-        }
-        else {
-            List<String> retList = mAppDatabase.eosAccountDao().getAll(); // get accounts from db
-            mAccountCache.addAll(retList); //  then cache..
-
-            return retList;
-        }
+    public List<String> getAll() {
+        return mAppDatabase.eosAccountDao().getAll(); // get accounts from db
     }
 
     @Override
-    public long getDataVersion() {
-        return mDataVersion;
+    public List<String> searchName( String nameStarts) {
+        return mAppDatabase.eosAccountDao().getAll( nameStarts + "%%");
     }
 }

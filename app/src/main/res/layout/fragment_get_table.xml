@@ -32,6 +32,43 @@
         android:padding="16dp"
         android:hint="@string/contract_code" />
 
+    <TextView
+        android:id="@+id/btn_query_table_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:background="@drawable/round_box_btn"
+        android:text="@string/read_table_list"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:background="@drawable/round_border_input">
+        <TextView
+            android:id="@+id/label_table_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/table_name" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/sp_table_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/label_table_name"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"/>
+    </LinearLayout>
+    <!--
     <EditText
         style="@style/EosNameTextWithDone"
         android:id="@+id/et_table"
@@ -43,6 +80,7 @@
         android:background="@drawable/round_box_input"
         android:padding="16dp"
         android:hint="@string/table_name" />
+    -->
 
     <TextView
         android:id="@+id/btn_get"

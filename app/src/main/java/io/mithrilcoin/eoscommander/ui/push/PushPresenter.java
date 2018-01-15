@@ -38,7 +38,9 @@ import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
+import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
+import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
@@ -51,6 +53,9 @@ import io.reactivex.Single;
  */
 
 public class PushPresenter extends BasePresenter<PushMvpView> {
+    private static final String KEY_FOR_ABI_OBJECT = "push_action_abi";
+
+    private EosAbiMain mContractAbi;
 
     @Inject
     EoscDataManager mDataManager;
@@ -59,36 +64,46 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
     public PushPresenter(){
     }
 
-    public void onMvpViewShown(){
-        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
+    public void onGetAbiClicked( String contract){
+        getMvpView().showLoading( true );
+        addDisposable( mDataManager.getCodeAbi( contract )
+                        .doOnNext( abi -> mDataManager.addAccountHistory( contract))
+                        .subscribeOn( getSchedulerProvider().io())
+                        .observeOn( getSchedulerProvider().ui())
+                        .subscribeWith(new RxCallbackWrapper<EosAbiMain>( this) {
+                                   @Override
+                                   public void onNext(EosAbiMain result) {
+                                       if (!isViewAttached()) return;
+
+                                       getMvpView().showLoading(false);
+
+                                       mContractAbi = result;
+                                       getMvpView().buildContractView( result);
+                                   }
+                               }
+                        )
+        );
+    }
+
+    public void onRequestInputUi( String actionName ) {
+        if ( StringUtils.isEmpty( actionName) ) {
+            getMvpView().onError(R.string.select_action_after_abi);
             return;
         }
 
-        getMvpView().showLoading( true );
-        addDisposable(
-                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
-                        .subscribeOn( getSchedulerProvider().io())
-                        .observeOn( getSchedulerProvider().ui())
-                        .subscribe( list -> {
-                                    if ( ! isViewAttached() ) return;
+        // save abi object to datamanager to pass it to input dialog
+        mDataManager.pushAbiObject( KEY_FOR_ABI_OBJECT, mContractAbi);
 
-                                    getMvpView().showLoading( false );
-                                    getMvpView().setupAccountHistory( list );
-                                }
-                                , e -> {
-                                    if ( ! isViewAttached() ) return;
-
-                                    notifyErrorToMvpView( e );
-                                } )
-        );
+        getMvpView().openDynInputFromAbi(KEY_FOR_ABI_OBJECT, actionName);
     }
+
 
     public void onImportFileClicked(){
         getMvpView().openFileManager();
     }
 
     // parse scopes into array
-    private String[] getArrayFromSeparatedCommaOrSpace(String csv) {
+    private String[] getArrayFromSeparator(String csv) {
         csv = csv.trim();
 
         if (StringUtils.isEmpty(csv)) {
@@ -125,7 +140,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         String[] permissions = ( StringUtils.isEmpty(permissionAccount) || StringUtils.isEmpty( permissionName))
                             ? null : new String[]{permissionAccount + "@" + permissionName };
 
-        String[] scopeAccounts = getArrayFromSeparatedCommaOrSpace(scopes);
+        String[] scopeAccounts = getArrayFromSeparator(scopes);
 
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")

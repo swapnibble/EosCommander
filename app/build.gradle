@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.2"
     defaultConfig {
         applicationId "io.mithrilcoin.eoscommander"
-        minSdkVersion 17
+        minSdkVersion 18
         targetSdkVersion 27
         versionCode 6
         versionName "1.0.6"
@@ -61,6 +61,7 @@ ext {
     timberVer = '4.5.1'
 
     fileChooserrVer = '1.3'
+    singleDateTimePickerVer = '1.2.2'
 
     junitVer = '4.12'
 }
@@ -111,6 +112,9 @@ dependencies {
 
     // file chooser, https://github.com/MostafaNasiri/AndroidFileChooser
     implementation "ir.sohreco.androidfilechooser:android-file-chooser:${fileChooserrVer}"
+
+    // single date time picker
+    implementation "com.github.florent37:singledateandtimepicker:${singleDateTimePickerVer}"
 
     // 구글 guava
     implementation 'com.google.guava:guava:23.0-android'

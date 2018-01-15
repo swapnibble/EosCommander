@@ -58,10 +58,6 @@ public class EosByteWriter implements EosType.Writer {
         _buf[_index++] = b;
     }
 
-//    public void putBoolean(boolean b) {
-//        put(b ? (byte) 1 : (byte) 0);
-//    }
-
     @Override
     public void putShortLE(short value) {
         ensureCapacity(2);
@@ -78,13 +74,6 @@ public class EosByteWriter implements EosType.Writer {
         _buf[_index++] = (byte) (0xFF & (value >> 24));
     }
 
-//    public void putIntBE(int value) {
-//        ensureCapacity(4);
-//        _buf[_index++] = (byte) (0xFF & (value >> 24));
-//        _buf[_index++] = (byte) (0xFF & (value >> 16));
-//        _buf[_index++] = (byte) (0xFF & (value >> 8));
-//        _buf[_index++] = (byte) (0xFF & (value >> 0));
-//    }
 
     @Override
     public void putLongLE(long value) {
@@ -99,22 +88,6 @@ public class EosByteWriter implements EosType.Writer {
         _buf[_index++] = (byte) (0xFFL & (value >> 56));
     }
 
-//    public void putLongBE(long value) {
-//        ensureCapacity(8);
-//        _buf[_index++] = (byte) (0xFFL & (value >> 56));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 48));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 40));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 32));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 24));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 16));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 8));
-//        _buf[_index++] = (byte) (0xFFL & (value >> 0));
-//    }
-
-//    public void putOneByte( byte value ) {
-//        ensureCapacity(1);
-//        _buf[_index++] = value;
-//    }
 
     @Override
     public void putBytes(byte[] value) {
@@ -129,27 +102,6 @@ public class EosByteWriter implements EosType.Writer {
         _index += length;
     }
 
-//    public void putSha256Hash(Sha256 hash) {
-//        putBytes(hash.getBytes());
-//    }
-//
-//    public void putSha256Hash(Sha256 hash, boolean reverse) {
-//        if (reverse) {
-//            putBytes(BitUtils.reverseBytes(hash.getBytes()));
-//        } else {
-//            putBytes(hash.getBytes());
-//        }
-//    }
-//
-//
-//    public void putRawStringUtf8(String s) {
-//        try {
-//            byte[] bytes = s.getBytes("UTF-8");
-//            putBytes(bytes);
-//        } catch (UnsupportedEncodingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     @Override
     public byte[] toBytes() {

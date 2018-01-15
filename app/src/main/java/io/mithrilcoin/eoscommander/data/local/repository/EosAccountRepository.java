@@ -17,12 +17,9 @@ public interface EosAccountRepository {
 
     /**
      * get account list
-     * @param getFromCacheIfPossible    get list from cache if possible
-     * @param getFromCacheIfPossible
-     * @param dataVersion
      * @return
      */
-    List<String> getAll( boolean getFromCacheIfPossible, RefValue<Long> dataVersion );
+    List<String> getAll( );
 
-    long getDataVersion();
+    List<String> searchName( String nameStarts);
 }

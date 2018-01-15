@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/til_input_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:inputType="textVisiblePassword"
+        android:digits=".12345abcdefghijklmnopqrstuvwxyz"/>
+
+</android.support.design.widget.TextInputLayout>
+<!--
+<android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/sp_array_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        android:padding="8dp"
+        android:spinnerMode="dropdown"/>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        tools:text="label"/>
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:inputType="textVisiblePassword"
+        android:digits=".12345abcdefghijklmnopqrstuvwxyz"/>
+
+</LinearLayout>
+-->

@@ -35,7 +35,6 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
 public interface CreateEosAccountMvpView extends MvpView {
 
     void showCreator( String creator );
-    void setupAccountHistory(List<String> recentAccounts);
 
     void showPubKeys( String ownerKey, String activeKey);
 

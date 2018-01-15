@@ -28,6 +28,8 @@ import com.google.gson.JsonObject;
 
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetRequiredKeys;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.RequiredKeysResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
@@ -66,6 +68,9 @@ public interface EosdApi {
 
     @POST("/v1/chain/abi_json_to_bin")
     Observable<JsonToBinResponse> jsonToBin(@Body JsonToBinRequest body);
+
+    @POST("/v1/chain/get_code")
+    Observable<GetCodeResponse> getCode(@Body GetCodeRequest body);
 
     @POST("/v1/account_history/{history_path}")
     Observable<JsonObject> getAccountHistory(@Path("history_path") String historyPath,  @Body JsonObject body);

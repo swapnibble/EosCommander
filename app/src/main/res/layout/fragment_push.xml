@@ -12,9 +12,8 @@
         android:background="@color/colorLight" >
 
         <AutoCompleteTextView
-            style="@style/EosNameTextWithNext"
             android:id="@+id/et_contract_account"
-            android:nextFocusDown="@+id/et_contract_action"
+            style="@style/EosNameTextWithSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -25,26 +24,11 @@
             android:textColorHint="@color/colorLightGray"
             android:hint="@string/contract_account" />
 
-        <EditText
-            style="@style/EosNameTextWithNext"
-            android:id="@+id/et_contract_action"
-            android:nextFocusDown="@+id/et_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_contract_account"
-            android:textColorHint="@color/colorLightGray"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/round_box_input"
-            android:padding="16dp"
-            android:hint="@string/contract_action" />
-
         <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
-            android:id="@+id/btn_import"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_contract_action"
-            android:layout_alignParentRight="true"
+            android:id="@+id/btn_get_abi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/et_contract_account"
             android:layout_marginBottom="16dp"
             android:background="@drawable/round_box_btn"
             android:drawablePadding="4dp"
@@ -54,28 +38,89 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="@color/colorDarkGray"
-            android:textSize="12sp"
-            android:text="@string/import_file"/>
+            android:textSize="14sp"
+            android:text="@string/get_abi"/>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/select_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/et_contract_action"
-            android:layout_toLeftOf="@id/btn_import"
-            android:layout_alignBaseline="@id/btn_import"
+            android:layout_below="@id/btn_get_abi"
+            android:orientation="horizontal"
             android:layout_marginBottom="16dp"
-            android:layout_marginRight="12dp"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/import_msg_json" />
+            android:background="@drawable/round_border_input">
+            <TextView
+                android:id="@+id/label_action_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/sp_action_name"
+                android:layout_marginRight="12dp"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/contract_action" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_action_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:padding="8dp"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/btn_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/select_action"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+                android:id="@+id/btn_ui_input"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_box_btn"
+                android:drawablePadding="4dp"
+                app:vectorLeft="@drawable/ic_push_file"
+                app:vectorTint="@color/colorGray"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="12sp"
+                android:text="@string/msg_ui"/>
+
+            <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+                android:id="@+id/btn_import"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round_box_btn"
+                android:drawablePadding="4dp"
+                app:vectorLeft="@drawable/ic_push_file"
+                app:vectorTint="@color/colorGray"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="12sp"
+                android:text="@string/import_json"/>
+
+        </LinearLayout>
+
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/et_message_scroller"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_below="@id/btn_import"
+            android:layout_below="@id/btn_wrapper"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:fillViewport="true">

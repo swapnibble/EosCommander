@@ -87,31 +87,24 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
 
         // generate keys..
         addDisposable(
-                mDataManager.createKey(2)
-                .map( keys -> {
-                    mOwnerKey = keys[0];
-                    mActiveKey= keys[1];
+                mDataManager
+                        .createKey(2)
+                        .subscribeOn(getSchedulerProvider().computation())
+                        .observeOn( getSchedulerProvider().ui())
+                        .subscribeWith( new RxCallbackWrapper<EosPrivateKey[]>(this) {
+                                            @Override
+                                            public void onNext(EosPrivateKey[] keys) {
+                                                if ( !isViewAttached() ) return;
 
-                    return mDataManager.getAllAccountHistory( true, mAccountHistoryVersion );
-                })
-                .subscribeOn( getSchedulerProvider().io())
-                .observeOn( getSchedulerProvider().ui())
-                .subscribeWith( new RxCallbackWrapper<List<String>>(this) {
-                    @Override
-                    public void onNext(List<String> recentAccounts ) {
-                        if (!isViewAttached()) return;
+                                                getMvpView().showLoading( false);
 
-                        if ( ! isViewAttached() ) return;
+                                                mOwnerKey = keys[0];
+                                                mActiveKey= keys[1];
 
-                        getMvpView().showLoading( false );
-
-                        // setup recent accounts
-                        getMvpView().setupAccountHistory( recentAccounts );
-
-                        // show generated keys
-                        getMvpView().showPubKeys( mOwnerKey.getPublicKey().toString(), mActiveKey.getPublicKey().toString());
-                    }
-                })
+                                                getMvpView().showPubKeys( mOwnerKey.getPublicKey().toString(), mActiveKey.getPublicKey().toString());
+                                            }
+                                        }
+                        )
         );
     }
 

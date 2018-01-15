@@ -32,5 +32,6 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
 
 public interface GetTableMvpView extends MvpView {
     void showTableResult(String result);
-    void setupAccountHistory(List<String> recentAccounts);
+    void showTableList( List<String> tables );
 }
+

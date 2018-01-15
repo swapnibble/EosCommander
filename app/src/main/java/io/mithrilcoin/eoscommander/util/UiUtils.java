@@ -31,10 +31,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
-import java.util.List;
-
 import io.mithrilcoin.eoscommander.R;
-import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
+import io.mithrilcoin.eoscommander.ui.suggestion.AccountAdapter;
 import io.mithrilcoin.eoscommander.ui.suggestion.WhitSpaceTokenizer;
 
 /**
@@ -63,13 +61,14 @@ public class UiUtils {
         }
     }
 
-    public static void setupRecentAccountSuggest( AutoCompleteTextView autoTextView, List<String> accounts ) {
-        AccountSuggestAdapter adapter = new AccountSuggestAdapter( autoTextView.getContext(), R.layout.account_suggestion, R.id.eos_account);
-        adapter.addAll( accounts );
-        if ( autoTextView instanceof MultiAutoCompleteTextView ) {
-            ((MultiAutoCompleteTextView)autoTextView).setTokenizer( new WhitSpaceTokenizer());
+    public static void setupAccountHistory( AutoCompleteTextView... autoTextViewArray ) {
+        for ( AutoCompleteTextView actv : autoTextViewArray ) {
+            AccountAdapter adapter = new AccountAdapter(actv.getContext(), R.layout.account_suggestion, R.id.eos_account);
+            if (actv instanceof MultiAutoCompleteTextView) {
+                ((MultiAutoCompleteTextView) actv).setTokenizer(new WhitSpaceTokenizer());
+            }
+            actv.setThreshold(1);
+            actv.setAdapter(adapter);
         }
-        autoTextView.setThreshold(1);
-        autoTextView.setAdapter( adapter );
     }
 }

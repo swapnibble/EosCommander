@@ -41,7 +41,7 @@
     <string name="input_wallet_password">지갑 비밀번호 입력</string>
     <string name="unlock">잠금해제</string>
     <string name="command">커맨드</string>
-    <string name="import_file">파일 가져오기</string>
+    <string name="import_json">파일 가져오기</string>
     <string name="import_msg_json">메시지 json을 가져오기 한 후, 편집.</string>
     <string name="push_message_hint">컨트랙트 데이터\n(먼저, 메시지 json 가져오기를 하세요.)</string>
     <string name="view_keys_unlocked_wallet">잠금 해제된 지갑의 키 보기</string>
@@ -64,7 +64,7 @@
     <string name="contract_account">컨트랙트 계정</string>
     <string name="contract_action">컨트랙트 액션(메시지)</string>
 
-    <string name="scope_hint">Scope 계정 (콤마 혹은 공백으로 분리)</string>
+    <string name="scope_hint">Scope 계정 (공백 혹은 콤마로 분리)</string>
 
     <string name="permission_account_hint">권한 계정</string>
 

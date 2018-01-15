@@ -91,31 +91,13 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
 
             return false;
         });
+
+
+        UiUtils.setupAccountHistory( mEtFrom, mEtTo );
     }
 
     private void onSend() {
         mPresenter.transfer(mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // notify to presenter
-        mPresenter.onMvpViewShown();
-    }
-
-    @Override
-    public void onSelected() {
-        if ( null != mPresenter ) {
-            mPresenter.onMvpViewShown();
-        }
-    }
-
-    @Override
-    public void setupAccountHistory(List<String> recentAccounts){
-        UiUtils.setupRecentAccountSuggest( mEtFrom, recentAccounts );
-        UiUtils.setupRecentAccountSuggest( mEtTo, recentAccounts );
     }
 
     @Override

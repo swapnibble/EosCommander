@@ -76,7 +76,7 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.dialog_account_create, container, false);
 
@@ -125,6 +125,9 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
+
+        UiUtils.setupAccountHistory( mEtCreator );
     }
 
     private void onClickCreate() {
@@ -144,14 +147,6 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     public void showCreator( String creator ) {
         UiUtils.setTextAndMoveCursorToEnd( mEtCreator, creator );
     }
-
-    @Override
-    public void setupAccountHistory(List<String> recentAccounts){
-        UiUtils.setupRecentAccountSuggest( mEtCreator, recentAccounts );
-
-        UiUtils.setupRecentAccountSuggest( mEtNewAccount, recentAccounts );
-    }
-
 
     @Override
     public void showPubKeys( String ownerKey, String activeKey) {

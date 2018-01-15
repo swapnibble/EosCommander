@@ -23,9 +23,11 @@
  */
 package io.mithrilcoin.eoscommander.data;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,12 +37,14 @@ import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.EosdApi;
+import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.EosChainInfo;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetTableRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.Message;
 import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetRequiredKeys;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosNewAccount;
@@ -65,6 +69,8 @@ public class EoscDataManager {
     private final EosWalletManager  mWalletMgr;
     private final EosAccountRepository mAccountRepository;
 
+    private HashMap<String,EosAbiMain> mAbiObjHouse;
+
     @Inject
     public EoscDataManager(EosdApi eosdApi, EosWalletManager walletManager, EosAccountRepository accountRepository, PreferencesHelper prefHelper) {
         mEosdApi = eosdApi;
@@ -74,6 +80,8 @@ public class EoscDataManager {
 
         mWalletMgr.setDir( mPrefHelper.getWalletDirFile() );
         mWalletMgr.openExistingsInDir();
+
+        mAbiObjHouse = new HashMap<>();
     }
 
     public EosWalletManager getWalletManager() { return mWalletMgr; }
@@ -93,12 +101,20 @@ public class EoscDataManager {
         mAccountRepository.delete( accountName );
     }
 
-    public List<String> getAllAccountHistory( boolean getFromCacheIfPossible, RefValue<Long> dataVersion) {
-        return mAccountRepository.getAll(getFromCacheIfPossible, dataVersion);
+    public List<String> searchAccount( String nameStarts){
+        return mAccountRepository.searchName( nameStarts );
     }
 
-    public boolean shouldUpdateAccountHistory( long versionCallerKnows ){
-        return mAccountRepository.getDataVersion() > versionCallerKnows ;
+    public void pushAbiObject(String key, EosAbiMain abi){
+        mAbiObjHouse.put(key , abi );
+    }
+
+    public EosAbiMain popAbiObject( String key) {
+        return mAbiObjHouse.remove( key );
+    }
+
+    public void clearAbiObjects(){
+        mAbiObjHouse.clear();
     }
 
     public Observable<EosChainInfo> getChainInfo(){
@@ -211,5 +227,11 @@ public class EoscDataManager {
                                             .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), scopes, permissions, info )) )
                 .flatMap( txn -> signTransaction( txn))
                 .flatMap( signedTxn -> mEosdApi.pushTransactionRetJson( signedTxn));
+    }
+
+    public Observable<EosAbiMain> getCodeAbi( String contract ) {
+        return mEosdApi.getCode( new GetCodeRequest(contract))
+                .map( result -> new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                        .create().fromJson(result.getAbi(), EosAbiMain.class) );
     }
 }

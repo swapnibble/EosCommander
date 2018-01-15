@@ -42,6 +42,11 @@
         <activity android:name=".ui.file.FileChooserActivity"
             android:windowSoftInputMode="adjustPan"/>
 
+
+        <activity android:name=".ui.push.abiview.MsgInputActivity"
+            android:theme="@style/AppTheme.TranslucentBack"
+            android:windowSoftInputMode="adjustPan"/>
+
     </application>
 
 </manifest>

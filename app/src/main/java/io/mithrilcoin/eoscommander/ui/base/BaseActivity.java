@@ -34,10 +34,16 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.app.EosCommanderApp;
@@ -45,6 +51,7 @@ import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.di.component.DaggerActivityComponent;
 import io.mithrilcoin.eoscommander.di.module.ActivityModule;
 import io.mithrilcoin.eoscommander.ui.result.ShowResultDialog;
+import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.UiUtils;
 
 
@@ -180,4 +187,5 @@ public class BaseActivity extends AppCompatActivity implements MvpView{
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

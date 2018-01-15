@@ -47,7 +47,7 @@
     <string name="input_wallet_password">Input wallet password</string>
     <string name="unlock">Unlock</string>
     <string name="command">Command</string>
-    <string name="import_file">Import file</string>
+    <string name="import_json">Import json</string>
     <string name="import_msg_json">Import message json file and edit.</string>
     <string name="push_message_hint">Contract data\n(Firstly, Import your contract message json.)</string>
     <string name="view_keys_unlocked_wallet">Keys in unlocked wallets</string>
@@ -68,9 +68,9 @@
     <string name="conn_failed">Could not connect!</string>
 
     <string name="contract_account">Contract account</string>
-    <string name="contract_action">Contract action</string>
+    <string name="contract_action">Contract Action :</string>
 
-    <string name="scope_hint">Scope accounts (separate by comma or space)</string>
+    <string name="scope_hint">Scope accounts (separate by space or comma)</string>
 
     <string name="permission_account_hint">Account for permission</string>
     <string name="permission_level_active">active</string>
@@ -103,4 +103,15 @@
     <string name="delete_confirm">Delete confirmation</string>
     <string name="ru_sure_delete">"Are you sure to delete history: '%s' ?"</string>
     <string name="deleted">Deleted</string>
+
+    <string name="get_abi">Get abi</string>
+    <string name="read_table_list">Read table list</string>
+    <string name="msg_ui">Message UI</string>
+    <string name="err_empty_action_name">Empty action name</string>
+    <string name="err_create_msg_input">Failed to create msg view</string>
+    <string name="select_action_after_abi">You should select action after getting abi</string>
+    <string name="picker">Picker</string>
+    <string name="action">"Action: "</string>
+    <string name="action_loaded">action loaded !</string>
+    <string name="table_loaded">table names loaded !</string>
 </resources>

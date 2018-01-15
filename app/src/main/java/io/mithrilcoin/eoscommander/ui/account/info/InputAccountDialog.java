@@ -37,13 +37,10 @@ import javax.inject.Inject;
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
-import io.mithrilcoin.eoscommander.ui.suggestion.AccountSuggestAdapter;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
 import io.mithrilcoin.eoscommander.util.RefValue;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.mithrilcoin.eoscommander.util.UiUtils;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by swapnibble on 2017-11-16.
@@ -103,6 +100,8 @@ public class InputAccountDialog extends BaseDialog {
         // edit view
         mEtAccount = view.findViewById( R.id.et_account );
 
+        UiUtils.setupAccountHistory(mEtAccount);
+
         // ok
         view.findViewById( R.id.btn_ok ).setOnClickListener( v -> {
             if ( null != mCallback) mCallback.onAccountEntered( mEtAccount.getText().toString(), mAccountInfoType);
@@ -112,32 +111,6 @@ public class InputAccountDialog extends BaseDialog {
 
         // cancel
         view.findViewById( R.id.btn_cancel ).setOnClickListener( v -> dismiss());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        setupRecentAccountSuggest( mEtAccount);
-    }
-
-    private void setupRecentAccountSuggest( AutoCompleteTextView autoTextView) {
-        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
-            return;
-        }
-
-        AccountSuggestAdapter adapter = new AccountSuggestAdapter(autoTextView.getContext(), R.layout.account_suggestion, R.id.eos_account);
-
-        mCompositeDisposable.add(
-                Observable.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe( list -> adapter.addAll( list ), e -> onError(e.getMessage()))
-        );
-
-
-        autoTextView.setThreshold(1);
-        autoTextView.setAdapter( adapter );
     }
 
     public void show(FragmentManager fragmentManager) {

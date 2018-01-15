@@ -24,11 +24,14 @@
 package io.mithrilcoin.eoscommander.ui.gettable;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,6 +42,7 @@ import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.ui.result.ShowResultDialog;
+import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class GetTableFragment extends BaseFragment
@@ -49,7 +53,10 @@ public class GetTableFragment extends BaseFragment
 
     private AutoCompleteTextView mTvAccountName;
     private AutoCompleteTextView mTvCode;
-    private TextView mTvTable;
+    //private TextView mTvTable;
+
+    private AppCompatSpinner        mTableNameSpinner;
+    private ArrayAdapter<String>    mTableNameAdapter;
 
 
     public static GetTableFragment newInstance() {
@@ -78,37 +85,18 @@ public class GetTableFragment extends BaseFragment
     protected void setUpView(View view) {
         mTvAccountName = view.findViewById( R.id.et_account);
         mTvCode = view.findViewById( R.id.et_code);
-        mTvTable= view.findViewById( R.id.et_table);
-
-        mTvTable.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-            if (EditorInfo.IME_ACTION_DONE == actionId) {
-                onGetTable();
-                return true;
-            }
-
-            return false;
-        });
 
         view.findViewById( R.id.btn_get).setOnClickListener( v -> onGetTable() );
+        view.findViewById( R.id.btn_query_table_list).setOnClickListener( v -> mPresenter.onGetTableListClicked( mTvCode.getText().toString()) );
+
+        mTableNameSpinner = view.findViewById( R.id.sp_table_list);
+
+        // NEW_ACCOUNT_SUGGEST
+        setupAccountHistory();
     }
 
     private void onGetTable() {
-        mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTvTable.getText().toString());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // notify to presenter
-        mPresenter.onMvpViewShown();
-    }
-
-    @Override
-    public void onSelected() {
-        if ( null != mPresenter ) {
-            mPresenter.onMvpViewShown();
-        }
+        mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString());
     }
 
     @Override
@@ -120,14 +108,31 @@ public class GetTableFragment extends BaseFragment
 
     @Override
     public void showTableResult(String result) {
-        String title = String.format("%s: %s", getString(R.string.get_table), mTvTable.getText() );
+        String title = String.format("%s: %s", getString(R.string.get_table), mTableNameSpinner.getSelectedItem() );
 
         ShowResultDialog.newInstance( title, result).show( getChildFragmentManager());
     }
 
+    private void setupAccountHistory(){
+        UiUtils.setupAccountHistory( mTvAccountName, mTvCode);
+
+        // when contract selected
+        mTvCode.setOnItemClickListener( (adapterView, view, position, id) -> {
+            ListAdapter adapter = mTvCode.getAdapter();
+            if ( (null != adapter ) && !StringUtils.isEmpty( (String) adapter.getItem(position)) ){
+                hideKeyboard();
+                mPresenter.onGetTableListClicked( (String) adapter.getItem(position) );
+            }
+        });
+    }
+
     @Override
-    public void setupAccountHistory(List<String> recentAccounts){
-        UiUtils.setupRecentAccountSuggest( mTvAccountName, recentAccounts );
-        UiUtils.setupRecentAccountSuggest( mTvCode, recentAccounts );
+    public void showTableList( List<String> tables ) {
+        mTableNameAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tables);
+        mTableNameAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        mTableNameSpinner.setAdapter( mTableNameAdapter );
+
+        showToast( R.string.table_loaded );
+
     }
 }

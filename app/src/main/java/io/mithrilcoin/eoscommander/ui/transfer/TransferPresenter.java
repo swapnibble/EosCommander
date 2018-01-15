@@ -47,30 +47,6 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
     public TransferPresenter(){
     }
 
-    public void onMvpViewShown(){
-        if (! mDataManager.shouldUpdateAccountHistory( mAccountHistoryVersion.data)){
-            return;
-        }
-
-        getMvpView().showLoading( true );
-        addDisposable(
-                Single.fromCallable( () -> mDataManager.getAllAccountHistory( true, mAccountHistoryVersion ) )
-                    .subscribeOn( getSchedulerProvider().io())
-                    .observeOn( getSchedulerProvider().ui())
-                    .subscribe( list -> {
-                                if ( ! isViewAttached() ) return;
-
-                                getMvpView().showLoading( false );
-                                getMvpView().setupAccountHistory( list );
-                            }
-                            , e -> {
-                                if ( ! isViewAttached() ) return;
-
-                                notifyErrorToMvpView( e );
-                            } )
-        );
-    }
-
     public void transfer(String from, String to, String amount){
         long amountAsLong = Utils.parseLongSafely( amount, 0);
         if ( amountAsLong < 0 ) {
