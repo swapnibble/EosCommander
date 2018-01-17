@@ -57,7 +57,6 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient providesOkHttpClient(HostInterceptor interceptor) {
-
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .build();

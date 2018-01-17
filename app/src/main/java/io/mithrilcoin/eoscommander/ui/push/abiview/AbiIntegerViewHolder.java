@@ -49,8 +49,7 @@ public class AbiIntegerViewHolder extends AbiViewBaseHolder<Long> {
     @Override
     protected View getItemView(LayoutInflater layoutInflater, ViewGroup parentView, String label ) {
         ViewGroup vg = (ViewGroup)layoutInflater.inflate( R.layout.label_with_int, parentView, false );
-        TextInputLayout til = vg.findViewById( R.id.til_input_wrapper);
-        til.setHint( label );
+        setItemViewLabel( vg, label );
 
         // add TYPE_NUMBER_FLAG_SIGNED when type is "signed int".
         TextInputEditText tie = vg.findViewById( R.id.et_input);
@@ -67,6 +66,12 @@ public class AbiIntegerViewHolder extends AbiViewBaseHolder<Long> {
             return 0L;
         }
 
-        return Utils.parseLongSafely( tie.toString(), 0);
+        return Utils.parseLongSafely( tie.getText().toString(), 0);
+    }
+
+    @Override
+    protected void setItemViewLabel( View itemView, String label){
+        TextInputLayout til = itemView.findViewById( R.id.til_input_wrapper);
+        til.setHint( label );
     }
 }

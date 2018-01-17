@@ -31,7 +31,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,7 +38,6 @@ import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.util.UiUtils;
-import timber.log.Timber;
 
 public class TransferFragment extends BaseFragment implements TransferMvpView{
 

@@ -27,7 +27,6 @@ package io.mithrilcoin.eoscommander.ui.push.abiview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatSpinner;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 
@@ -48,6 +49,7 @@ import io.mithrilcoin.eoscommander.util.StringUtils;
 
 public abstract class AbiViewBaseHolder<T> {
     private static final int MAX_ARRAY_SIZE = 32;
+
     private ViewGroup mContainer;
     private String mKeyName;
     private String mTypeName;
@@ -55,6 +57,21 @@ public abstract class AbiViewBaseHolder<T> {
     private boolean mIsArray;
 
     private int mCurArraySize;
+
+
+    private static WeakReference<AbiViewCallback> mDynViewCallbackRef;
+
+    public static void setDynViewCallback( AbiViewCallback callback ){
+        mDynViewCallbackRef = new WeakReference<>(callback);
+    }
+
+    protected View getDynView( String typeName, ViewGroup parentView ) {
+        if ( mDynViewCallbackRef.get() == null ){
+            return null;
+        }
+
+        return mDynViewCallbackRef.get().onRequestAbiViewHolder( typeName, parentView);
+    }
 
     public static String dumpToJson( View view ) {
         if ( (view != null ) && (view.getTag() instanceof AbiViewBaseHolder) ){
@@ -81,7 +98,7 @@ public abstract class AbiViewBaseHolder<T> {
         mTypeName   = type;
     }
 
-    public AbiViewBaseHolder(String key, String type, boolean isArray, LayoutInflater layoutInflater, ViewGroup parentView) {
+    public AbiViewBaseHolder(String key, String type, boolean isArray,  LayoutInflater layoutInflater, ViewGroup parentView) {
         this( key, type, isArray);
         initView( layoutInflater, parentView);
     }
@@ -99,7 +116,6 @@ public abstract class AbiViewBaseHolder<T> {
             mContainer = (ViewGroup)getItemView( layoutInflater, parentView, generateLabel(-1) );
         }
 
-
         mContainer.setTag( this );
     }
 
@@ -107,7 +123,7 @@ public abstract class AbiViewBaseHolder<T> {
 
         TextView arrSizeLabel = mContainer.findViewById( R.id.tv_label );
         if ( arrSizeLabel != null ){
-            arrSizeLabel.setText( mKeyName + "[] size");
+            arrSizeLabel.setText( mKeyName + "[] size: ");
         }
 
         ArrSizeAdapter adapter = new ArrSizeAdapter( context, size );
@@ -129,21 +145,25 @@ public abstract class AbiViewBaseHolder<T> {
 
     private void onChangeArraySize( Context context, int newSize ) {
         if ( mCurArraySize < newSize ) {
-            Log.i("SFX", "addNew childs(array) curSize: " + mCurArraySize + ", newSize: " + newSize );
-            LayoutInflater inflater = LayoutInflater.from( context );
+            //LayoutInflater inflater = LayoutInflater.from( context );
             // add new item views
-            // 0-th child is spinner!
-            for ( int index = mCurArraySize ; index < newSize; index++ ) {
-                View childView = getItemView( inflater, mContainer, generateLabel(index ) );
-                if ( childView != null ){
-                    mContainer.addView( childView);
+            // first child is size spinner!
+            String typeName = mTypeName.endsWith("[]") ? mTypeName.substring(0, mTypeName.length() - 2) : mTypeName;
+
+            for ( int arrayIndex = mCurArraySize ; arrayIndex < newSize; arrayIndex++ ) {
+                View itemView = getDynView( typeName, mContainer );
+                if ( itemView != null ){
+                    setItemViewLabel( itemView, generateLabel( arrayIndex ));
+                    mContainer.addView( itemView);
+                }
+                else {
+                    // TODO add error textview
                 }
             }
         }
         else if ( mCurArraySize > newSize ) {
-            Log.e("SFX", "del childs(array) curSize: " + mCurArraySize + ", newSize: " + newSize );
             // remove item views
-            // 0-th child is spinner,
+            // first child is size spinner!
             mContainer.removeViews( newSize + 1 , mCurArraySize - newSize );
         }
 
@@ -163,11 +183,15 @@ public abstract class AbiViewBaseHolder<T> {
             label = mKeyName;
         }
 
-        return label + " (" + mTypeName + ")";
+        String typeNameWithoutBracket = mTypeName.endsWith("[]") ? mTypeName.substring( 0, mTypeName.length() - 2) : mTypeName;
+
+        return label + " (" + typeNameWithoutBracket + ")";
     }
 
     protected abstract View getItemView( LayoutInflater layoutInflater, ViewGroup parentView, String label );
     protected abstract T getItemValue(View itemView);
+
+    protected abstract void setItemViewLabel( View itemView, String label);
 
     public String getKeyName() { return mKeyName; }
 
@@ -186,38 +210,21 @@ public abstract class AbiViewBaseHolder<T> {
         return mIsArray;
     }
 
-//    public void writeJson(JSONObject json) {
-//        try {
-//            if ( mIsArray ) {
-//                JSONArray jsonArray = new JSONArray();
-//                for ( int index = 1; index <= mCurArraySize; index++) {
-//                    jsonArray.put( getItemValue(mContainer.getChildAt(index) ) );
-//                }
-//
-//                json.put(mKeyName, jsonArray);
-//            }
-//            else {
-//                json.put(mKeyName, getItemValue(mContainer.getChildAt(1)));
-//            }
-//
-//        }
-//        catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void writeJson(JSONObject json) {
         try {
+            String jsonKey = isRoot() ? "" : mKeyName;
             if ( mIsArray ) {
                 JSONArray jsonArray = new JSONArray();
                 for ( int index = 1; index <= mCurArraySize; index++) {
                     jsonArray.put( getItemValue(mContainer.getChildAt(index) ) );
                 }
 
-                json.put(mKeyName, jsonArray);
+                json.put( jsonKey,jsonArray );
             }
             else {
-                json.put(mKeyName, getItemValue( mContainer ));
+                json.put(jsonKey, getItemValue(mContainer));
+
             }
 
         }
@@ -232,11 +239,11 @@ public abstract class AbiViewBaseHolder<T> {
         private final int mMaxSize;
 
         public ArrSizeAdapter(@NonNull Context context, int maxSize) {
-            super(context, android.R.layout.simple_spinner_item);
+            super(context, R.layout.spinner_item_centered);
 
             mMaxSize = ( maxSize > 0 ) ? maxSize : 0;
 
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            setDropDownViewResource(R.layout.spinner_item_centered);
         }
         public int getCount() { return mMaxSize + 1;}
 

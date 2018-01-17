@@ -28,8 +28,10 @@ import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.mithrilcoin.eoscommander.R;
+import io.mithrilcoin.eoscommander.util.StringUtils;
 
 /**
  * Created by swapnibble on 2017-12-28.
@@ -45,11 +47,10 @@ public class AbiStringViewHolder extends AbiViewBaseHolder<String> {
 
     @Override
     protected View getItemView(LayoutInflater layoutInflater, ViewGroup parentView, String label ) {
-        ViewGroup vg = (ViewGroup)layoutInflater.inflate( getItemLayout(), parentView, false );
-        TextInputLayout til = vg.findViewById( R.id.til_input_wrapper);
-        til.setHint( label );
+        ViewGroup container = (ViewGroup)layoutInflater.inflate( getItemLayout(), parentView, false );
+        setItemViewLabel( container, label );
 
-        return vg;
+        return container;
     }
 
     @Override
@@ -60,5 +61,11 @@ public class AbiStringViewHolder extends AbiViewBaseHolder<String> {
         }
 
         return "";
+    }
+
+    @Override
+    protected void setItemViewLabel( View itemView, String label){
+        TextInputLayout til = itemView.findViewById( R.id.til_input_wrapper);
+        til.setHint( label );
     }
 }

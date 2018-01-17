@@ -52,8 +52,8 @@ public class AbiTimeInputViewHolder extends AbiViewBaseHolder<String> {
     @Override
     protected View getItemView(LayoutInflater layoutInflater, ViewGroup parentView, String label ) {
         ViewGroup vg = (ViewGroup)layoutInflater.inflate( R.layout.label_with_time, parentView, false );
-        TextInputLayout til = vg.findViewById( R.id.til_input_wrapper);
-        til.setHint( label );
+
+        setItemViewLabel( vg, label );
 
         View button = vg.findViewById( R.id.btn_time_picker );
         button.setOnClickListener( this::openTimePicker);
@@ -65,6 +65,12 @@ public class AbiTimeInputViewHolder extends AbiViewBaseHolder<String> {
     @Override
     protected String getItemValue(View itemView) {
         return ((TextInputEditText)itemView.findViewById( R.id.et_input)).getText().toString();
+    }
+
+    @Override
+    protected void setItemViewLabel( View itemView, String label){
+        TextInputLayout til = itemView.findViewById( R.id.til_input_wrapper);
+        til.setHint( label );
     }
 
 

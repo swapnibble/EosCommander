@@ -45,7 +45,6 @@ import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.Utils;
-import io.reactivex.Single;
 
 
 /**
@@ -85,9 +84,29 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         );
     }
 
+    // for test
+    public void testAbiByString( String jsonString ) {
+        addDisposable( mDataManager.getAbiMainFromJson( jsonString )
+                .subscribeOn( getSchedulerProvider().io())
+                .observeOn( getSchedulerProvider().ui())
+                .subscribeWith(new RxCallbackWrapper<EosAbiMain>( this) {
+                                   @Override
+                                   public void onNext(EosAbiMain result) {
+                                       if (!isViewAttached()) return;
+
+                                       getMvpView().showLoading(false);
+
+                                       mContractAbi = result;
+                                       getMvpView().buildContractView( result);
+                                   }
+                               }
+                )
+        );
+    }
+
     public void onRequestInputUi( String actionName ) {
         if ( StringUtils.isEmpty( actionName) ) {
-            getMvpView().onError(R.string.select_action_after_abi);
+            getMvpView().showToast(R.string.select_action_after_abi);
             return;
         }
 

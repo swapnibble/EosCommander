@@ -49,7 +49,7 @@
     <string name="command">Command</string>
     <string name="import_json">Import json</string>
     <string name="import_msg_json">Import message json file and edit.</string>
-    <string name="push_message_hint">Contract data\n(Firstly, Import your contract message json.)</string>
+    <string name="push_message_hint">Contract message\n(Create message from ui or json file.)</string>
     <string name="view_keys_unlocked_wallet">Keys in unlocked wallets</string>
     <string name="wallet_list">Wallet list</string>
     <string name="get_account">Get account</string>
@@ -57,7 +57,7 @@
     <string name="locked">Locked</string>
 
     <string name="contract_code">Contract</string>
-    <string name="table_name">Table name</string>
+    <string name="table_name">"Table name :"</string>
     <string name="get_servants">Get servants</string>
 
     <string name="wallet_password">Wallet password</string>
@@ -106,10 +106,11 @@
 
     <string name="get_abi">Get abi</string>
     <string name="read_table_list">Read table list</string>
-    <string name="msg_ui">Message UI</string>
+    <string name="form_input">Form input</string>
     <string name="err_empty_action_name">Empty action name</string>
     <string name="err_create_msg_input">Failed to create msg view</string>
     <string name="select_action_after_abi">You should select action after getting abi</string>
+    <string name="select_action_after_tables">You should select action after getting table names</string>
     <string name="picker">Picker</string>
     <string name="action">"Action: "</string>
     <string name="action_loaded">action loaded !</string>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="32dp"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_weight="1"
         android:textSize="16sp"
         android:textColor="@android:color/holo_green_dark"
-        android:text="struct_label"/>
+        tools:text="struct_label" />
 
     <!-- nested fields are added here.. -->
 

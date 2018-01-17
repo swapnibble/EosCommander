@@ -31,15 +31,12 @@ import timber.log.Timber;
 
 public class AccountAdapter extends ArrayAdapter<String> implements View.OnClickListener {
 
-    private Context mContext;
     private List<String> mData = new ArrayList<>();
     private AccountFilter mFilter;
 
 
     public AccountAdapter(@NonNull Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId);
-
-        mContext = context;
     }
 
     @Override
@@ -169,64 +166,4 @@ public class AccountAdapter extends ArrayAdapter<String> implements View.OnClick
             }
         }
     }
-
-    /*
-    AOSP filter:
-    private class ArrayFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence prefix) {
-            final FilterResults results = new FilterResults();
-            if (mOriginalValues == null) {
-                synchronized (mLock) {
-                    mOriginalValues = new ArrayList<>(mObjects);
-                }
-            }
-            if (prefix == null || prefix.length() == 0) {
-                final ArrayList<T> list;
-                synchronized (mLock) {
-                    list = new ArrayList<>(mOriginalValues);
-                }
-                results.values = list;
-                results.count = list.size();
-            } else {
-                final String prefixString = prefix.toString().toLowerCase();
-                final ArrayList<T> values;
-                synchronized (mLock) {
-                    values = new ArrayList<>(mOriginalValues);
-                }
-                final int count = values.size();
-                final ArrayList<T> newValues = new ArrayList<>();
-                for (int i = 0; i < count; i++) {
-                    final T value = values.get(i);
-                    final String valueText = value.toString().toLowerCase();
-                    // First match against the whole, non-splitted value
-                    if (valueText.startsWith(prefixString)) {
-                        newValues.add(value);
-                    } else {
-                        final String[] words = valueText.split(" ");
-                        for (String word : words) {
-                            if (word.startsWith(prefixString)) {
-                                newValues.add(value);
-                                break;
-                            }
-                        }
-                    }
-                }
-                results.values = newValues;
-                results.count = newValues.size();
-            }
-            return results;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            //noinspection unchecked
-            mObjects = (List<T>) results.values;
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
-    }
-     */
 }

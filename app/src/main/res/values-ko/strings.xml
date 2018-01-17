@@ -43,7 +43,7 @@
     <string name="command">커맨드</string>
     <string name="import_json">파일 가져오기</string>
     <string name="import_msg_json">메시지 json을 가져오기 한 후, 편집.</string>
-    <string name="push_message_hint">컨트랙트 데이터\n(먼저, 메시지 json 가져오기를 하세요.)</string>
+    <string name="push_message_hint">컨트랙트 데이터\n(먼저, 메시지를 UI 로 입력하거나 json 가져오기를 하세요.)</string>
     <string name="view_keys_unlocked_wallet">잠금 해제된 지갑의 키 보기</string>
     <string name="wallet_list">지갑 목록</string>
     <string name="get_account">계정 정보 보기</string>
@@ -96,4 +96,16 @@
     <string name="delete_confirm">삭제 확인</string>
     <string name="ru_sure_delete">"계정: '%s' 의 입력 기록을 삭제할까요?"</string>
     <string name="deleted">삭제되었습니다.</string>
+
+    <string name="get_abi">ABI 가져오기</string>
+    <string name="read_table_list">테이블 목록 읽기</string>
+    <string name="form_input">폼(Form) 입력</string>
+    <string name="err_empty_action_name">액션 이름 없음</string>
+    <string name="err_create_msg_input">폼 UI 생성 실패</string>
+    <string name="select_action_after_abi">ABI 가져온후, 액션을 선택하세요.</string>
+    <string name="select_action_after_tables">테이블을 가져온후, 액션을 선택하세요</string>
+    <string name="picker">시간 선택</string>
+    <string name="action">"액션: "</string>
+    <string name="action_loaded">액션 로드됨 !</string>
+    <string name="table_loaded">테이블 로드됨 !</string>
 </resources>

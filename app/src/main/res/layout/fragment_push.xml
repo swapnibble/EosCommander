@@ -32,7 +32,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/round_box_btn"
             android:drawablePadding="4dp"
-            app:vectorLeft="@drawable/ic_push_file"
+            app:vectorLeft="@drawable/ic_get_abi"
             app:vectorTint="@color/colorGray"
             android:padding="8dp"
             android:gravity="center"
@@ -57,14 +57,16 @@
                 android:layout_marginRight="12dp"
                 android:padding="8dp"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:textSize="12sp"
                 android:textColor="@color/colorPrimary"
                 android:text="@string/contract_action" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/sp_action_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:theme="@style/ThemeOverlay.AppCompat.Light"
                 android:padding="8dp"
                 android:spinnerMode="dropdown"/>
@@ -87,14 +89,14 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/round_box_btn"
                 android:drawablePadding="4dp"
-                app:vectorLeft="@drawable/ic_push_file"
+                app:vectorLeft="@drawable/ic_form_input"
                 app:vectorTint="@color/colorGray"
                 android:padding="8dp"
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:textColor="@color/colorDarkGray"
                 android:textSize="12sp"
-                android:text="@string/msg_ui"/>
+                android:text="@string/form_input"/>
 
             <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
                 android:id="@+id/btn_import"
@@ -176,6 +178,8 @@
                 android:background="@drawable/round_box_input"
                 android:padding="6dp"
                 android:textSize="14sp"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:imeOptions="actionSend"
                 android:hint="@string/permission_account_hint" />
 
@@ -203,6 +207,8 @@
                 android:padding="6dp"
                 android:textSize="14sp"
                 android:text="@string/permission_level_active"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:imeOptions="actionSend" />
         </LinearLayout>
 

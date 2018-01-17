@@ -91,11 +91,15 @@ public class GetTableFragment extends BaseFragment
 
         mTableNameSpinner = view.findViewById( R.id.sp_table_list);
 
-        // NEW_ACCOUNT_SUGGEST
         setupAccountHistory();
     }
 
     private void onGetTable() {
+        if ( StringUtils.isEmpty(mTvCode.getText().toString()) || (mTableNameSpinner.getSelectedItem() == null ) ){
+            showToast(R.string.select_action_after_tables);
+            return;
+        }
+
         mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString());
     }
 

@@ -46,10 +46,9 @@ import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
 import io.mithrilcoin.eoscommander.ui.file.FileChooserActivity;
 import io.mithrilcoin.eoscommander.ui.push.abiview.MsgInputActivity;
-import io.mithrilcoin.eoscommander.ui.push.abiview.EosAbiViewBuilder;
+import io.mithrilcoin.eoscommander.ui.push.abiview.AbiViewBuilder;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.UiUtils;
-import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -65,7 +64,7 @@ public class PushFragment extends BaseFragment
     private AppCompatSpinner mActionSpinner;
     private ArrayAdapter<String> mActionNameAdapter;
 
-    private EosAbiViewBuilder mAbiViewBuilder;
+    private AbiViewBuilder mAbiViewBuilder;
     private MultiAutoCompleteTextView mEtScopes;
     private AutoCompleteTextView mEtPermissionAccount;
     private EditText mEtPermissionName;
@@ -91,7 +90,7 @@ public class PushFragment extends BaseFragment
             mPresenter.attachView( this );
         }
 
-        mAbiViewBuilder = new EosAbiViewBuilder();
+        mAbiViewBuilder = new AbiViewBuilder();
 
         return view;
     }
@@ -136,7 +135,12 @@ public class PushFragment extends BaseFragment
     }
 
     private void onPushAction() {
-        mPresenter.pushMessage(mEtContract.getText().toString(),""// mEtAction.getText().toString()      // contract, action
+        if ( mActionSpinner.getSelectedItem() == null ){
+            showToast(R.string.select_action_after_abi);
+            return;
+        }
+
+        mPresenter.pushMessage(mEtContract.getText().toString(),mActionSpinner.getSelectedItem().toString()// mEtAction.getText().toString()      // contract, action
                 , mEtMsg.getText().toString() // message,
                 , mEtScopes.getText().toString()   // scope
                 , mEtPermissionAccount.getText().toString()     // account for permission
@@ -150,24 +154,9 @@ public class PushFragment extends BaseFragment
         }
 
         hideKeyboard();
+
         mPresenter.onGetAbiClicked( name );
     }
-
-//    @Override
-//    public void setupAccountHistory(List<String> recentAccounts){
-//        UiUtils.setupRecentAccountSuggest( mEtContract, recentAccounts );
-//
-//        // when contract selected
-//        mEtContract.setOnItemClickListener( (adapterView, view, position, id) -> {
-//            ListAdapter adapter = mEtContract.getAdapter();
-//            if ( (null != adapter ) && !StringUtils.isEmpty( (String) adapter.getItem(position)) ){
-//                onContractEntered( (String) adapter.getItem(position) );
-//            }
-//        });
-//
-//        UiUtils.setupRecentAccountSuggest( mEtScopes, recentAccounts );
-//        UiUtils.setupRecentAccountSuggest( mEtPermissionAccount, recentAccounts );
-//    }
 
     private void setupAccountHistory(){
 
@@ -202,7 +191,7 @@ public class PushFragment extends BaseFragment
                 }
             }
             else {
-                Timber.e("error failed abi view!");
+                showToast( R.string.err_create_msg_input);
             }
         }
         else {

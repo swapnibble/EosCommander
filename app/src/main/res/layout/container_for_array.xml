@@ -18,7 +18,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="right"
             android:layout_marginRight="16dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             tools:text="label"/>
 
         <android.support.v7.widget.AppCompatSpinner
@@ -26,8 +26,6 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:textSize="16sp"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:padding="8dp"

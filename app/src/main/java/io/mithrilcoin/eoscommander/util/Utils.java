@@ -24,13 +24,17 @@
 package io.mithrilcoin.eoscommander.util;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by swapnibble on 2017-10-18.
@@ -73,6 +77,35 @@ public class Utils {
             closeSilently( parcelFD ); // parcel 쪽을 먼저 close 해야 함.
             closeSilently( fi );
         }
+    }
+
+    public static String readFile(Context context, String fileName) {
+        StringBuilder returnString = new StringBuilder();
+        InputStream fIn = null;
+        InputStreamReader isr = null;
+        BufferedReader input = null;
+        try {
+            fIn = context.getResources().getAssets().open(fileName);
+            isr = new InputStreamReader(fIn);
+            input = new BufferedReader(isr);
+            String line;
+            while ((line = input.readLine()) != null) {
+                returnString.append(line);
+            }
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (isr != null) isr.close();
+                if (fIn != null) fIn.close();
+                if (input != null) input.close();
+            } catch (Exception e2) {
+                //e2.getMessage();
+                e2.printStackTrace();
+            }
+        }
+        return returnString.toString();
     }
 
 

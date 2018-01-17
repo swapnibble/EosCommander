@@ -65,6 +65,10 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
     }
 
     public void onGetTableListClicked( String contract ){
+        if ( StringUtils.isEmpty(contract) ){
+            return;
+        }
+
         getMvpView().showLoading( true );
 
         addDisposable( mDataManager.getCodeAbi( contract )

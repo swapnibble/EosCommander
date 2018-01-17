@@ -23,8 +23,6 @@
  */
 package io.mithrilcoin.eoscommander.ui.push;
 
-import java.util.List;
-
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.ui.base.MvpView;
 

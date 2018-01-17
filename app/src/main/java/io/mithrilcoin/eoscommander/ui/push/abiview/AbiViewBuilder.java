@@ -30,8 +30,6 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONObject;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ import io.mithrilcoin.eoscommander.util.StringUtils;
  * Created by swapnibble on 2017-12-26.
  */
 
-public class EosAbiViewBuilder implements DynAbiViewCallback {
+public class AbiViewBuilder implements AbiViewCallback {
     private Map<String, Class<? extends AbiViewBaseHolder>> mBuiltinTypeToVH;
     private LayoutInflater mLayoutInflater;
 
@@ -193,44 +191,52 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
         return tv;
     }
 
+
     public View getViewForAction(ViewGroup parentView, String actionName ) {
         mLayoutInflater = LayoutInflater.from( parentView.getContext() );
 
         EosAbiAction abiAction = mActions.get( actionName );
         if ( null == abiAction ){
-            return getErrorMsgTextView( parentView, " Error: No action defined: " + actionName);
+            return getErrorMsgTextView( parentView, "Error: No action defined: " + actionName);
         }
+
+        AbiViewBaseHolder.setDynViewCallback( this);
+
+        return onRequestAbiViewHolder( abiAction.type, parentView);
+    }
+
+    @Override
+    public View onRequestAbiViewHolder(String typeName, ViewGroup parentView) {
 
         RefValue<Boolean> isArray = new RefValue<>(false);
 
-        String resolvedType = resolveType( abiAction.type, isArray ) ;
+        String resolvedType = resolveType( typeName, isArray ) ;
         if ( StringUtils.isEmpty( resolvedType )) {
-            return getErrorMsgTextView( parentView, " Error: Unknown type for action:" + actionName);
+            return getErrorMsgTextView( parentView, "Unknown type:" + typeName);
         }
 
         EosAbiStruct actionStruct = mStructs.get( resolvedType );
-        ViewGroup actionRootView;
+        ViewGroup abiView;
 
         if (null != actionStruct) {
             // action 의 root
             // holder create
             AbiStructViewHolder structViewHolder = new AbiStructViewHolder(null, resolvedType, isArray.data, this, mLayoutInflater, parentView);
-            actionRootView = structViewHolder.getContainerView();
+            abiView = structViewHolder.getContainerView();
         }
         else {
-            actionRootView = getViewHolderForBuiltinType( null, resolvedType, isArray.data, parentView).getContainerView();
+            abiView = getViewHolderForBuiltinType( null, resolvedType, isArray.data, parentView).getContainerView();
         }
 
-        if ( actionRootView == null ) {
-            return getErrorMsgTextView( parentView, "Unknown type " + resolvedType + " for action " + actionName );
+        if ( abiView == null ) {
+            return getErrorMsgTextView( parentView, "Unknown type " + resolvedType );
         }
 
-        return actionRootView;
+        return abiView;
     }
 
     @Override
-    public void onRequestStructView(String structName, ViewGroup parentView) {
-
+    public void onRequestViewForStruct( String structName, ViewGroup parentView){
         EosAbiStruct abiStruct = mStructs.get( resolveType(structName, null) );
         if ( abiStruct != null ) {
             buildViewForStruct( abiStruct, parentView);
@@ -242,7 +248,7 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
         if (!StringUtils.isEmpty(abiStruct.base) ) {
 
             EosAbiStruct baseStruct = mStructs.get( resolveType( abiStruct.base, null) );
-            if (abiStruct != null) {
+            if (baseStruct != null) {
                 buildViewForStruct( baseStruct, parentView); // recursive call
             }
             else {
@@ -271,16 +277,16 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
 
             isArray.data = false; // initialize
 
-            String resolvedType = resolveType( fields.get(keyName), isArray );
-            if ( StringUtils.isEmpty( resolvedType ) ) {
+            String rType = resolveType( fields.get(keyName), isArray );
+            if ( StringUtils.isEmpty( rType ) ) {
                 parentView.addView( getErrorMsgTextView( parentView, "UnknownTypeFor: " + keyName) );
                 continue;
             }
 
-            String typeForView = getArrayTypeIfNeeded( resolvedType, isArray.data);
+            String typeForView = getArrayTypeIfNeeded( rType, isArray.data);
 
             // struct 를 받고
-            EosAbiStruct abiStruct = mStructs.get( resolvedType );
+            EosAbiStruct abiStruct = mStructs.get( rType );
             AbiViewBaseHolder<?> abiViewHolder;
             if ( abiStruct != null){
                 // nested layout 을 inflate 한다.
@@ -288,11 +294,14 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
             }
             else {
                 // maybe built-in type
-                abiViewHolder = getViewHolderForBuiltinType( keyName, resolvedType, isArray.data, parentView);
+                abiViewHolder = getViewHolderForBuiltinType( keyName, rType, isArray.data, parentView);
             }
 
             if ( abiViewHolder != null) {
                 abiViewHolder.attachContainerToParent(parentView);
+            }
+            else {
+                parentView.addView( getErrorMsgTextView( parentView, "Error creating view: "+ keyName));
             }
         }
     }
@@ -300,9 +309,9 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
     private AbiViewBaseHolder getViewHolderForBuiltinType(String key, String type, boolean isArray, ViewGroup parentView ){
 
 
-        Class< ? extends AbiViewBaseHolder> viewHolder = mBuiltinTypeToVH.get( type );
+        Class< ? extends AbiViewBaseHolder> viewHolderClazz = mBuiltinTypeToVH.get( type );
 
-        if ( null == viewHolder ) {
+        if ( null == viewHolderClazz ) {
             return null;
         }
 
@@ -310,7 +319,7 @@ public class EosAbiViewBuilder implements DynAbiViewCallback {
         try {
 
             Constructor< ? extends AbiViewBaseHolder> constructor
-                    = viewHolder.getConstructor( String.class, String.class, Boolean.TYPE, LayoutInflater.class, ViewGroup.class);
+                    = viewHolderClazz.getConstructor( String.class, String.class, Boolean.TYPE, LayoutInflater.class, ViewGroup.class);
 
             if ( null != constructor ) {
                 result = constructor.newInstance(new Object[]{key, type, isArray, mLayoutInflater, parentView});

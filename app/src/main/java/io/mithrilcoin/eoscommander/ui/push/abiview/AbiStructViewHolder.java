@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,11 +38,11 @@ import io.mithrilcoin.eoscommander.util.StringUtils;
  * Created by swapnibble on 2017-12-28.
  */
 
-public class AbiStructViewHolder extends AbiViewBaseHolder<Void> {
+public class AbiStructViewHolder extends AbiViewBaseHolder<JSONObject> {
 
-    private DynAbiViewCallback mDynViewCallback;
+    private AbiViewCallback mDynViewCallback;
 
-    public AbiStructViewHolder(String key, String type, boolean isArray, DynAbiViewCallback callback, LayoutInflater layoutInflater, ViewGroup parentView) {
+    public AbiStructViewHolder(String key, String type, boolean isArray, AbiViewCallback callback, LayoutInflater layoutInflater, ViewGroup parentView) {
         super(key, type, isArray);
         mDynViewCallback = callback;
 
@@ -53,26 +52,59 @@ public class AbiStructViewHolder extends AbiViewBaseHolder<Void> {
     @Override
     protected View getItemView(LayoutInflater layoutInflater, ViewGroup parentView, String label) {
         // 배열일 경우, 아래의 view 를 계속해서 붙여나간다. 그후, 해당 child view holder 를 만든다.( child view 들을 붙여야 한다. )
-        ViewGroup vg = (ViewGroup)layoutInflater.inflate( R.layout.label_with_struct, parentView, false);
+        ViewGroup container = (ViewGroup)layoutInflater.inflate( R.layout.label_with_struct, parentView, false);
 
-        TextView tvLabel = vg.findViewById( R.id.tv_label);
+        setItemViewLabel( container, label );
+
+        // filed view 들을 만들고, view holder 를 붙여서 받자.
+        if ( null != mDynViewCallback ) {
+            mDynViewCallback.onRequestViewForStruct(getTypeName(), container);
+        }
+
+        return container;
+    }
+
+    @Override
+    protected void setItemViewLabel( View itemView, String label){
+        if ( itemView == null ) {
+            return;
+        }
+
+        TextView tvLabel = itemView.findViewById( R.id.tv_label);
+
         if (StringUtils.isEmpty( label )){
             tvLabel.setVisibility( View.GONE );
         }
         else {
+            tvLabel.setVisibility( View.VISIBLE );
             tvLabel.setText( label );
         }
-
-        if ( null != mDynViewCallback ) {
-            mDynViewCallback.onRequestStructView( getTypeName(), vg);
-        }
-
-        return vg;
     }
 
+//    protected void setLabel(String label){
+//        TextView tvLabel = getContainerView().findViewById( R.id.tv_label);
+//        if (StringUtils.isEmpty( label )){
+//            tvLabel.setVisibility( View.GONE );
+//        }
+//        else {
+//            tvLabel.setText( label );
+//        }
+//    }
+
     @Override
-    protected Void getItemValue(View itemView) {
-        return null;
+    protected JSONObject getItemValue(View itemView) {
+        ViewGroup container = getContainerView();
+        int childCount = container.getChildCount();
+
+        JSONObject jsonObject = new JSONObject();
+
+        for ( int i = 0; i < childCount; i++ ) {
+            if ( container.getChildAt(i).getTag() instanceof AbiViewBaseHolder) {
+                ((AbiViewBaseHolder)container.getChildAt(i).getTag()).writeJson( jsonObject );
+            }
+        }
+
+        return jsonObject;
     }
 
 

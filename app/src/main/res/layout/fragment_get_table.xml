@@ -63,6 +63,7 @@
             android:id="@+id/sp_table_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_alignBaseline="@+id/label_table_name"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:padding="8dp"

@@ -55,7 +55,7 @@ public class MsgInputActivity extends BaseActivity implements MsgInputMvpView{
 
     private String mActionName;
     private ViewGroup mActionUiRoot;
-    private EosAbiViewBuilder mAbiViewBuilder;
+    private AbiViewBuilder mAbiViewBuilder;
 
     public static Intent getLaunchIntent(Context context, String abiObjKey, String actionName) {
         Intent intent = new Intent(context, MsgInputActivity.class);
@@ -127,7 +127,7 @@ public class MsgInputActivity extends BaseActivity implements MsgInputMvpView{
         }
 
         if ( mAbiViewBuilder == null ) {
-            mAbiViewBuilder = new EosAbiViewBuilder();
+            mAbiViewBuilder = new AbiViewBuilder();
         }
 
         mAbiViewBuilder.setAbiMain( abiMain);
