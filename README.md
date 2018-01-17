@@ -25,7 +25,7 @@ You shoud have running eosd node.
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOS version [f5c1732](https://github.com/EOSIO/eos/tree/f5c1732526c35e1037488beb133cf205757ee860).
+EOS Commander has been tested with EOS version [83009a6](https://github.com/EOSIO/eos/tree/83990a6494a8e2dfcd445c098a677cbec8f71d7b).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -93,7 +93,8 @@ Transfer eos. (Push transfer message on built-in `eos` smart contract)
 <a name="push"></a>
 ## Push
 Push the contract message.
-[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#pushamessage)
+[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#pushamessage)  
+You can type json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
 
 <a name="get_table"></a>
 ## Get table
