@@ -37,7 +37,11 @@ On the console type:
 Open in Android studio 3.0 or later.
 
 ### Install from Play Store
-You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)
+You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
+
+Or download apk : [link](https://github.com/mithrilcoin-io/EosCommander/blob/master/EosCommander-v1.1.0-release.apk)  
+( SHA1 : 901fc681228e334cbbbe2797ad9190a181da371b, SHA256: 74fd9936ce50ab1cad644d58f23862ff233f94c8973b2cddf8a8637e9ffea2b5)  
+
 
 <a name="set_connection"></a>
 ## Set connection  
