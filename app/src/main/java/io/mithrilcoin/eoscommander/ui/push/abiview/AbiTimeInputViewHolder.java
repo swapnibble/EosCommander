@@ -89,6 +89,7 @@ public class AbiTimeInputViewHolder extends AbiViewBaseHolder<String> {
         }
 
         if ( buttonView.getTag() instanceof TextInputEditText ) {
+            // http://en.wikipedia.org/wiki/ISO_860
             ((TextInputEditText)buttonView.getTag()).setText( new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss").format( date));
         }
     }

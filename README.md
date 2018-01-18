@@ -39,7 +39,7 @@ Open in Android studio 3.0 or later.
 ### Install from Play Store
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
 
-Or download apk : [link](https://github.com/mithrilcoin-io/files/blob/master/EosCommander-v1.1.0-release.apk?raw=true)  
+Or download apk : [link](https://github.com/mithrilcoin-io/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
 SHA1 : 901fc681228e334cbbbe2797ad9190a181da371b  
 SHA256: 74fd9936ce50ab1cad644d58f23862ff233f94c8973b2cddf8a8637e9ffea2b5  
 

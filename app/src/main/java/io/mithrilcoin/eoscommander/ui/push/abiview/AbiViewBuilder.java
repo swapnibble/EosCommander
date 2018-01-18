@@ -128,16 +128,16 @@ public class AbiViewBuilder implements AbiViewCallback {
         mBuiltinTypeToVH.put( "uint8", AbiIntegerViewHolder.class );
         mBuiltinTypeToVH.put( "uint16", AbiIntegerViewHolder.class );
         mBuiltinTypeToVH.put( "uint32", AbiIntegerViewHolder.class );
-        mBuiltinTypeToVH.put( "uint64", AbiIntegerViewHolder.class );
-        mBuiltinTypeToVH.put( "uint128", AbiIntegerViewHolder.class );
-        mBuiltinTypeToVH.put( "uint256", AbiIntegerViewHolder.class );
+        mBuiltinTypeToVH.put( "uint64", AbiBigIntegerViewHolder.class );
+        mBuiltinTypeToVH.put( "uint128", AbiBigIntegerViewHolder.class );
+        mBuiltinTypeToVH.put( "uint256", AbiBigIntegerViewHolder.class );
 
         mBuiltinTypeToVH.put( "int8", AbiIntegerViewHolder.class );
         mBuiltinTypeToVH.put( "int16",  AbiIntegerViewHolder.class );
         mBuiltinTypeToVH.put( "int32", AbiIntegerViewHolder.class );
         mBuiltinTypeToVH.put( "int64", AbiIntegerViewHolder.class );
 
-        // time : int32, sec after epoch
+        // time :
         mBuiltinTypeToVH.put( "time", AbiTimeInputViewHolder.class );
 
         // bytes : hex string
