@@ -113,7 +113,7 @@ Lists the contract table.
 <a name="lincense"></a>
 ## License
 
-    Copyright 2017 Mithril coin.
+    Copyright (c) 2017-2018 Mithril coin.
 
     The MIT License
 
