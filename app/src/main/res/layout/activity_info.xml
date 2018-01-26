@@ -35,7 +35,7 @@
         android:layout_height="64dp"
         android:scaleType="fitXY"
         android:layout_gravity="center"
-        android:tint="@color/colorMithril"
+        android:tint="@color/colorWhite"
         app:srcCompat="@drawable/ic_mithril_logo" />
 
     <TextView
@@ -59,6 +59,7 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:autoLink="web"
+        android:textColorLink="@color/colorWhite"
         android:text="@string/info_mithril_web"/>
 
     <TextView
@@ -71,6 +72,7 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:autoLink="web"
+        android:textColorLink="@color/colorWhite"
         android:text="@string/info_mithril_github"/>
 
     <TextView
@@ -83,6 +85,7 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:autoLink="web"
+        android:textColorLink="@color/colorWhite"
         android:text="@string/info_mithril_telegram"/>
 
     <TextView
@@ -95,6 +98,7 @@
         android:textColor="@color/colorWhite"
         android:gravity="center"
         android:autoLink="web"
+        android:textColorLink="@color/colorWhite"
         android:text="@string/info_mithril_facebook"/>
 
 </LinearLayout>
