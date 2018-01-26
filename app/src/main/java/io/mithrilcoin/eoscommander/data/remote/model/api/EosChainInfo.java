@@ -38,24 +38,34 @@ import java.util.Date;
 
 public class EosChainInfo {
 
+    @SerializedName("server_version")
+    @Expose
+    private String server_version;
+
     @SerializedName("head_block_num")
     @Expose
     private Integer headBlockNum;
+
     @SerializedName("last_irreversible_block_num")
     @Expose
     private Integer lastIrreversibleBlockNum;
+
     @SerializedName("head_block_id")
     @Expose
     private String headBlockId;
+
     @SerializedName("head_block_time")
     @Expose
     private String headBlockTime;
+
     @SerializedName("head_block_producer")
     @Expose
     private String headBlockProducer;
+
     @SerializedName("recent_slots")
     @Expose
     private String recentSlots;
+
     @SerializedName("participation_rate")
     @Expose
     private String participationRate;
@@ -135,7 +145,8 @@ public class EosChainInfo {
     }
 
     public String getBrief(){
-        return "head block num: " + headBlockNum
+        return    "server_version: "  + server_version
+                + "\nhead block num: " + headBlockNum
                 + "\nlast irreversible block: " + lastIrreversibleBlockNum
                 + "\nhead block time: " + headBlockTime
                 + "\nhead block producer: " + headBlockProducer ;

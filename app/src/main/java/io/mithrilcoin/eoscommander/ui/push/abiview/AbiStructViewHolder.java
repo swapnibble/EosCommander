@@ -81,16 +81,6 @@ public class AbiStructViewHolder extends AbiViewBaseHolder<JSONObject> {
         }
     }
 
-//    protected void setLabel(String label){
-//        TextView tvLabel = getContainerView().findViewById( R.id.tv_label);
-//        if (StringUtils.isEmpty( label )){
-//            tvLabel.setVisibility( View.GONE );
-//        }
-//        else {
-//            tvLabel.setText( label );
-//        }
-//    }
-
     @Override
     protected JSONObject getItemValue(View itemView) {
         ViewGroup container = getContainerView();
@@ -135,32 +125,4 @@ public class AbiStructViewHolder extends AbiViewBaseHolder<JSONObject> {
             e.printStackTrace();
         }
     }
-
-//    public void writeJson(JSONObject json){
-//        ViewGroup container = getContainerView();
-//
-//        if ( null == container){
-//            return;
-//        }
-//
-//        JSONObject nested = isRoot() ? json : new JSONObject();
-//
-//        // iterate all children
-//        int childCount = container.getChildCount();
-//
-//        for ( int i = 0 ; i < childCount; i++ ) {
-//            if ( container.getChildAt(i).getTag() instanceof AbiViewHolder) {
-//                ((AbiViewHolder) container.getChildAt(i).getTag()).writeJson( nested);
-//            }
-//        }
-//
-//        try {
-//            if ( ! isRoot() ) {
-//                json.put(getKeyName(), nested);
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

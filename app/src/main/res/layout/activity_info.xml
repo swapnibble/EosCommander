@@ -27,7 +27,7 @@
         android:paddingBottom="16dp"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:text="@string/info_txt1"/>
+        android:text="@string/app_title_with_ver_fmt"/>
 
     <ImageView
         android:id="@+id/iv_mithril_logo"
@@ -47,7 +47,7 @@
         android:paddingBottom="48dp"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:text="@string/info_txt2"/>
+        android:text="@string/mithril_coin_io"/>
 
     <TextView
         android:id="@+id/iv_mithril_web"

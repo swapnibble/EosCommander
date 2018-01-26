@@ -15,8 +15,8 @@
     <string name="connect">Connect</string>
     <string name="desc_for_connect_result">EOS network information will be displayed here when you connect.</string>
 
-    <string name="info_txt1">EOS Commander for developers\n\nby</string>
-    <string name="info_txt2">mithrilcoin.io</string>
+    <string name="app_title_with_ver_fmt">EOS Commander %s for developers\n\nby</string>
+    <string name="mithril_coin_io">mithrilcoin.io</string>
 
     <string name="info_mithril_web">Web\nhttps://mithrilcoin.io</string>
     <string name="info_mithril_github">Github\nhttps://github.com/mithrilcoin-io</string>
