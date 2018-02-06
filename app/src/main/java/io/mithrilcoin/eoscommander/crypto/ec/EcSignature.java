@@ -37,14 +37,16 @@ public class EcSignature {
 
     public final BigInteger r;
     public final BigInteger s;
+    public final CurveParam curveParam;
 
-    public EcSignature(BigInteger r, BigInteger s) {
+    public EcSignature(BigInteger r, BigInteger s, CurveParam curveParam) {
         this.r = r;
         this.s = s;
+        this.curveParam = curveParam;
     }
 
-    public EcSignature(BigInteger r, BigInteger s, int recId) {
-        this(r, s);
+    public EcSignature(BigInteger r, BigInteger s, CurveParam curveParam, int recId) {
+        this(r, s,curveParam);
 
         setRecid( recId );
     }
@@ -60,7 +62,7 @@ public class EcSignature {
      */
 
     public boolean isCanonical(){
-        return s.compareTo(Secp256k1Param.HALF_CURVE_ORDER) <= 0;
+        return s.compareTo( curveParam.halfCurveOrder()) <= 0 ; // Secp256k1Param.HALF_CURVE_ORDER) <= 0;
     }
 
     /**
@@ -77,7 +79,7 @@ public class EcSignature {
             //    N = 10
             //    s = 8, so (-8 % 10 == 2) thus both (r, 8) and (r, 2) are valid solutions.
             //    10 - 8 == 2, giving us always the latter solution, which is canonical.
-            return new EcSignature(r, Secp256k1Param.n.subtract(s));
+            return new EcSignature(r, curveParam.n().subtract(s), curveParam); //Secp256k1Param.n.subtract(s));
         } else {
             return this;
         }

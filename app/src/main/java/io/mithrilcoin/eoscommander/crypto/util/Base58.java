@@ -19,6 +19,7 @@ package io.mithrilcoin.eoscommander.crypto.util;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
+
 /**
  * <p>
  * Base58 is a way to encode Bitcoin addresses as numbers and letters. Note that
@@ -214,6 +215,7 @@ public class Base58 {
 
         return copyOfRange(temp, j - zeroCount, temp.length);
     }
+
 
     public static BigInteger decodeToBigInteger(String input) {
         return new BigInteger(1, decode(input));

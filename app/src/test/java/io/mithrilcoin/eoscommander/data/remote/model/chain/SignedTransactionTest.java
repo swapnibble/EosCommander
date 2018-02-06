@@ -28,8 +28,10 @@ import org.junit.Test;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import io.mithrilcoin.eoscommander.crypto.ec.CurveParam;
 import io.mithrilcoin.eoscommander.crypto.ec.EcDsa;
 import io.mithrilcoin.eoscommander.crypto.ec.EcSignature;
+import io.mithrilcoin.eoscommander.crypto.ec.EcTools;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.api.Message;
@@ -105,12 +107,13 @@ public class SignedTransactionTest {
         byte[] data = HexUtils.toBytes("369a790be1b3192fa6eccd0e8e90b39692145d30c75eda7e435df083e30801a3");
         BigInteger r = new BigInteger(HexUtils.toBytes("545c106dfd35900fab318cc12e208140abba086ab1112c543a808e2248ddb62d"));
         BigInteger s = new BigInteger(HexUtils.toBytes("5fe909c18582e792116e418e5491d18a5c98be34e5bdccb577d6fa59806e6a28"));
-        EcSignature signature = new EcSignature( r,s,1);
-        assertEquals("failed to recover pubKey from sig, (recId 1)", key.getPublicKey(), EcDsa.recoverPubKey(data, signature, 1) );
+        CurveParam curveParamK1 = EcTools.getCurveParam( CurveParam.SECP256_K1);
+        EcSignature signature = new EcSignature( r,s, curveParamK1,1);
+        assertEquals("failed to recover pubKey from sig, (recId 1)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1,data, signature, 1) );
 
         r = new BigInteger(HexUtils.toBytes("40361c656f284cd676d920108d3a63dfcf0779d0296cdb2f9421c0c1fd18244a"));
         s = new BigInteger(HexUtils.toBytes("284db40e8661d75067d45b6559266ba5345e86df0af83343951284121dddd1ec"));
-        signature = new EcSignature( r,s,0);
-        assertEquals("failed to recover pubKey from sig, (recId 0)", key.getPublicKey(), EcDsa.recoverPubKey(data, signature, 0) );
+        signature = new EcSignature( r,s, curveParamK1,0);
+        assertEquals("failed to recover pubKey from sig, (recId 0)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1, data, signature, 0) );
     }
 }

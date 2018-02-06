@@ -23,14 +23,13 @@
  */
 package io.mithrilcoin.eoscommander.crypto.ec;
 
-import com.google.common.base.Preconditions;
-
 import java.util.Arrays;
 
 import io.mithrilcoin.eoscommander.crypto.digest.Ripemd160;
 import io.mithrilcoin.eoscommander.crypto.util.Base58;
 import io.mithrilcoin.eoscommander.crypto.util.BitUtils;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
+import io.mithrilcoin.eoscommander.util.RefValue;
 
 
 /**
@@ -38,10 +37,10 @@ import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
  */
 
 public class EosPublicKey {
-    private static final String PUBKEY_PREFIX = "EOS";
     private static final int CHECK_BYTE_LEN = 4;
 
-    private long mCheck;
+    private final long mCheck;
+    private final CurveParam mCurveParam;
     private final byte[] mData;
 
     public static class IllegalEosPubkeyFormatException extends IllegalArgumentException {
@@ -51,29 +50,23 @@ public class EosPublicKey {
     }
 
     public EosPublicKey( byte[] data ){
+        this( data, EcTools.getCurveParam( CurveParam.SECP256_K1));
+    }
+
+    public EosPublicKey( byte[] data, CurveParam curveParam ){
         mData = Arrays.copyOf(data, 33);
+        mCurveParam = curveParam;
 
         mCheck= BitUtils.uint32ToLong( Ripemd160.from( mData, 0, mData.length).bytes(), 0 );
     }
 
     public EosPublicKey(String base58Str) {
-        Preconditions.checkArgument( base58Str.length() > PUBKEY_PREFIX.length());
-        Preconditions.checkArgument( PUBKEY_PREFIX.equals(base58Str.substring(0, PUBKEY_PREFIX.length())) );
 
-        byte[] decodedBytes = Base58.decode( base58Str.substring( PUBKEY_PREFIX.length()) );
-
-        long check_fromDecoded = BitUtils.uint32ToLong(decodedBytes, decodedBytes.length - CHECK_BYTE_LEN);
-
-        long check_fromCalculated = BitUtils.uint32ToLong( Ripemd160.from( decodedBytes, 0, decodedBytes.length - CHECK_BYTE_LEN ).bytes(), 0 );
-
-
-
-        if (check_fromDecoded != check_fromCalculated) {
-            throw new IllegalEosPubkeyFormatException(base58Str);
-        }
-
-        mCheck= check_fromDecoded;
-        mData = Arrays.copyOf(decodedBytes, decodedBytes.length - CHECK_BYTE_LEN);
+        RefValue<CurveParam> curveParamRefValue = new RefValue<>();
+        RefValue<Long> checksumRef = new RefValue<>();
+        mData = EosEcUtil.parseKeyBase58( base58Str, curveParamRefValue, checksumRef );
+        mCurveParam = curveParamRefValue.data;
+        mCheck = checksumRef.data;
     }
 
     public byte[] getBytes() {
@@ -84,15 +77,26 @@ public class EosPublicKey {
         return HexUtils.toHex( mData );
     }
 
+
+
     @Override
     public String toString() {
-        byte[] digest = Ripemd160.from( mData ).bytes();
+
+        byte[] postfixBytes = CurveParam.SECP256_K1 == mCurveParam.getCurveParamType() ? new byte[0] : "R1".getBytes();
+        byte[] toDigest = new byte[mData.length + postfixBytes.length];
+        System.arraycopy( mData, 0, toDigest, 0, mData.length);
+
+        if ( postfixBytes.length > 0) {
+            System.arraycopy(postfixBytes, 0, toDigest, mData.length, postfixBytes.length);
+        }
+
+        byte[] digest = Ripemd160.from( toDigest ).bytes();
         byte[] result = new byte[ CHECK_BYTE_LEN + mData.length];
 
         System.arraycopy( mData, 0, result, 0, mData.length);
         System.arraycopy( digest, 0, result, mData.length, CHECK_BYTE_LEN);
 
-        return PUBKEY_PREFIX + Base58.encode( result ) ;
+        return EosEcUtil.EOS_PREFIX + Base58.encode( result ) ;
     }
 
     @Override
