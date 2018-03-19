@@ -56,7 +56,7 @@ public class AbiStructViewHolder extends AbiViewBaseHolder<JSONObject> {
 
         setItemViewLabel( container, label );
 
-        // filed view 들을 만들고, view holder 를 붙여서 받자.
+        // field view 들을 만들고, view holder 를 붙여서 받자.
         if ( null != mDynViewCallback ) {
             mDynViewCallback.onRequestViewForStruct(getTypeName(), container);
         }

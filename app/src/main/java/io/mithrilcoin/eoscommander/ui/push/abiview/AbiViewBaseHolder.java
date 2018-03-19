@@ -145,7 +145,6 @@ public abstract class AbiViewBaseHolder<T> {
 
     private void onChangeArraySize( Context context, int newSize ) {
         if ( mCurArraySize < newSize ) {
-            //LayoutInflater inflater = LayoutInflater.from( context );
             // add new item views
             // first child is size spinner!
             String typeName = mTypeName.endsWith("[]") ? mTypeName.substring(0, mTypeName.length() - 2) : mTypeName;

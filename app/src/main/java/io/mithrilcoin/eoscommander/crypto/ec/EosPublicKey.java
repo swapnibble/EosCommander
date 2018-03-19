@@ -82,7 +82,7 @@ public class EosPublicKey {
     @Override
     public String toString() {
 
-        byte[] postfixBytes = CurveParam.SECP256_K1 == mCurveParam.getCurveParamType() ? new byte[0] : "R1".getBytes();
+        byte[] postfixBytes = CurveParam.SECP256_R1 == mCurveParam.getCurveParamType() ? EosEcUtil.PREFIX_R1.getBytes() : new byte[0] ;
         byte[] toDigest = new byte[mData.length + postfixBytes.length];
         System.arraycopy( mData, 0, toDigest, 0, mData.length);
 
