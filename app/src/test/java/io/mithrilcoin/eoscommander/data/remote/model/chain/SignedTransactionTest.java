@@ -34,7 +34,7 @@ import io.mithrilcoin.eoscommander.crypto.ec.EcSignature;
 import io.mithrilcoin.eoscommander.crypto.ec.EcTools;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
-import io.mithrilcoin.eoscommander.data.remote.model.api.Message;
+import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAsset;
 
 import static org.junit.Assert.*;
@@ -43,13 +43,17 @@ import static org.junit.Assert.*;
  * Created by swapnibble on 2017-10-18.
  */
 public class SignedTransactionTest {
+
     @Test
     public void setRefBlockId_okRefBlockNumAndPrefix() {
         SignedTransaction signedTransaction = new SignedTransaction();
         signedTransaction.setReferenceBlock( "000000044af9aacdb9329e7f875b44907bacb972e0c3ff49cd054660318c707e");
 
-        assertEquals( "incorrect ref block num", new BigInteger("4"), signedTransaction.getRefBlockNum());
-        assertEquals( "incorrect ref block prefix", new BigInteger(1, HexUtils.toBytes("7F9E32B9")), signedTransaction.getRefBlockPrefix());
+//        assertEquals( "incorrect ref block num", new BigInteger("4"), signedTransaction.getRefBlockNum());
+//        assertEquals( "incorrect ref block prefix", new BigInteger(1, HexUtils.toBytes("7F9E32B9")), signedTransaction.getRefBlockPrefix());
+
+        assertEquals( "incorrect ref block num", 4, signedTransaction.getRefBlockNum());
+        assertEquals( "incorrect ref block prefix", 0x7F9E32B9, signedTransaction.getRefBlockPrefix());
 
         assertEquals( "asset symbol parse error", "EOS", new TypeAsset(1).symbolName());
 
@@ -62,18 +66,17 @@ public class SignedTransactionTest {
     }
 
 
-
     private SignedTransaction createTxn( String contract, String action, String dataAsHex, String[] scopes, String[] permissions ){
-        Message msg = new Message();
-        msg.setCode( contract );
+        Action msg = new Action();
+        msg.setAccount( contract );
         msg.setAuthorization(permissions);
-        msg.setType( action );
+        msg.setName( action );
         msg.setData( dataAsHex );
 
         SignedTransaction txn = new SignedTransaction();
-        txn.setScope( scopes );
-        txn.addMessage( msg );
-        txn.setReadScopeList(new ArrayList<>(0));
+        // dawn3 does not request scopes.. txn.setScope( scopes );
+        txn.addAction( msg );
+        // dawn3 does not request scopes.. txn.setReadScopeList(new ArrayList<>(0));
         txn.setSignatures( new ArrayList<>());
 
         return txn;
@@ -91,7 +94,8 @@ public class SignedTransactionTest {
 
     @Test
     public void signTransactionNew_matchSignature(){
-        SignedTransaction txn =createTxn( "eos", "newaccount", CREATE_ACCOUNT_DATA_AS_HEX, new String[]{ "inita", "eos"}, new String[]{"inita@active"});
+        SignedTransaction txn =createTxn( "eos", "newaccount", CREATE_ACCOUNT_DATA_AS_HEX,
+                new String[]{ "inita", "eos"}, new String[]{"inita@active"});
 
         String head_block_id = "000009907e54bb84c7dc993e613e237f65dfbbc0a26f501b2ac7e1eb7b570df3";
         txn.setReferenceBlock(head_block_id);

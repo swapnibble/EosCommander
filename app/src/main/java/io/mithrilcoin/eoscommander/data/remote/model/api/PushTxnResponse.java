@@ -32,19 +32,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class PushTxnResponse {
 
-    @SerializedName("transaction_id")
     @Expose
-    private String transactionId;
-    @SerializedName("processed")
+    private String transaction_id;
+
     @Expose
     private Processed processed;
 
     public String getTransactionId() {
-        return transactionId;
+        return transaction_id;
     }
 
     public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
+        this.transaction_id = transactionId;
     }
 
     public Processed getProcessed() {

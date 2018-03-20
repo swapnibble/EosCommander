@@ -31,6 +31,7 @@ import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetRequiredKeys;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.PackedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.RequiredKeysResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
@@ -58,7 +59,7 @@ public interface EosdApi {
     Observable<JsonObject> getTable(@Body GetTableRequest body);
 
     @POST("/v1/chain/push_transaction")
-    Observable<PushTxnResponse> pushTransaction(@Body SignedTransaction body);
+    Observable<PushTxnResponse> pushTransaction(@Body PackedTransaction body);
 
     @POST("/v1/chain/push_transaction")
     Observable<JsonObject> pushTransactionRetJson(@Body SignedTransaction body);

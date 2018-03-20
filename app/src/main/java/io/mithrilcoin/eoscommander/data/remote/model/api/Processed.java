@@ -27,89 +27,25 @@ package io.mithrilcoin.eoscommander.data.remote.model.api;
  * Created by swapnibble on 2017-09-11.
  */
 
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.mithrilcoin.eoscommander.data.remote.model.chain.ActionTrace;
+
 public class Processed {
 
-    @SerializedName("ref_block_num")
     @Expose
-    private String refBlockNum;
-    @SerializedName("ref_block_prefix")
+    public String status;
+
     @Expose
-    private String refBlockPrefix;
-    @SerializedName("expiration")
+    public String id;
+
     @Expose
-    private String expiration;
-    @SerializedName("scope")
+    public List<ActionTrace> action_traces;
+
     @Expose
-    private List<String> scope = null;
-    @SerializedName("signatures")
-    @Expose
-    private List<String> signatures = null;
-    @SerializedName("messages")
-    @Expose
-    private List<Message> messages = null;
-    @SerializedName("output")
-    @Expose
-    private List<Output> output = null;
-
-    public String getRefBlockNum() {
-        return refBlockNum;
-    }
-
-    public void setRefBlockNum(String refBlockNum) {
-        this.refBlockNum = refBlockNum;
-    }
-
-    public String getRefBlockPrefix() {
-        return refBlockPrefix;
-    }
-
-    public void setRefBlockPrefix(String refBlockPrefix) {
-        this.refBlockPrefix = refBlockPrefix;
-    }
-
-    public String getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
-    }
-
-    public List<String> getScope() {
-        return scope;
-    }
-
-    public void setScope(List<String> scope) {
-        this.scope = scope;
-    }
-
-    public List<String> getSignatures() {
-        return signatures;
-    }
-
-    public void setSignatures(List<String> signatures) {
-        this.signatures = signatures;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public List<Output> getOutput() {
-        return output;
-    }
-
-    public void setOutput(List<Output> output) {
-        this.output = output;
-    }
-
+    public JsonElement deferred_transactions;
 }

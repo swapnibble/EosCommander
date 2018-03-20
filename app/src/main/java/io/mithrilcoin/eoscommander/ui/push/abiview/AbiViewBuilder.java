@@ -41,6 +41,7 @@ import java.util.TreeMap;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiAction;
+import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiField;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiStruct;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiTypeDef;
@@ -266,6 +267,42 @@ public class AbiViewBuilder implements AbiViewCallback {
         }
 
         return type;
+    }
+
+    private void buildViewForFields(List<EosAbiField> fields, ViewGroup parentView ) {
+        RefValue<Boolean> isArray = new RefValue<>(false);
+
+        for ( EosAbiField abiFiled : fields ) {
+
+            isArray.data = false; // initialize
+
+            String rType = resolveType( abiFiled.type, isArray );
+            if ( StringUtils.isEmpty( rType ) ) {
+                parentView.addView( getErrorMsgTextView( parentView, "UnknownTypeFor: " + abiFiled.name) );
+                continue;
+            }
+
+            String typeForView = getArrayTypeIfNeeded( rType, isArray.data);
+
+            // struct 를 받고
+            EosAbiStruct abiStruct = mStructs.get( rType );
+            AbiViewBaseHolder<?> abiViewHolder;
+            if ( abiStruct != null){
+                // nested layout 을 inflate 한다.
+                abiViewHolder = new AbiStructViewHolder( abiFiled.name, typeForView, isArray.data, this, mLayoutInflater, parentView);
+            }
+            else {
+                // maybe built-in type
+                abiViewHolder = getViewHolderForBuiltinType( abiFiled.name, rType, isArray.data, parentView);
+            }
+
+            if ( abiViewHolder != null) {
+                abiViewHolder.attachContainerToParent(parentView);
+            }
+            else {
+                parentView.addView( getErrorMsgTextView( parentView, "Error creating view: "+ abiFiled.name));
+            }
+        }
     }
 
     private void buildViewForFields(Map<String,String> fields, ViewGroup parentView ) {

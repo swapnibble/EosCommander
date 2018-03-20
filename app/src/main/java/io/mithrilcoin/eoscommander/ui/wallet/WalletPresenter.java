@@ -170,7 +170,7 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
     public void onShownPassword( String walletName, String password ) {
         // save default account when wallet is "default" and password is not empty( user allowed "save password" )
         if ( Consts.DEFAULT_WALLET_NAME.equals( walletName) && !StringUtils.isEmpty( password )) {
-            mDataManager.getPreferenceHelper().putDefaultAccountCreator( Consts.DEFAULT_INITA_ACCOUNT );
+            mDataManager.getPreferenceHelper().putDefaultAccountCreator( Consts.DEFAULT_SERVANT_ACCOUNT);
 
             mDataManager.getWalletManager().saveFile( Consts.DEFAULT_WALLET_NAME );
         }

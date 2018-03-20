@@ -22,35 +22,24 @@
  * SOFTWARE.
  */
 package io.mithrilcoin.eoscommander.data.remote.model.types;
-
-
-import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
-
 /**
  * Created by swapnibble on 2017-09-12.
  */
 
 public class TypeKeyPermissionWeight implements EosType.Packer {
-    byte[] mPubKey;
-    short mWeight = 0;
+    private TypePublicKey mPubKey;
+    private short mWeight = 0;
 
-    TypeKeyPermissionWeight(byte[] pubKey, short weight) {
+    public TypeKeyPermissionWeight(TypePublicKey pubKey, short weight) {
         mPubKey = pubKey;
         mWeight = weight;
-    }
-
-
-    TypeKeyPermissionWeight(String pubKeyInHex, int weight) {
-        this(HexUtils.toBytes(pubKeyInHex), (short)weight);
     }
 
 
     @Override
     public void pack(EosType.Writer writer) {
 
-        if ( null != mPubKey ) {
-            writer.putBytes(mPubKey);
-        }
+        mPubKey.pack( writer );
 
         writer.putShortLE( mWeight);
     }

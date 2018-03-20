@@ -31,7 +31,7 @@
     <string name="amount">Amount</string>
     <string name="send">보내기</string>
     <string name="create_wallet">지갑 생성</string>
-    <string name="create_wallet_default">기본(default) 지갑을 만들고\n샘플 inita 의 키를 import 합니다.</string>
+    <string name="create_wallet_default">기본(default) 지갑을 만들고\n샘플 eosio 의 키를 import 합니다.</string>
     <string name="new_wallet_name">새 지갑 이름</string>
     <string name="import_key">키 가져오기(import)</string>
     <string name="input_private_key">개인키 입력</string>

@@ -32,8 +32,8 @@ import java.util.ArrayList;
 public class TypeAuthority implements EosType.Packer {
 
     private int mThreshold;
-    private ArrayList<TypeKeyPermissionWeight> mKeys;
     private ArrayList<TypeAccountPermissionWeight> mAccounts;
+    private ArrayList<TypeKeyPermissionWeight> mKeys;
 
     TypeAuthority(int threshold, TypeKeyPermissionWeight oneKey, TypeAccountPermissionWeight onePermission) {
         mThreshold = threshold;
@@ -49,9 +49,9 @@ public class TypeAuthority implements EosType.Packer {
         }
     }
 
-    TypeAuthority(int threshold, String pubKeyInHex, String permission) {
+    TypeAuthority(int threshold, TypePublicKey pubKey, String permission) {
         this( threshold
-                ,( null == pubKeyInHex ? null: new TypeKeyPermissionWeight( pubKeyInHex, 1))
+                ,( null == pubKey ? null: new TypeKeyPermissionWeight( pubKey, (short)1))
                 ,( null == permission ? null : new TypeAccountPermissionWeight(permission)) );
     }
 
@@ -59,17 +59,11 @@ public class TypeAuthority implements EosType.Packer {
     public void pack(EosType.Writer writer) {
 
         writer.putIntLE( mThreshold);
-        writer.put( (byte) mKeys.size());
 
-        for (TypeKeyPermissionWeight oneKey : mKeys) {
-            oneKey.pack(writer);
-        }
+        // accounts
+        writer.putCollection( mAccounts );
 
-
-        writer.put( (byte) mAccounts.size());
-
-        for (TypeAccountPermissionWeight onePermission : mAccounts) {
-            onePermission.pack(writer);
-        }
+        // keys
+        writer.putCollection( mKeys );
     }
 }

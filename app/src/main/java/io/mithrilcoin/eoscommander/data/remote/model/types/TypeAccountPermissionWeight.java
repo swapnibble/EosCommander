@@ -28,7 +28,7 @@ package io.mithrilcoin.eoscommander.data.remote.model.types;
  */
 
 public class TypeAccountPermissionWeight implements EosType.Packer {
-    TypeAccountPermission mPermission;
+    TypePermissionLevel mPermission;
     short mWeight;
 
     /**
@@ -40,7 +40,7 @@ public class TypeAccountPermissionWeight implements EosType.Packer {
     }
 
     TypeAccountPermissionWeight(String nameForActive, short weight ) {
-        mPermission = new TypeAccountPermission( nameForActive, "active");
+        mPermission = new TypePermissionLevel( nameForActive, "active");
         mWeight = weight;
     }
 

@@ -35,47 +35,34 @@ public class EosNewAccount implements EosType.Packer {
     private TypeAuthority mOwner;
     private TypeAuthority mActive;
     private TypeAuthority mRecovery;
-    private TypeAsset mDeposit;
-
-//    public static class Deserializer implements JsonDeserializer<EosNewAccount> {
-//
-//        @Override
-//        public EosNewAccount deserialize(JsonElement json, Packer typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//            final JsonObject jsonObject = json.getAsJsonObject();
-//
-//            return null;
-//        }
-//    }
 
     public String getTypeName() {
         return "newaccount";
     }
 
     public EosNewAccount(String creator, String newName,
-                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery, TypeAsset deposit) {
+                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery ) {
 
-        this( new TypeAccountName(creator), new TypeAccountName(newName), owner, active, recovery, deposit );
+        this( new TypeAccountName(creator), new TypeAccountName(newName), owner, active, recovery );
     }
 
     public EosNewAccount( String creator, String newName,
-                          String ownerPubKeyInHex, String activePubKeyInHex, String recoveryAccountWithOneWeight) {
+                          TypePublicKey ownerPubKey, TypePublicKey activePubKey, String recoveryAccountWithOneWeight) {
 
         this( new TypeAccountName(creator), new TypeAccountName(newName)
-                , new TypeAuthority(1, ownerPubKeyInHex, null)
-                , new TypeAuthority(1, activePubKeyInHex, null)
-                , new TypeAuthority(1, null, recoveryAccountWithOneWeight)
-                , new TypeAsset(1) );
+                , new TypeAuthority(1, ownerPubKey, null)
+                , new TypeAuthority(1, activePubKey, null)
+                , new TypeAuthority(1, null, recoveryAccountWithOneWeight)  );
     }
 
     public EosNewAccount(TypeAccountName creator, TypeAccountName newName,
-                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery, TypeAsset deposit) {
+                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery) {
 
         mCreator = creator;
         mNewName = newName;
         mOwner = owner;
         mActive = active;
         mRecovery = recovery;
-        mDeposit = deposit;
     }
 
     public String getCreatorName(){
@@ -90,7 +77,6 @@ public class EosNewAccount implements EosType.Packer {
         mOwner.pack(writer);
         mActive.pack(writer);
         mRecovery.pack(writer);
-        mDeposit.pack(writer);
     }
 
     public String getAsHex() {

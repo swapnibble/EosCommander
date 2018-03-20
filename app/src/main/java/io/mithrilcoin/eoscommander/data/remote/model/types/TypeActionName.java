@@ -28,12 +28,12 @@ package io.mithrilcoin.eoscommander.data.remote.model.types;
 /**
  * Created by swapnibble on 2017-09-12.
  */
-public class TypeFuncName extends TypeName {
-    public TypeFuncName(long nameAsLong) {
+public class TypeActionName extends TypeName {
+    public TypeActionName(long nameAsLong) {
         super(nameAsLong);
     }
 
-    public TypeFuncName(String name) {
+    public TypeActionName(String name) {
         super(name);
     }
 

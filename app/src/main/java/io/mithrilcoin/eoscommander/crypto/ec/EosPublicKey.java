@@ -113,4 +113,8 @@ public class EosPublicKey {
 
         return BitUtils.areEqual( this.mData, ((EosPublicKey)other).mData);
     }
+
+    public boolean isCurveParamK1() {
+        return ( mCurveParam == null || CurveParam.SECP256_K1 == mCurveParam.getCurveParamType() );
+    }
 }

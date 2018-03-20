@@ -24,7 +24,6 @@
 package io.mithrilcoin.eoscommander.ui.account.create;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,6 +32,7 @@ import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosNewAccount;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypePublicKey;
 import io.mithrilcoin.eoscommander.data.wallet.EosWallet;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
@@ -126,7 +126,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
         // create account and save keys if successful.
         addDisposable( mDataManager
                 .createAccount( new EosNewAccount(creator, newAccount
-                        , mOwnerKey.getPublicKey().getBytesAsHexStr(), mActiveKey.getPublicKey().getBytesAsHexStr(), creator))
+                        , TypePublicKey.from( mOwnerKey.getPublicKey()) , TypePublicKey.from(mActiveKey.getPublicKey()) , creator))
                 .doOnNext( jsonObject -> mDataManager.addAccountHistory( creator, newAccount ))
                 .subscribeOn(getSchedulerProvider().io())
                 .doOnNext( pushTxnResult -> {

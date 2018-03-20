@@ -44,7 +44,7 @@ public class TypeName implements EosType.Packer {
         return (byte)0;
     }
 
-    static long string_to_name( String str ) {
+    static public long string_to_name( String str ) {
         if ( null == str ) {
             return 0L;
         }
@@ -71,7 +71,7 @@ public class TypeName implements EosType.Packer {
         return value;
     }
 
-    static String name_to_string( long nameAsLong ) {
+    static public String name_to_string( long nameAsLong ) {
         long tmp = nameAsLong;
 
         char[] result = new char[MAX_NAME_IDX + 1];

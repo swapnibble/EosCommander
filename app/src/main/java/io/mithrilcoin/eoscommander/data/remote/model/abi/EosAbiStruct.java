@@ -2,6 +2,7 @@ package io.mithrilcoin.eoscommander.data.remote.model.abi;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ public class EosAbiStruct {
     public String base;
 
     @Expose
-    public Map<String,String> fields; // key: name, value: type( built-in or another struct )
+    public List<EosAbiField> fields;
 
     @Override
     public String toString() {

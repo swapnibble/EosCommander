@@ -17,9 +17,8 @@ import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepositoryImp
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.EosdApi;
 import io.mithrilcoin.eoscommander.data.remote.HostInterceptor;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
-import io.mithrilcoin.eoscommander.data.remote.model.api.Message;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountPermission;
+import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
 import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.di.ApplicationContext;
 import io.mithrilcoin.eoscommander.util.RefValue;
@@ -57,8 +56,12 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient providesOkHttpClient(HostInterceptor interceptor) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(logging)
                 .build();
     }
 
@@ -66,9 +69,8 @@ public class AppModule {
     @Singleton
     Gson providesGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory( new Message.GsonTypeAdapterFactory() )
-                .registerTypeAdapterFactory( new TypeAccountPermission.GsonTypeAdapterFactory() )
-                .registerTypeAdapterFactory( new SignedTransaction.GsonTypeAdapterFactory() )
+                .registerTypeAdapterFactory( new Action.GsonTypeAdapterFactory() )
+                .registerTypeAdapterFactory( new TypePermissionLevel.GsonTypeAdapterFactory() )
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
     }

@@ -30,7 +30,7 @@ EOS Commander has been tested with EOS version [83009a6](https://github.com/EOSI
 See [EOSIO github](https://github.com/EOSIO/eos).
 
 ### Build
-On the console type:
+On the console name:
 
 	git clone https://github.com/mithrilcoin-io/eoscommander.git
 
@@ -65,8 +65,8 @@ You can run commands without signing. But in this case, the eosd must have been 
 
 <a name="getting_started"></a>
 ## Wallet
-### create default wallet and import key of inita.
-This creates a wallet named 'default' and import the private key of `inita` account.
+### create default wallet and import key of eosio.
+This creates a wallet named 'default' and import the private key of `eosio` account.
 [See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#walletimport)
 ### create wallet
 You can also create wallets other than "default".
@@ -99,7 +99,7 @@ Transfer eos. (Push transfer message on built-in `eos` smart contract)
 ## Push
 Push the contract message.
 [See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#pushamessage)  
-You can type json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
+You can name json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
 
 <a name="get_table"></a>
 ## Get table

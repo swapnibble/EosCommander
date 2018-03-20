@@ -37,7 +37,7 @@
     <string name="amount">Amount</string>
     <string name="send">Send</string>
     <string name="create_wallet">Create wallet</string>
-    <string name="create_wallet_default">Create default wallet\nand import key of sample inita</string>
+    <string name="create_wallet_default">Create default wallet\nand import key of sample eosio</string>
     <string name="new_wallet_name">New wallet name</string>
     <string name="import_key">Import key</string>
     <string name="input_private_key">Input private key</string>

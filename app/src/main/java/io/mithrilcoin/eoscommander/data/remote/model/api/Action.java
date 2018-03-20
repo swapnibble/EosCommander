@@ -36,33 +36,27 @@ import java.util.List;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountName;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountPermission;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeFuncName;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeActionName;
 
 /**
  * Created by swapnibble on 2017-09-11.
  */
 
-public class Message implements EosType.Packer {
-    private TypeAccountName code;
+public class Action implements EosType.Packer {
+    private TypeAccountName account;
 
-    private TypeFuncName type;
+    private TypeActionName name;
 
-    @SerializedName("authorization")
     @Expose
-    private List<TypeAccountPermission> authorization = null;
+    private List<TypePermissionLevel> authorization = null;
 
-    @SerializedName("data")
     @Expose
     private JsonElement data;
 
-    @SerializedName("hex_data")
-    @Expose
-    private String hexData = null;
-
-    public Message(String code, String type, TypeAccountPermission authorization, String data){
-        this.code = new TypeAccountName(code);
-        this.type = new TypeFuncName(type);
+    public Action(String account, String name, TypePermissionLevel authorization, String data){
+        this.account = new TypeAccountName(account);
+        this.name = new TypeActionName(name);
         this.authorization = new ArrayList<>();
         if ( null != authorization ) {
             this.authorization.add(authorization);
@@ -73,39 +67,39 @@ public class Message implements EosType.Packer {
         }
     }
 
-    public Message(String code, String type) {
-        this ( code, type, null, null);
+    public Action(String account, String name) {
+        this (account, name, null, null);
     }
 
-    public Message(){
+    public Action(){
         this ( null, null, null, null);
     }
 
-    public String getCode() {
-        return code.toString();
+    public String getAccount() {
+        return account.toString();
     }
 
-    public void setCode( String code) {
-        this.code = new TypeAccountName(code);
+    public void setAccount(String account) {
+        this.account = new TypeAccountName(account);
     }
 
-    public String getType() {
-        return type.toString();
+    public String getName() {
+        return name.toString();
     }
 
-    public void setType( String type) {
-        this.type = new TypeFuncName(type) ;
+    public void setName(String name) {
+        this.name = new TypeActionName(name) ;
     }
 
-    public List<TypeAccountPermission> getAuthorization() {
+    public List<TypePermissionLevel> getAuthorization() {
         return authorization;
     }
 
-    public void setAuthorization(List<TypeAccountPermission> authorization) {
+    public void setAuthorization(List<TypePermissionLevel> authorization) {
         this.authorization = authorization;
     }
 
-    public void setAuthorization(TypeAccountPermission[] authorization) {
+    public void setAuthorization(TypePermissionLevel[] authorization) {
         this.authorization.addAll( Arrays.asList( authorization) );
     }
 
@@ -115,8 +109,8 @@ public class Message implements EosType.Packer {
         }
 
         for ( String permissionStr : accountWithPermLevel ) {
-            String[] splited = permissionStr.split("@", 2);
-            authorization.add( new TypeAccountPermission(splited[0], splited[1]) );
+            String[] split = permissionStr.split("@", 2);
+            authorization.add( new TypePermissionLevel(split[0], split[1]) );
         }
     }
 
@@ -128,13 +122,10 @@ public class Message implements EosType.Packer {
         this.data = ( null != data) ? new JsonPrimitive(data) : null;
     }
 
-    public String getHexData() { return hexData; }
-    public void setHexData(String h){ this.hexData = h;}
-
     @Override
     public void pack(EosType.Writer writer) {
-        code.pack(writer);
-        type.pack(writer);
+        account.pack(writer);
+        name.pack(writer);
 
         writer.putCollection( authorization );
 
@@ -148,23 +139,23 @@ public class Message implements EosType.Packer {
         }
     }
 
-    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<Message> {
+    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<Action> {
         public GsonTypeAdapterFactory(){
-            super(Message.class);
+            super(Action.class);
         }
 
         @Override
-        protected void beforeWrite(Message source, JsonElement toSerialize) {
+        protected void beforeWrite(Action source, JsonElement toSerialize) {
             JsonObject jsonObject = toSerialize.getAsJsonObject();
-            jsonObject.addProperty("code", source.getCode());
-            jsonObject.addProperty("type", source.getType());
+            jsonObject.addProperty("account", source.getAccount());
+            jsonObject.addProperty("name", source.getName());
         }
 
         @Override
-        protected void afterRead(Message source, JsonElement deserialized) {
+        protected void afterRead(Action source, JsonElement deserialized) {
             JsonObject jsonObject = deserialized.getAsJsonObject();
-            source.setCode( jsonObject.get("code").getAsString() );
-            source.setType( jsonObject.get("type").getAsString() );
+            source.setAccount( jsonObject.get("account").getAsString() );
+            source.setName( jsonObject.get("name").getAsString() );
         }
     }
 }

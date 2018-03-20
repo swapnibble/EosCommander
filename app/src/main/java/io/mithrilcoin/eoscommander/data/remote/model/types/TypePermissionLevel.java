@@ -33,22 +33,22 @@ import io.mithrilcoin.eoscommander.data.remote.model.api.EoscGsonTypeAdapterFact
  * Created by swapnibble on 2017-09-12.
  */
 
-public class TypeAccountPermission implements EosType.Packer {
+public class TypePermissionLevel implements EosType.Packer {
 
-    private TypeAccountName mAccount;
+    private TypeAccountName mActor;
     private TypePermissionName mPermission;
 
-    public TypeAccountPermission(String accountName, String permissionName) {
-        mAccount = new TypeAccountName(accountName);
+    public TypePermissionLevel(String accountName, String permissionName) {
+        mActor = new TypeAccountName(accountName);
         mPermission = new TypePermissionName( permissionName);
     }
 
     public String getAccount(){
-        return mAccount.toString();
+        return mActor.toString();
     }
 
     public void setAccount(String accountName ){
-        mAccount = new TypeAccountName( accountName );
+        mActor = new TypeAccountName( accountName );
     }
 
     public String getPermission(){
@@ -62,26 +62,26 @@ public class TypeAccountPermission implements EosType.Packer {
     @Override
     public void pack(EosType.Writer writer) {
 
-        mAccount.pack(writer);
+        mActor.pack(writer);
         mPermission.pack(writer);
     }
 
-    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<TypeAccountPermission> {
+    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<TypePermissionLevel> {
         public GsonTypeAdapterFactory(){
-            super(TypeAccountPermission.class);
+            super(TypePermissionLevel.class);
         }
 
         @Override
-        protected void beforeWrite(TypeAccountPermission source, JsonElement toSerialize) {
+        protected void beforeWrite(TypePermissionLevel source, JsonElement toSerialize) {
             JsonObject jsonObject = toSerialize.getAsJsonObject();
-            jsonObject.addProperty("account", source.getAccount());
+            jsonObject.addProperty("actor", source.getAccount());
             jsonObject.addProperty("permission", source.getPermission());
         }
 
         @Override
-        protected void afterRead(TypeAccountPermission source, JsonElement deserialized) {
+        protected void afterRead(TypePermissionLevel source, JsonElement deserialized) {
             JsonObject jsonObject = deserialized.getAsJsonObject();
-            source.setAccount( jsonObject.get("account").getAsString() );
+            source.setAccount( jsonObject.get("actor").getAsString() );
             source.setPermission( jsonObject.get("permission").getAsString() );
         }
     }

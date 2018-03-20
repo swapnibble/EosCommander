@@ -31,13 +31,13 @@ package io.mithrilcoin.eoscommander.util;
 public final class Consts {
     public static final boolean DEFAULT_SKIP_SIGNING = true;
 
-    public static final String  DEFAULT_INITA_ACCOUNT = "inita";
+    public static final String DEFAULT_SERVANT_ACCOUNT = "eosio";
 
     public static final String  DEFAULT_WALLET_NAME = "default";
     public static final boolean DEFAULT_SAVE_PASSWORD= true;
 
     public static final String SAMPLE_PRIV_KEY_FOR_TEST = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3";
 
-    public static final String EOS_CONTRACT_NAME= "eos";
+    public static final String EOS_SYSTEM_ACCOUNT = "eosio";
     public static final int TX_EXPIRATION_IN_MILSEC = 30000;
 }

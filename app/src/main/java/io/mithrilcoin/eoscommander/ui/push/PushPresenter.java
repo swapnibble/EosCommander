@@ -143,8 +143,8 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         return parsed.toArray( new String[ parsed.size()]);
     }
 
-    private ArrayList<String> getAccountListForHistory( String[] scopeAccounts, String contract, String permissionAccount ){
-        ArrayList<String> historyAccounts = new ArrayList<>(Arrays.asList( scopeAccounts ));
+    private ArrayList<String> getAccountListForHistory( String contract, String permissionAccount ){
+        ArrayList<String> historyAccounts = new ArrayList<>(2);
         historyAccounts.add( contract );
         historyAccounts.add( permissionAccount );
 
@@ -159,12 +159,11 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         String[] permissions = ( StringUtils.isEmpty(permissionAccount) || StringUtils.isEmpty( permissionName))
                             ? null : new String[]{permissionAccount + "@" + permissionName };
 
-        String[] scopeAccounts = getArrayFromSeparator(scopes);
 
         addDisposable(
                 mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
-                                , scopeAccounts , permissions)
-                .mergeWith( jsonObject -> mDataManager.addAccountHistory( getAccountListForHistory(scopeAccounts, contract, permissionAccount) ))
+                                , permissions)
+                .mergeWith( jsonObject -> mDataManager.addAccountHistory( getAccountListForHistory( contract, permissionAccount) ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
