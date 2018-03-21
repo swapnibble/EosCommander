@@ -52,7 +52,7 @@ public class Action implements EosType.Packer {
     private List<TypePermissionLevel> authorization = null;
 
     @Expose
-    private JsonElement data;
+    private String data;
 
     public Action(String account, String name, TypePermissionLevel authorization, String data){
         this.account = new TypeAccountName(account);
@@ -63,7 +63,7 @@ public class Action implements EosType.Packer {
         }
 
         if ( null != data ) {
-            this.data = new JsonPrimitive(data);
+            this.data = data;
         }
     }
 
@@ -115,11 +115,11 @@ public class Action implements EosType.Packer {
     }
 
     public String getData() {
-        return ( null != data) ? data.getAsString() : null;
+        return data;
     }
 
     public void setData(String data) {
-        this.data = ( null != data) ? new JsonPrimitive(data) : null;
+        this.data = data;
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Action implements EosType.Packer {
         writer.putCollection( authorization );
 
         if ( null != data ) {
-            byte[] dataAsBytes = HexUtils.toBytes( data.getAsString() );
+            byte[] dataAsBytes = HexUtils.toBytes( data);
             writer.putVariableUInt(dataAsBytes.length);
             writer.putBytes( dataAsBytes );
         }

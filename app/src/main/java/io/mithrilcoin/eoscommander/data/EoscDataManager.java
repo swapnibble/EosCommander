@@ -138,17 +138,15 @@ public class EoscDataManager {
         } );
     }
 
-    private SignedTransaction createTransaction( String contract, String action, String dataAsHex,
+    private SignedTransaction createTransaction( String contract, String actionName, String dataAsHex,
                                 String[] permissions, EosChainInfo chainInfo ){
-        Action msg = new Action();
-        msg.setAccount( contract );
-        msg.setAuthorization(permissions);
-        msg.setName( action );
-        msg.setData( dataAsHex );
+        Action action = new Action(contract, actionName);
+        action.setAuthorization(permissions);
+        action.setData( dataAsHex );
 
         SignedTransaction txn = new SignedTransaction();
-        txn.addAction( msg );
-        txn.setSignatures( new ArrayList<>());
+        txn.addAction( action );
+        txn.putSignatures( new ArrayList<>());
 
 
         if ( null != chainInfo ) {

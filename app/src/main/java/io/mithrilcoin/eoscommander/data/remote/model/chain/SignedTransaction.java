@@ -44,6 +44,7 @@ import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
+import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-11.
@@ -54,7 +55,8 @@ public class SignedTransaction extends Transaction {
     @Expose
     private List<String> signatures = null;
 
-    private List<String> context_free_data = null;
+    @Expose
+    private List<String> context_free_data = new ArrayList<>();
 
 
     public SignedTransaction(){
@@ -70,16 +72,19 @@ public class SignedTransaction extends Transaction {
         return signatures;
     }
 
-    public void setSignatures(List<String> signatures) {
+    public void putSignatures(List<String> signatures) {
         this.signatures = signatures;
     }
 
 
     private Sha256 getDigestForSignature(TypeChainId chainId) {
         EosByteWriter writer = new EosByteWriter(255);
-        writer.putBytes(chainId.getBytes());
 
-        this.pack( writer);
+        // data layout to sign :
+        // [ {chainId}, {Transaction( parent class )} ]
+
+        writer.putBytes(chainId.getBytes());
+        super.pack( writer); // don't include members of current class!
 
         return Sha256.from(writer.toBytes());
     }
@@ -88,7 +93,6 @@ public class SignedTransaction extends Transaction {
         if ( null == this.signatures){
             this.signatures = new ArrayList<>();
         }
-
 
         EcSignature signature = EcDsa.sign(getDigestForSignature( chainId ), privateKey);
         this.signatures.add( signature.toString());

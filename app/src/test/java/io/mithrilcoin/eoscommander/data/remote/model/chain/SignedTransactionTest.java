@@ -77,7 +77,7 @@ public class SignedTransactionTest {
         // dawn3 does not request scopes.. txn.setScope( scopes );
         txn.addAction( msg );
         // dawn3 does not request scopes.. txn.setReadScopeList(new ArrayList<>(0));
-        txn.setSignatures( new ArrayList<>());
+        txn.putSignatures( new ArrayList<>());
 
         return txn;
     }

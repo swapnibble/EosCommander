@@ -29,6 +29,6 @@ public class PackedTransaction {
         stxn.pack(byteWriter);
 
         data = HexUtils.toHex( byteWriter.toBytes() );
-        signatures = new ArrayList<>(0);
+        signatures = stxn.getSignatures();
     }
 }

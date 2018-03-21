@@ -116,4 +116,24 @@ public class EosEcUtil {
 
         throw new IllegalArgumentException("Invalid format, checksum mismatch");
     }
+
+    public static String encodeForEosCrypto( byte[] data, CurveParam curveParam ) {
+        boolean isR1 = ( null != curveParam ) && ( curveParam.getCurveParamType() == CurveParam.SECP256_R1);
+
+        byte[] toHashData = new byte[ data.length + (isR1 ? PREFIX_R1.length() : 0) ];
+        System.arraycopy( data, 0, toHashData, 0, data.length);
+        if ( isR1 ) {
+            System.arraycopy( PREFIX_R1.getBytes(), 0, toHashData, data.length, PREFIX_R1.length());
+        }
+
+        byte[] result = new byte[ data.length + 4 ];
+
+        Ripemd160 ripemd160 = Ripemd160.from( toHashData); //byte[] data, int startOffset, int length
+        byte[] checksumBytes = ripemd160.bytes();
+
+        System.arraycopy( data, 0, result, 0, data.length); // copy source data
+        System.arraycopy( checksumBytes, 0, result, data.length, 4); // copy checksum data
+
+        return EOS_PREFIX + ( isR1 ? PREFIX_R1 : "") + Base58.encode( result );
+    }
 }

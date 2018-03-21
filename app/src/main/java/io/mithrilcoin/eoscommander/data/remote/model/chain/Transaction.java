@@ -15,7 +15,7 @@ import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 
 public class Transaction extends TransactionHeader {
     @Expose
-    private List<Action> context_free_actions = null;
+    private List<Action> context_free_actions = new ArrayList<>();
 
     @Expose
     private List<Action> actions = null;
