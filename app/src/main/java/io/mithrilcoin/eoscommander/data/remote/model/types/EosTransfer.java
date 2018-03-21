@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Mithril coin.
+ * Copyright (c) 2017-2018 Mithril coin.
  *
  * The MIT License
  *
@@ -31,23 +31,23 @@ import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
  */
 
 public class EosTransfer implements EosType.Packer {
-    private TypeAccountName mFrom;
-    private TypeAccountName mTo;
-    private long mAmount;
-    private String mMemo;
+    private TypeAccountName from;
+    private TypeAccountName to;
+    private long quantity;
+    private String memo;
 
-    public EosTransfer(String from, String to, long amount, String memo ) {
-        this( new TypeAccountName(from), new TypeAccountName(to), amount, memo );
+    public EosTransfer(String from, String to, long quantity, String memo ) {
+        this( new TypeAccountName(from), new TypeAccountName(to), quantity, memo );
     }
 
-    public EosTransfer(TypeAccountName from, TypeAccountName to, long amount, String memo ) {
-        mFrom = from;
-        mTo = to;
-        mAmount = amount;
-        mMemo = memo;
+    public EosTransfer(TypeAccountName from, TypeAccountName to, long quantity, String memo ) {
+        this.from = from;
+        this.to = to;
+        this.quantity = quantity;
+        this.memo = memo;
     }
 
-    public String getTypeName() {
+    public String getActionName() {
         return "transfer";
     }
 
@@ -55,12 +55,12 @@ public class EosTransfer implements EosType.Packer {
     @Override
     public void pack(EosType.Writer writer) {
 
-        mFrom.pack(writer);
-        mTo.pack(writer);
+        from.pack(writer);
+        to.pack(writer);
 
-        writer.putLongLE( mAmount);
+        writer.putLongLE(quantity);
 
-        writer.putString( mMemo );
+        writer.putString(memo);
     }
 
     public String getAsHex() {

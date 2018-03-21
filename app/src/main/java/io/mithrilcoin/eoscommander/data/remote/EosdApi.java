@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Mithril coin.
+ * Copyright (c) 2017-2018 Mithril coin.
  *
  * The MIT License
  *
@@ -62,10 +62,20 @@ public interface EosdApi {
     Observable<PushTxnResponse> pushTransaction(@Body PackedTransaction body);
 
     @POST("/v1/chain/push_transaction")
-    Observable<JsonObject> pushTransactionRetJson(@Body SignedTransaction body);
+    Observable<JsonObject> pushTransactionRetJson(@Body PackedTransaction body);
 
     @POST("/v1/chain/get_required_keys")
     Observable<RequiredKeysResponse> getRequiredKeys(@Body GetRequiredKeys body);
+
+
+
+    @POST("/v1/chain/get_currency_balance")
+    Observable<RequiredKeysResponse> getCurrencyBalance(@Body GetRequiredKeys body);
+
+    @POST("/v1/chain/get_currency_stats")
+    Observable<RequiredKeysResponse> getCurrencyStats(@Body GetRequiredKeys body);
+
+
 
     @POST("/v1/chain/abi_json_to_bin")
     Observable<JsonToBinResponse> jsonToBin(@Body JsonToBinRequest body);

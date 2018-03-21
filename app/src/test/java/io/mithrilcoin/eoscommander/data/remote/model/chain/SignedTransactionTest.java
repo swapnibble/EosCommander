@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Mithril coin.
+ * Copyright (c) 2017-2018 Mithril coin.
  *
  * The MIT License
  *
@@ -33,6 +33,7 @@ import io.mithrilcoin.eoscommander.crypto.ec.EcDsa;
 import io.mithrilcoin.eoscommander.crypto.ec.EcSignature;
 import io.mithrilcoin.eoscommander.crypto.ec.EcTools;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
+import io.mithrilcoin.eoscommander.crypto.util.BitUtils;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAsset;
@@ -43,6 +44,20 @@ import static org.junit.Assert.*;
  * Created by swapnibble on 2017-10-18.
  */
 public class SignedTransactionTest {
+
+    @Test
+    public void testSymbol(){
+        final int precision = 4;
+        final String name = "EOS";
+        long result = 0;
+        for ( int i = 0; i < name.length(); i++) {
+            result |= ((byte) name.charAt(i)) << 8*(i+1);
+        }
+
+        result |= precision;
+
+        System.out.println( "Symbol name: " + name +", symVal: 0x" + Long.toHexString( result));
+    }
 
     @Test
     public void setRefBlockId_okRefBlockNumAndPrefix() {

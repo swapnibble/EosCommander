@@ -46,7 +46,7 @@
                         android:background="@color/colorLight"
                         android:textColor="@color/colorPrimary"
                         android:textSize="12sp"
-                        tools:text="Response account" />
+                        tools:text="Response code" />
             </ScrollView>
 
 

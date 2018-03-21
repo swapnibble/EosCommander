@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Mithril coin.
+ * Copyright (c) 2017-2018 Mithril coin.
  *
  * The MIT License
  *
@@ -33,15 +33,12 @@ import java.util.List;
  */
 
 public class JsonToBinResponse {
-    @SerializedName("binargs")
     @Expose
     private String binargs;
 
-    @SerializedName("required_scope")
     @Expose
     private List<String> required_scope;
 
-    @SerializedName("required_auth")
     @Expose
     private List<String> required_auth;
 

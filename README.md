@@ -30,7 +30,7 @@ EOS Commander has been tested with EOS version [83009a6](https://github.com/EOSI
 See [EOSIO github](https://github.com/EOSIO/eos).
 
 ### Build
-On the console name:
+On the console type:
 
 	git clone https://github.com/mithrilcoin-io/eoscommander.git
 
@@ -99,7 +99,7 @@ Transfer eos. (Push transfer message on built-in `eos` smart contract)
 ## Push
 Push the contract message.
 [See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#pushamessage)  
-You can name json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
+You can type json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
 
 <a name="get_table"></a>
 ## Get table
