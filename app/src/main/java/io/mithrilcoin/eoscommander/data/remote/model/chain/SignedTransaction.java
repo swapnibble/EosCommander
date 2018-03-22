@@ -84,7 +84,7 @@ public class SignedTransaction extends Transaction {
         // [ {chainId}, {Transaction( parent class )} ]
 
         writer.putBytes(chainId.getBytes());
-        super.pack( writer); // don't include members of current class!
+        pack( writer); // don't include members of current class!
 
         return Sha256.from(writer.toBytes());
     }
@@ -98,22 +98,22 @@ public class SignedTransaction extends Transaction {
         this.signatures.add( signature.toString());
     }
 
-    private void putStringList(EosType.Writer writer, List<String> list){
-        if ( list == null || list.size() == 0) {
-            writer.putVariableUInt(0);
-            return;
-        }
+//    private void putStringList(EosType.Writer writer, List<String> list){
+//        if ( list == null || list.size() == 0) {
+//            writer.putVariableUInt(0);
+//            return;
+//        }
+//
+//        for ( String val : list ) {
+//            writer.putString( val );
+//        }
+//    }
 
-        for ( String val : list ) {
-            writer.putString( val );
-        }
-    }
-
-    @Override
-    public void pack(EosType.Writer writer) {
-        super.pack(writer);
-
-        putStringList( writer, signatures );
-        putStringList( writer, context_free_data );
-    }
+//    @Override
+//    public void pack(EosType.Writer writer) {
+//        super.pack(writer);
+//
+//        putStringList( writer, signatures );
+//        putStringList( writer, context_free_data );
+//    }
 }
