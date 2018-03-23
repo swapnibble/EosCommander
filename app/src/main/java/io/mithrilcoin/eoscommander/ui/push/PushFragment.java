@@ -140,7 +140,7 @@ public class PushFragment extends BaseFragment
             return;
         }
 
-        mPresenter.pushMessage(mEtContract.getText().toString(),mActionSpinner.getSelectedItem().toString()// mEtAction.getText().toString()      // contract, action
+        mPresenter.pushAction(mEtContract.getText().toString(),mActionSpinner.getSelectedItem().toString()// mEtAction.getText().toString()      // contract, action
                 , mEtMsg.getText().toString() // message,
                 , mEtScopes.getText().toString()   // scope
                 , mEtPermissionAccount.getText().toString()     // account for permission

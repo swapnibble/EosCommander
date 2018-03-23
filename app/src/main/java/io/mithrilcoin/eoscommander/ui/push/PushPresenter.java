@@ -33,7 +33,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import javax.inject.Inject;
@@ -151,7 +150,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         return historyAccounts;
     }
 
-    public void pushMessage( String contract, String action, String message, String scopes, String permissionAccount, String permissionName ){
+    public void pushAction(String contract, String action, String message, String scopes, String permissionAccount, String permissionName ){
 
         getMvpView().showLoading( true );
 
@@ -161,7 +160,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
 
         addDisposable(
-                mDataManager.pushMessage(contract, action, message.replaceAll("\\r|\\n","")
+                mDataManager.pushAction(contract, action, message.replaceAll("\\r|\\n","")
                                 , permissions)
                 .mergeWith( jsonObject -> mDataManager.addAccountHistory( getAccountListForHistory( contract, permissionAccount) ))
                 .subscribeOn( getSchedulerProvider().io())

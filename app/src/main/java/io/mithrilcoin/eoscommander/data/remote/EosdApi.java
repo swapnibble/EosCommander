@@ -69,11 +69,11 @@ public interface EosdApi {
 
 
 
-    @POST("/v1/chain/get_currency_balance")
-    Observable<RequiredKeysResponse> getCurrencyBalance(@Body GetRequiredKeys body);
-
-    @POST("/v1/chain/get_currency_stats")
-    Observable<RequiredKeysResponse> getCurrencyStats(@Body GetRequiredKeys body);
+//    @POST("/v1/chain/get_currency_balance")
+//    Observable<RequiredKeysResponse> getCurrencyBalance(@Body GetRequiredKeys body);
+//
+//    @POST("/v1/chain/get_currency_stats")
+//    Observable<RequiredKeysResponse> getCurrencyStats(@Body GetRequiredKeys body);
 
 
 

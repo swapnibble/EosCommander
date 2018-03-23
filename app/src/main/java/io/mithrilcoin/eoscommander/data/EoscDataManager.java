@@ -178,37 +178,12 @@ public class EoscDataManager {
     public Observable<JsonObject> readAccountInfo(String accountName ) {
         return mEosdApi.getAccountInfo(new AccountInfoRequest(accountName));
     }
-    /*
-    public Observable<JsonObject> pushMessage(String contract, String action, String message, String[] permissions) {
-
-        return mEosdApi.jsonToBin( new JsonToBinRequest( contract, action, message ))
-                .flatMap( jsonToBinResp -> getChainInfo()
-                                            .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
-                .flatMap( txn -> signAndPackTransaction( txn))
-                .flatMap( signedTxn -> mEosdApi.pushTransactionRetJson( signedTxn));
-    }
-     */
 
     public Observable<JsonObject> transferEos( String from, String to, long amount, String memo ) {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
 
-        return mEosdApi.jsonToBin( new JsonToBinRequest( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), new Gson().toJson( transfer )))
-                .flatMap( binResp -> getChainInfo()
-                                    .map ( info -> createTransaction( Consts.EOS_SYSTEM_ACCOUNT, transfer.getActionName()
-                                        , binResp.getBinargs(), getActivePermission(from), info )) )
-                .flatMap( this::signAndPackTransaction )
-                .flatMap( mEosdApi::pushTransactionRetJson );
-
-//        return getChainInfo()
-//                .map( info -> {
-//
-//
-//                    return createTransaction( Consts.EOS_SYSTEM_ACCOUNT, transfer.getTypeName(), transfer.getAsHex(),
-//                            getActivePermission(from), info);
-//                })
-//                .flatMap( txn -> signAndPackTransaction( txn ) )
-//                .flatMap( packedTxn -> mEosdApi.pushTransactionRetJson( packedTxn )) ;
+        return pushAction( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), new Gson().toJson( transfer ), getActivePermission(from));
     }
 
     public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
@@ -237,13 +212,13 @@ public class EoscDataManager {
         return mEosdApi.getAccountHistory( EosdApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
     }
 
-    public Observable<JsonObject> pushMessage(String contract, String action, String message, String[] permissions) {
+    public Observable<JsonObject> pushAction(String contract, String action, String data, String[] permissions) {
 
-        return mEosdApi.jsonToBin( new JsonToBinRequest( contract, action, message ))
+        return mEosdApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                                             .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
-                .flatMap( txn -> signAndPackTransaction( txn))
-                .flatMap( signedTxn -> mEosdApi.pushTransactionRetJson( signedTxn));
+                .flatMap( this::signAndPackTransaction )
+                .flatMap( mEosdApi::pushTransactionRetJson );
     }
 
     public Observable<EosAbiMain> getCodeAbi( String contract ) {

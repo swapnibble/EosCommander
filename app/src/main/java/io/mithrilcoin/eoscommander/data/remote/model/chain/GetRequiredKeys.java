@@ -35,7 +35,6 @@ import java.util.List;
  */
 
 public class GetRequiredKeys {
-    @SerializedName("transaction")
     @Expose
     private SignedTransaction transaction;
 
