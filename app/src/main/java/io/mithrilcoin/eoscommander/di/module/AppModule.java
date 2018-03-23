@@ -17,14 +17,13 @@ import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepositoryImp
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.EosdApi;
 import io.mithrilcoin.eoscommander.data.remote.HostInterceptor;
-import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeName;
+import io.mithrilcoin.eoscommander.data.remote.TypeNameGsonSerialization;
 import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.di.ApplicationContext;
 import io.mithrilcoin.eoscommander.util.RefValue;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -65,8 +64,9 @@ public class AppModule {
     @Singleton
     Gson providesGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory( new Action.GsonTypeAdapterFactory() )
-                .registerTypeAdapterFactory( new TypePermissionLevel.GsonTypeAdapterFactory() )
+                //.registerTypeAdapterFactory( new Action.GsonTypeAdapterFactory() )
+                //.registerTypeAdapterFactory( new TypePermissionLevel.GsonTypeAdapterFactory() )
+                .registerTypeAdapter(TypeName.class, new TypeNameGsonSerialization())
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
     }

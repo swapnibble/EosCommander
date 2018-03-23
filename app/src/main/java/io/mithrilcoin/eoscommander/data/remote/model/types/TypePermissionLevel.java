@@ -25,8 +25,8 @@ package io.mithrilcoin.eoscommander.data.remote.model.types;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import io.mithrilcoin.eoscommander.data.remote.model.api.EoscGsonTypeAdapterFactory;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -35,12 +35,17 @@ import io.mithrilcoin.eoscommander.data.remote.model.api.EoscGsonTypeAdapterFact
 
 public class TypePermissionLevel implements EosType.Packer {
 
-    private TypeAccountName mActor;
-    private TypePermissionName mPermission;
+    @SerializedName("actor")
+    @Expose
+    private TypeName mActor;
+
+    @SerializedName("permission")
+    @Expose
+    private TypeName mPermission;
 
     public TypePermissionLevel(String accountName, String permissionName) {
-        mActor = new TypeAccountName(accountName);
-        mPermission = new TypePermissionName( permissionName);
+        mActor = new TypeName(accountName);
+        mPermission = new TypeName(permissionName);
     }
 
     public String getAccount(){
@@ -48,7 +53,7 @@ public class TypePermissionLevel implements EosType.Packer {
     }
 
     public void setAccount(String accountName ){
-        mActor = new TypeAccountName( accountName );
+        mActor = new TypeName(accountName);
     }
 
     public String getPermission(){
@@ -56,7 +61,7 @@ public class TypePermissionLevel implements EosType.Packer {
     }
 
     public void setPermission(String permissionName ){
-        mPermission = new TypePermissionName( permissionName);
+        mPermission = new TypeName(permissionName);
     }
 
     @Override
@@ -64,25 +69,5 @@ public class TypePermissionLevel implements EosType.Packer {
 
         mActor.pack(writer);
         mPermission.pack(writer);
-    }
-
-    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<TypePermissionLevel> {
-        public GsonTypeAdapterFactory(){
-            super(TypePermissionLevel.class);
-        }
-
-        @Override
-        protected void beforeWrite(TypePermissionLevel source, JsonElement toSerialize) {
-            JsonObject jsonObject = toSerialize.getAsJsonObject();
-            jsonObject.addProperty("actor", source.getAccount());
-            jsonObject.addProperty("permission", source.getPermission());
-        }
-
-        @Override
-        protected void afterRead(TypePermissionLevel source, JsonElement deserialized) {
-            JsonObject jsonObject = deserialized.getAsJsonObject();
-            source.setAccount( jsonObject.get("actor").getAsString() );
-            source.setPermission( jsonObject.get("permission").getAsString() );
-        }
     }
 }

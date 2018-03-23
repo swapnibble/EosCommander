@@ -23,11 +23,7 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.api;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,18 +31,19 @@ import java.util.List;
 
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountName;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeName;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeActionName;
 
 /**
  * Created by swapnibble on 2017-09-11.
  */
 
 public class Action implements EosType.Packer {
-    private TypeAccountName account;
+    @Expose
+    private TypeName account;
 
-    private TypeActionName name;
+    @Expose
+    private TypeName name;
 
     @Expose
     private List<TypePermissionLevel> authorization = null;
@@ -55,8 +52,8 @@ public class Action implements EosType.Packer {
     private String data;
 
     public Action(String account, String name, TypePermissionLevel authorization, String data){
-        this.account = new TypeAccountName(account);
-        this.name = new TypeActionName(name);
+        this.account = new TypeName(account);
+        this.name = new TypeName(name);
         this.authorization = new ArrayList<>();
         if ( null != authorization ) {
             this.authorization.add(authorization);
@@ -80,7 +77,7 @@ public class Action implements EosType.Packer {
     }
 
     public void setAccount(String account) {
-        this.account = new TypeAccountName(account);
+        this.account = new TypeName(account);
     }
 
     public String getName() {
@@ -88,7 +85,7 @@ public class Action implements EosType.Packer {
     }
 
     public void setName(String name) {
-        this.name = new TypeActionName(name) ;
+        this.name = new TypeName(name);
     }
 
     public List<TypePermissionLevel> getAuthorization() {
@@ -136,26 +133,6 @@ public class Action implements EosType.Packer {
         }
         else {
             writer.putVariableUInt(0);
-        }
-    }
-
-    public static class GsonTypeAdapterFactory extends EoscGsonTypeAdapterFactory<Action> {
-        public GsonTypeAdapterFactory(){
-            super(Action.class);
-        }
-
-        @Override
-        protected void beforeWrite(Action source, JsonElement toSerialize) {
-            JsonObject jsonObject = toSerialize.getAsJsonObject();
-            jsonObject.addProperty("account", source.getAccount());
-            jsonObject.addProperty("name", source.getName());
-        }
-
-        @Override
-        protected void afterRead(Action source, JsonElement deserialized) {
-            JsonObject jsonObject = deserialized.getAsJsonObject();
-            source.setAccount( jsonObject.get("account").getAsString() );
-            source.setName( jsonObject.get("name").getAsString() );
         }
     }
 }

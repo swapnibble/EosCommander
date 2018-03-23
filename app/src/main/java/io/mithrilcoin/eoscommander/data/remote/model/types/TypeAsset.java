@@ -45,9 +45,9 @@ public class TypeAsset implements EosType.Packer {
             10000000000000L, 100000000000000L
     };
 
-    long mAmount;
-    final long mAssetSymbol;
-    final String mSymbolName;
+    private long mAmount;
+    private final long mAssetSymbol;
+    private final String mSymbolName;
 
     public static TypeAsset fromString(String value) {
         if ( null == value ) {
@@ -135,6 +135,8 @@ public class TypeAsset implements EosType.Packer {
     }
 
     public long assetSymbol(){ return mAssetSymbol;}
+
+    public long getAmount(){ return mAmount;}
 
     @Override
     public String toString() {

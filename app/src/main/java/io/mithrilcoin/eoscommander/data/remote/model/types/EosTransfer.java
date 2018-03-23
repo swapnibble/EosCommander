@@ -33,7 +33,7 @@ import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 public class EosTransfer implements EosType.Packer {
     private TypeAccountName from;
     private TypeAccountName to;
-    private long quantity;
+    private TypeAsset quantity;
     private String memo;
 
     public EosTransfer(String from, String to, long quantity, String memo ) {
@@ -43,7 +43,7 @@ public class EosTransfer implements EosType.Packer {
     public EosTransfer(TypeAccountName from, TypeAccountName to, long quantity, String memo ) {
         this.from = from;
         this.to = to;
-        this.quantity = quantity;
+        this.quantity = new TypeAsset(quantity);
         this.memo = memo;
     }
 
@@ -58,7 +58,7 @@ public class EosTransfer implements EosType.Packer {
         from.pack(writer);
         to.pack(writer);
 
-        writer.putLongLE(quantity);
+        writer.putLongLE(quantity.getAmount());
 
         writer.putString(memo);
     }
