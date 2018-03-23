@@ -95,7 +95,7 @@ public class AbiViewBuilder implements AbiViewCallback {
         if ( null != abi.actions) {
             mActions = new TreeMap<>();
             for ( EosAbiAction action : abi.actions ) {
-                mActions.put( action.action_name, action );
+                mActions.put( action.name, action );
             }
         }
         else {

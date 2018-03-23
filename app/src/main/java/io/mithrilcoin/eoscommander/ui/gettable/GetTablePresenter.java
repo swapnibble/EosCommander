@@ -56,7 +56,7 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
 
         ArrayList<String> names = new ArrayList<>( abiTables.size() );
         for ( EosAbiTable table : abiTables ){
-            names.add( table.table_name );
+            names.add( table.name );
         }
 
         Collections.sort( names);
