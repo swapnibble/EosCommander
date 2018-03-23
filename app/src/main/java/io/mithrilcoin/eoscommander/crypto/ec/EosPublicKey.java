@@ -64,7 +64,7 @@ public class EosPublicKey {
 
         RefValue<CurveParam> curveParamRefValue = new RefValue<>();
         RefValue<Long> checksumRef = new RefValue<>();
-        mData = EosEcUtil.parseKeyBase58( base58Str, curveParamRefValue, checksumRef );
+        mData = EosEcUtil.decodeEosCrypto( base58Str, curveParamRefValue, checksumRef );
         mCurveParam = curveParamRefValue.data;
         mCheck = checksumRef.data;
     }

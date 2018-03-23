@@ -71,7 +71,7 @@ public class EosPrivateKey {
     public EosPrivateKey( String wif ) {
         RefValue<CurveParam> curveParamRef = new RefValue<>();
 
-        byte[] keyBytes = EosEcUtil.parseKeyBase58( wif, curveParamRef, null);
+        byte[] keyBytes = EosEcUtil.decodeEosCrypto( wif, curveParamRef, null);
         if ( ( null == keyBytes) || (keyBytes.length < 5 )) {
             throw new IllegalArgumentException("Invalid wif length");
         }

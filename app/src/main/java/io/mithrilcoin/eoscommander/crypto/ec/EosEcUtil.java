@@ -42,29 +42,29 @@ public class EosEcUtil {
     public static final String PREFIX_K1 = "K1";
     public static final String PREFIX_R1 = "R1";
 
-    public static byte[] parseKeyBase58(String base58Key, RefValue<CurveParam> curveParamRef, RefValue<Long> checksumRef ){
+    public static byte[] decodeEosCrypto(String base58Data, RefValue<CurveParam> curveParamRef, RefValue<Long> checksumRef ){
 
         final byte[] retKeyData;
 
         final String typePrefix;
-        if ( base58Key.startsWith( EOS_PREFIX ) ) {
+        if ( base58Data.startsWith( EOS_PREFIX ) ) {
 
-            if ( base58Key.startsWith( PREFIX_K1, EOS_PREFIX.length())) {
+            if ( base58Data.startsWith( PREFIX_K1, EOS_PREFIX.length())) {
                 typePrefix = PREFIX_K1;
             }
             else
-            if ( base58Key.startsWith( PREFIX_R1, EOS_PREFIX.length())) {
+            if ( base58Data.startsWith( PREFIX_R1, EOS_PREFIX.length())) {
                 typePrefix = PREFIX_R1;
             }
             else {
                 typePrefix = null;
             }
 
-            retKeyData = getBytesIfMatchedRipemd160( base58Key.substring( EOS_PREFIX.length() ), typePrefix, checksumRef);
+            retKeyData = getBytesIfMatchedRipemd160( base58Data.substring( EOS_PREFIX.length() ), typePrefix, checksumRef);
         }
         else{
             typePrefix = null;
-            retKeyData = getBytesIfMatchedSha256( base58Key, checksumRef );
+            retKeyData = getBytesIfMatchedSha256( base58Data, checksumRef );
         }
 
         if ( curveParamRef != null) {
@@ -117,7 +117,7 @@ public class EosEcUtil {
         throw new IllegalArgumentException("Invalid format, checksum mismatch");
     }
 
-    public static String encodeForEosCrypto( byte[] data, CurveParam curveParam ) {
+    public static String encodeEosCrypto(byte[] data, CurveParam curveParam ) {
         boolean isR1 = ( null != curveParam ) && ( curveParam.getCurveParamType() == CurveParam.SECP256_R1);
 
         byte[] toHashData = new byte[ data.length + (isR1 ? PREFIX_R1.length() : 0) ];

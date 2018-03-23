@@ -24,9 +24,10 @@
 package io.mithrilcoin.eoscommander.crypto.ec;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
-import io.mithrilcoin.eoscommander.crypto.util.Base58;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
+import io.mithrilcoin.eoscommander.util.RefValue;
 
 
 /**
@@ -34,10 +35,6 @@ import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
  */
 
 public class EcSignature {
-//    private static final String EOS_SIGNATURE_BASE_PREFIX = "EOS";
-//    private static final String EOS_SIGNATURE_PREFIX_K1 = "K1";
-//    private static final String EOS_SIGNATURE_PREFIX_R1 = "R1";
-
     public int recId = -1;
 
     public final BigInteger r;
@@ -54,6 +51,22 @@ public class EcSignature {
         this(r, s,curveParam);
 
         setRecid( recId );
+    }
+
+    public EcSignature( String dataInBase58 ){
+        RefValue<CurveParam> curveParamRef = new RefValue<>();
+
+        byte[] rawBytes = EosEcUtil.decodeEosCrypto( dataInBase58, curveParamRef, null );
+
+        if ( null == rawBytes ) {
+            // TODO handle error!
+        }
+
+        setRecid( rawBytes[0] - 27 - 4 ); // recId encoding 이 recId + 27 + (compressed ? 4 : 0) 이므로
+
+        this.r = new BigInteger(Arrays.copyOfRange(rawBytes, 1, 33) );
+        this.s = new BigInteger(Arrays.copyOfRange(rawBytes, 33, 65) );
+        this.curveParam = curveParamRef.data;
     }
 
     public void setRecid(int recid ) {
@@ -107,12 +120,6 @@ public class EcSignature {
     }
 
 
-//    private String getPrefix(){
-//        return EOS_SIGNATURE_BASE_PREFIX + (
-//                null == curveParam || curveParam.getCurveParamType() == CurveParam.SECP256_K1 ?
-//                EOS_SIGNATURE_PREFIX_K1 : EOS_SIGNATURE_PREFIX_R1 );
-//    }
-
     public String eosEncodingHex( boolean compressed ) {
         if ( recId < 0 || recId > 3) {
             throw new IllegalStateException("signature has invalid recid.");
@@ -124,7 +131,7 @@ public class EcSignature {
         System.arraycopy(EcTools.integerToBytes( this.r, 32), 0, sigData, 1, 32);
         System.arraycopy(EcTools.integerToBytes( this.s, 32), 0, sigData, 33, 32);
 
-        return EosEcUtil.encodeForEosCrypto( sigData, curveParam);
+        return EosEcUtil.encodeEosCrypto( sigData, curveParam);
     }
 
     @Override
