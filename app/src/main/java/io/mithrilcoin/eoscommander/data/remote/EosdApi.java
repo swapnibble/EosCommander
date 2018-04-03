@@ -26,6 +26,8 @@ package io.mithrilcoin.eoscommander.data.remote;
 
 import com.google.gson.JsonObject;
 
+import javax.inject.Singleton;
+
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
@@ -39,6 +41,7 @@ import io.mithrilcoin.eoscommander.data.remote.model.api.EosChainInfo;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetTableRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -91,4 +94,6 @@ public interface EosdApi {
 
     String ACCOUNT_HISTORY_GET_SERVANTS = "get_controlled_accounts" ;
     String GET_SERVANTS_KEY = "controlling_account";
+
+    String ACCOUNT_HISTORY_GET_KEY_ACCOUNTS = "get_key_accounts";
 }

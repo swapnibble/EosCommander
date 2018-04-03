@@ -23,7 +23,7 @@ public class TypePublicKey implements EosType.Packer {
 
     @Override
     public void pack(EosType.Writer writer) {
-        writer.put( mPubKey.isCurveParamK1() ? PACK_VAL_CURVE_PARAM_TYPE_K1 : PACK_VAL_CURVE_PARAM_TYPE_R1 );
+        writer.putVariableUInt( mPubKey.isCurveParamK1() ? PACK_VAL_CURVE_PARAM_TYPE_K1 : PACK_VAL_CURVE_PARAM_TYPE_R1 );
 
         writer.putBytes( mPubKey.getBytes());
     }

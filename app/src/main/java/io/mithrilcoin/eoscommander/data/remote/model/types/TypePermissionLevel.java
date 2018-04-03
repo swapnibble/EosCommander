@@ -23,8 +23,6 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.types;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -35,39 +33,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class TypePermissionLevel implements EosType.Packer {
 
-    @SerializedName("actor")
     @Expose
-    private TypeName mActor;
+    private TypeAccountName actor;
 
-    @SerializedName("permission")
     @Expose
-    private TypeName mPermission;
+    private TypePermissionName permission;
 
     public TypePermissionLevel(String accountName, String permissionName) {
-        mActor = new TypeName(accountName);
-        mPermission = new TypeName(permissionName);
+        actor = new TypeAccountName(accountName);
+        permission = new TypePermissionName(permissionName);
     }
 
     public String getAccount(){
-        return mActor.toString();
+        return actor.toString();
     }
 
     public void setAccount(String accountName ){
-        mActor = new TypeName(accountName);
+        actor = new TypeAccountName(accountName);
     }
 
     public String getPermission(){
-        return mPermission.toString();
+        return permission.toString();
     }
 
     public void setPermission(String permissionName ){
-        mPermission = new TypeName(permissionName);
+        permission = new TypePermissionName(permissionName);
     }
 
     @Override
     public void pack(EosType.Writer writer) {
 
-        mActor.pack(writer);
-        mPermission.pack(writer);
+        actor.pack(writer);
+        permission.pack(writer);
     }
 }

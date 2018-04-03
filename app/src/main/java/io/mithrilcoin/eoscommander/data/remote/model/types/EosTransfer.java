@@ -24,6 +24,8 @@
 package io.mithrilcoin.eoscommander.data.remote.model.types;
 
 
+import com.google.gson.annotations.Expose;
+
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 
 /**
@@ -31,9 +33,16 @@ import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
  */
 
 public class EosTransfer implements EosType.Packer {
+    @Expose
     private TypeAccountName from;
+
+    @Expose
     private TypeAccountName to;
+
+    @Expose
     private TypeAsset quantity;
+
+    @Expose
     private String memo;
 
     public EosTransfer(String from, String to, long quantity, String memo ) {
@@ -44,7 +53,7 @@ public class EosTransfer implements EosType.Packer {
         this.from = from;
         this.to = to;
         this.quantity = new TypeAsset(quantity);
-        this.memo = memo;
+        this.memo = memo != null ? memo : "";
     }
 
     public String getActionName() {

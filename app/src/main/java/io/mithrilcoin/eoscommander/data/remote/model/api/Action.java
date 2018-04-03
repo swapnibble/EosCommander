@@ -31,6 +31,8 @@ import java.util.List;
 
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountName;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeActionName;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeName;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
 
@@ -40,10 +42,10 @@ import io.mithrilcoin.eoscommander.data.remote.model.types.TypePermissionLevel;
 
 public class Action implements EosType.Packer {
     @Expose
-    private TypeName account;
+    private TypeAccountName account;
 
     @Expose
-    private TypeName name;
+    private TypeActionName name;
 
     @Expose
     private List<TypePermissionLevel> authorization = null;
@@ -52,8 +54,8 @@ public class Action implements EosType.Packer {
     private String data;
 
     public Action(String account, String name, TypePermissionLevel authorization, String data){
-        this.account = new TypeName(account);
-        this.name = new TypeName(name);
+        this.account = new TypeAccountName(account);
+        this.name = new TypeActionName(name);
         this.authorization = new ArrayList<>();
         if ( null != authorization ) {
             this.authorization.add(authorization);
@@ -77,7 +79,7 @@ public class Action implements EosType.Packer {
     }
 
     public void setAccount(String account) {
-        this.account = new TypeName(account);
+        this.account = new TypeAccountName(account);
     }
 
     public String getName() {
@@ -85,7 +87,7 @@ public class Action implements EosType.Packer {
     }
 
     public void setName(String name) {
-        this.name = new TypeName(name);
+        this.name = new TypeActionName(name);
     }
 
     public List<TypePermissionLevel> getAuthorization() {

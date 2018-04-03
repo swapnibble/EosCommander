@@ -56,6 +56,7 @@ import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.util.Consts;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 import static io.mithrilcoin.eoscommander.util.Consts.EOS_SYSTEM_ACCOUNT;
 import static io.mithrilcoin.eoscommander.util.Consts.TX_EXPIRATION_IN_MILSEC;
@@ -183,7 +184,7 @@ public class EoscDataManager {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
 
-        return pushAction( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), new Gson().toJson( transfer ), getActivePermission(from));
+        return pushAction( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), Utils.prettyPrintJson( transfer), getActivePermission(from));
     }
 
     public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
@@ -223,6 +224,7 @@ public class EoscDataManager {
 
     public Observable<EosAbiMain> getCodeAbi( String contract ) {
         return mEosdApi.getCode( new GetCodeRequest(contract))
+                .filter( codeResp -> codeResp.isValidCode())
                 .map( result -> new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
                         .create().fromJson(result.getAbi(), EosAbiMain.class) );
     }
