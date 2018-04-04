@@ -48,6 +48,8 @@ public class Transaction extends TransactionHeader {
         this.actions = actions;
     }
 
+    public int getContextFreeActionCount(){ return ( actions == null ? 0 : actions.size());}
+
 
     <T> List<T> deepCopyOnlyContainer(List<T> srcList){
         if ( null == srcList ){

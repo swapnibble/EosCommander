@@ -23,7 +23,6 @@
  */
 package io.mithrilcoin.eoscommander.data;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
@@ -37,7 +36,7 @@ import javax.inject.Singleton;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
-import io.mithrilcoin.eoscommander.data.remote.EosdApi;
+import io.mithrilcoin.eoscommander.data.remote.NodeosApi;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
@@ -52,11 +51,11 @@ import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosNewAccount;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosTransfer;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
+import io.mithrilcoin.eoscommander.data.util.EstimateRsc;
 import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.util.Consts;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Observable;
-import timber.log.Timber;
 
 import static io.mithrilcoin.eoscommander.util.Consts.EOS_SYSTEM_ACCOUNT;
 import static io.mithrilcoin.eoscommander.util.Consts.TX_EXPIRATION_IN_MILSEC;
@@ -67,7 +66,7 @@ import static io.mithrilcoin.eoscommander.util.Consts.TX_EXPIRATION_IN_MILSEC;
 @Singleton
 public class EoscDataManager {
 
-    private final EosdApi mEosdApi;
+    private final NodeosApi mNodeosApi;
     private final PreferencesHelper mPrefHelper;
     private final EosWalletManager  mWalletMgr;
     private final EosAccountRepository mAccountRepository;
@@ -75,8 +74,8 @@ public class EoscDataManager {
     private HashMap<String,EosAbiMain> mAbiObjHouse;
 
     @Inject
-    public EoscDataManager(EosdApi eosdApi, EosWalletManager walletManager, EosAccountRepository accountRepository, PreferencesHelper prefHelper) {
-        mEosdApi = eosdApi;
+    public EoscDataManager(NodeosApi nodeosApi, EosWalletManager walletManager, EosAccountRepository accountRepository, PreferencesHelper prefHelper) {
+        mNodeosApi = nodeosApi;
         mWalletMgr  = walletManager;
         mAccountRepository = accountRepository;
         mPrefHelper = prefHelper;
@@ -122,11 +121,11 @@ public class EoscDataManager {
 
     public Observable<EosChainInfo> getChainInfo(){
 
-        return mEosdApi.readInfo("get_info");
+        return mNodeosApi.readInfo("get_info");
     }
 
     public Observable<String> getTable( String accountName, String code, String table ){
-        return mEosdApi.getTable( new GetTableRequest(accountName, code, table))
+        return mNodeosApi.getTable( new GetTableRequest(accountName, code, table))
                 .map( tableResult -> Utils.prettyPrintJson(tableResult));
     }
 
@@ -160,13 +159,19 @@ public class EoscDataManager {
         return txn;
     }
 
+    private SignedTransaction estimateResources( SignedTransaction txn, int keyCount ) {
+        return new EstimateRsc().estimate( txn, PackedTransaction.CompressType.none, keyCount);
+    }
+
+
     private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign ) {
         if ( mPrefHelper.shouldSkipSigning() ) {
-            return Observable.just( new PackedTransaction(txnBeforeSign ) );
+            // TODO estimateRscUsages
+            return Observable.just( new PackedTransaction( estimateResources(txnBeforeSign , 0) ) );
         }
 
-        return mEosdApi.getRequiredKeys( new GetRequiredKeys( txnBeforeSign, mWalletMgr.listPubKeys() ))
-                .map( keys -> mWalletMgr.signTransaction( txnBeforeSign, keys.getKeys(), new TypeChainId() ))
+        return mNodeosApi.getRequiredKeys( new GetRequiredKeys( txnBeforeSign, mWalletMgr.listPubKeys() ))
+                .map( keys -> mWalletMgr.signTransaction( estimateResources(txnBeforeSign, keys.getKeys().size()), keys.getKeys(), new TypeChainId() ))
                 .map( signedTx -> new PackedTransaction(signedTx) );
     }
 
@@ -177,7 +182,7 @@ public class EoscDataManager {
 
 
     public Observable<JsonObject> readAccountInfo(String accountName ) {
-        return mEosdApi.getAccountInfo(new AccountInfoRequest(accountName));
+        return mNodeosApi.getAccountInfo(new AccountInfoRequest(accountName));
     }
 
     public Observable<JsonObject> transferEos( String from, String to, long amount, String memo ) {
@@ -193,37 +198,37 @@ public class EoscDataManager {
                 .map( info -> createTransaction( Consts.EOS_SYSTEM_ACCOUNT, newAccountData.getTypeName(), newAccountData.getAsHex()
                                     , getActivePermission( newAccountData.getCreatorName() ), info ))
                 .flatMap( txn -> signAndPackTransaction( txn))
-                .flatMap( packedTxn -> mEosdApi.pushTransaction( packedTxn ));
+                .flatMap( packedTxn -> mNodeosApi.pushTransaction( packedTxn ));
     }
 
     public Observable<JsonObject> getTransactions(String accountName ) {
 
         JsonObject gsonObject = new JsonObject();
-        gsonObject.addProperty( EosdApi.GET_TRANSACTIONS_KEY, accountName);
+        gsonObject.addProperty( NodeosApi.GET_TRANSACTIONS_KEY, accountName);
 
-        return mEosdApi.getAccountHistory( EosdApi.ACCOUNT_HISTORY_GET_TRANSACTIONS, gsonObject);
+        return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_TRANSACTIONS, gsonObject);
     }
 
     public Observable<JsonObject> getServants( String accountName ) {
         // controlling_account
 
         JsonObject gsonObject = new JsonObject();
-        gsonObject.addProperty( EosdApi.GET_SERVANTS_KEY, accountName);
+        gsonObject.addProperty( NodeosApi.GET_SERVANTS_KEY, accountName);
 
-        return mEosdApi.getAccountHistory( EosdApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
+        return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
     }
 
     public Observable<JsonObject> pushAction(String contract, String action, String data, String[] permissions) {
 
-        return mEosdApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
+        return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                                             .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
                 .flatMap( this::signAndPackTransaction )
-                .flatMap( mEosdApi::pushTransactionRetJson );
+                .flatMap( mNodeosApi::pushTransactionRetJson );
     }
 
     public Observable<EosAbiMain> getCodeAbi( String contract ) {
-        return mEosdApi.getCode( new GetCodeRequest(contract))
+        return mNodeosApi.getCode( new GetCodeRequest(contract))
                 .filter( codeResp -> codeResp.isValidCode())
                 .map( result -> new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
                         .create().fromJson(result.getAbi(), EosAbiMain.class) );

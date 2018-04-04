@@ -15,6 +15,12 @@ public class ActionTrace {
     public String receiver;
 
     @Expose
+    public boolean context_free;
+
+    @Expose
+    public long cpu_usage;
+
+    @Expose
     public Action act;
 
     @Expose
@@ -28,4 +34,10 @@ public class ActionTrace {
 
     @Expose
     public List<DataAccessInfo> data_access;
+
+    @Expose
+    public long auths_used; // uint32_t
+
+    @Expose
+    public long _profiling_us;
 }

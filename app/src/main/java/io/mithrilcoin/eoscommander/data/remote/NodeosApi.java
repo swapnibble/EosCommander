@@ -50,7 +50,7 @@ import retrofit2.http.Path;
  * Created by swapnibble on 2017-09-08.
  */
 
-public interface EosdApi {
+public interface NodeosApi {
 
     @POST("/v1/chain/{infoType}")
     Observable<EosChainInfo> readInfo(@Path("infoType") String infoType);

@@ -15,10 +15,9 @@ import io.mithrilcoin.eoscommander.data.local.db.AppDatabase;
 import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepository;
 import io.mithrilcoin.eoscommander.data.local.repository.EosAccountRepositoryImpl;
 import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
-import io.mithrilcoin.eoscommander.data.remote.EosdApi;
+import io.mithrilcoin.eoscommander.data.remote.NodeosApi;
 import io.mithrilcoin.eoscommander.data.remote.HostInterceptor;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAsset;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeName;
+import io.mithrilcoin.eoscommander.data.util.GsonEosTypeAdapterFactory;
 import io.mithrilcoin.eoscommander.data.wallet.EosWalletManager;
 import io.mithrilcoin.eoscommander.di.ApplicationContext;
 import io.mithrilcoin.eoscommander.util.RefValue;
@@ -71,8 +70,7 @@ public class AppModule {
     @Singleton
     Gson providesGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(TypeName.class, new TypeName.GsonTypeAdapter())
-                .registerTypeAdapter(TypeAsset.class, new TypeAsset.GsonTypeAdapter())
+                .registerTypeAdapterFactory(new GsonEosTypeAdapterFactory())
                 .excludeFieldsWithoutExposeAnnotation().create();
     }
 
@@ -81,7 +79,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    EosdApi providesEosService(Gson gson, OkHttpClient okHttpClient, PreferencesHelper preferencesHelper) {
+    NodeosApi providesEosService(Gson gson, OkHttpClient okHttpClient, PreferencesHelper preferencesHelper) {
         RefValue<Integer> portRef = new RefValue<>(0);
         String addr = preferencesHelper.getEosdConnInfo( portRef );
 
@@ -95,7 +93,7 @@ public class AppModule {
                 .client( okHttpClient )
                 .build();
 
-        return retrofit.create( EosdApi.class);
+        return retrofit.create( NodeosApi.class);
     }
 
     @Provides

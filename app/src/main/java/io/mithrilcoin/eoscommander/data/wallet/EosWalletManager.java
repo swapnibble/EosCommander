@@ -32,6 +32,7 @@ import java.util.Map;
 
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPublicKey;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.PackedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
 import io.mithrilcoin.eoscommander.util.Consts;

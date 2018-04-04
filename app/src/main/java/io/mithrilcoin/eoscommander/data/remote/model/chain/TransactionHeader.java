@@ -88,6 +88,14 @@ public class TransactionHeader implements EosType.Packer {
         }
     }
 
+    public void putNetUsageWords(long netUsage) {
+        this.net_usage_words = netUsage;
+    }
+
+    public void putKcpuUsage(long kCpuUsage) {
+        this.kcpu_usage = kCpuUsage;
+    }
+
     @Override
     public void pack(EosType.Writer writer) {
         writer.putIntLE( (int)(getExpirationAsDate(expiration).getTime() / 1000) ); // ms -> sec

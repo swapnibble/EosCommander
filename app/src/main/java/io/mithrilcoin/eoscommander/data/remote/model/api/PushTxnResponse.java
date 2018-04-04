@@ -28,7 +28,6 @@ package io.mithrilcoin.eoscommander.data.remote.model.api;
  */
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class PushTxnResponse {
 
@@ -36,7 +35,7 @@ public class PushTxnResponse {
     private String transaction_id;
 
     @Expose
-    private Processed processed;
+    private TransactionTrace processed;
 
     public String getTransactionId() {
         return transaction_id;
@@ -46,11 +45,11 @@ public class PushTxnResponse {
         this.transaction_id = transactionId;
     }
 
-    public Processed getProcessed() {
+    public TransactionTrace getProcessed() {
         return processed;
     }
 
-    public void setProcessed(Processed processed) {
+    public void setProcessed(TransactionTrace processed) {
         this.processed = processed;
     }
 

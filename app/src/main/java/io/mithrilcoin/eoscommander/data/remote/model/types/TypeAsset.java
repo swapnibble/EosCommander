@@ -23,20 +23,12 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.types;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,10 +55,33 @@ public class TypeAsset implements EosType.Packer {
     private final long mAssetSymbol;
     private final String mSymbolName;
 
-    public static TypeAsset fromString(String value) {
-        if ( null == value ) {
-            return null;
-        }
+//    public static TypeAsset fromString(String value) {
+//        if ( null == value ) {
+//            return null;
+//        }
+//
+//        value = value.trim();
+//
+//        Pattern pattern = Pattern.compile("^([0-9]+)\\.?([0-9]*)[ ]([a-zA-Z0-9]{1,7})$");//\\s(\\w)$");
+//        Matcher matcher = pattern.matcher(value);
+//
+//        if ( matcher.find()) {
+//            String beforeDotVal = matcher.group(1), afterDotVal = matcher.group(2) ;
+//
+//            long amount = Long.valueOf( beforeDotVal + afterDotVal);
+//            int decimals = afterDotVal.length();
+//
+//            return new TypeAsset( amount, decimals, matcher.group(3));
+//        }
+//        else {
+//            return null;
+//        }
+//    }
+
+    public TypeAsset(String value) {
+//        if ( null == value ) {
+//            return ;
+//        }
 
         value = value.trim();
 
@@ -76,13 +91,17 @@ public class TypeAsset implements EosType.Packer {
         if ( matcher.find()) {
             String beforeDotVal = matcher.group(1), afterDotVal = matcher.group(2) ;
 
-            long amount = Long.valueOf( beforeDotVal + afterDotVal);
-            int decimals = afterDotVal.length();
+            mAmount = Long.valueOf( beforeDotVal + afterDotVal);
 
-            return new TypeAsset( amount, decimals, matcher.group(3));
+            int decimals = afterDotVal.length();
+            this.mSymbolName = matcher.group(3);
+
+            this.mAssetSymbol = makeAssetSymbol( mSymbolName, decimals);
         }
         else {
-            return null;
+            this.mAmount = 0;
+            this.mSymbolName = "EOS";
+            this.mAssetSymbol = EOS_SYMBOL;
         }
     }
 
@@ -112,19 +131,23 @@ public class TypeAsset implements EosType.Packer {
         mSymbolName = new String( sym, 1, symbolLen);
     }
 
-    public TypeAsset(long amount, int decimals, String symbolName) {
-        mAmount = amount;
-        this.mSymbolName = symbolName;
+//    public TypeAsset(long amount, int decimals, String symbolName) {
+//        mAmount = amount;
+//        this.mSymbolName = symbolName;
+//
+//        mAssetSymbol = makeAssetSymbol( symbolName, decimals);
+//    }
 
-        long temp = 0;
+    private long makeAssetSymbol(String symbolName, int decimals ) {
+        long symbol = 0;
         int nameLen = symbolName.length();
         for (int i = 0; (i < nameLen) && ( i < 7); i++ ) {
-            temp |= (symbolName.charAt( i) <<  ( (i+1) * 8));
+            symbol |= (symbolName.charAt( i) <<  ( (i+1) * 8));
         }
 
-        temp |= decimals;
+        symbol |= decimals;
 
-        mAssetSymbol = temp;
+        return symbol;
     }
 
     public byte decimals(){
@@ -177,26 +200,26 @@ public class TypeAsset implements EosType.Packer {
         //mAmount
     }
 
-    public static class GsonTypeAdapter extends TypeAdapter<TypeAsset> {
-
-        @Override
-        public TypeAsset read(JsonReader in) throws IOException {
-            if (in.peek() == JsonToken.NULL) {
-                in.nextNull();
-                return null;
-            }
-
-            return TypeAsset.fromString( in.nextString());
-        }
-
-        @Override
-        public void write(JsonWriter out, TypeAsset value) throws IOException {
-            if (value == null) {
-                out.nullValue();
-                return;
-            }
-
-            out.value(value.toString());
-        }
-    }
+//    public static class GsonTypeAdapter extends TypeAdapter<TypeAsset> {
+//
+//        @Override
+//        public TypeAsset read(JsonReader in) throws IOException {
+//            if (in.peek() == JsonToken.NULL) {
+//                in.nextNull();
+//                return null;
+//            }
+//
+//            return new TypeAsset( in.nextString());
+//        }
+//
+//        @Override
+//        public void write(JsonWriter out, TypeAsset value) throws IOException {
+//            if (value == null) {
+//                out.nullValue();
+//                return;
+//            }
+//
+//            out.value(value.toString());
+//        }
+//    }
 }

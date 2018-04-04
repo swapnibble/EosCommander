@@ -45,6 +45,10 @@ public class PackedTransaction {
         this( stxn, CompressType.none);
     }
 
+    public long getDataSize() {
+        return data.length() / 2; // hex -> raw bytes
+    }
+
     private byte[] compress( byte[] uncompressedBytes, CompressType compressType) {
         if ( compressType == null || !CompressType.zlib.equals( compressType)) {
             return uncompressedBytes;

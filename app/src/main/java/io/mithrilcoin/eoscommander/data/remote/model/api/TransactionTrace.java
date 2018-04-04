@@ -34,18 +34,31 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import io.mithrilcoin.eoscommander.data.remote.model.chain.ActionTrace;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeSharedLock;
 
-public class Processed {
-
-    @Expose
-    public String status;
+public class TransactionTrace extends TransactionReceipt {
 
     @Expose
-    public String id;
+    private List<ActionTrace> action_traces;
 
     @Expose
-    public List<ActionTrace> action_traces;
+    private JsonElement deferred_transaction_requests;
 
     @Expose
-    public JsonElement deferred_transactions;
+    private List<TypeSharedLock> read_locks;
+
+    @Expose
+    private List<TypeSharedLock> write_locks;
+
+    @Expose
+    private long cpu_usage;
+
+    @Expose
+    private long net_usage;
+
+    @Expose
+    private long _profiling_us;
+
+    @Expose
+    private long _setup_profiling_us;
 }

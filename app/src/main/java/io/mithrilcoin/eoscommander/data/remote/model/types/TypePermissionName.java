@@ -28,7 +28,7 @@ package io.mithrilcoin.eoscommander.data.remote.model.types;
  */
 
 public class TypePermissionName extends TypeName {
-    TypePermissionName(String name) {
+    public TypePermissionName(String name) {
         super(name);
     }
 }

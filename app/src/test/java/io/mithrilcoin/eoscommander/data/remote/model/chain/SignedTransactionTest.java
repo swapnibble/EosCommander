@@ -73,7 +73,7 @@ public class SignedTransactionTest {
         assertEquals( "asset symbol parse error", "EOS", new TypeAsset(1).symbolName());
 
         String assetStr = "12.34567 EOS";
-        TypeAsset testAsset = TypeAsset.fromString(assetStr);
+        TypeAsset testAsset = new TypeAsset(assetStr);
         assertNotNull( "fail parse asset from string", testAsset);
         assertEquals( "invalid parsed asset symbol", "EOS", testAsset.symbolName());
         assertEquals( "invalid parsed asset decimals", 5, testAsset.decimals());

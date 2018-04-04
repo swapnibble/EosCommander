@@ -23,9 +23,6 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.types;
 
-
-import io.mithrilcoin.eoscommander.util.StringUtils;
-
 /**
  * Created by swapnibble on 2017-09-12.
  */
@@ -36,7 +33,7 @@ public class TypeAccountName extends TypeName {
     public TypeAccountName(String name) {
         super(name);
 
-        if (StringUtils.isEmpty(name) || name.length() > MAX_ACCOUNT_NAME_LEN ) {
+        if ( ( name != null) && (name.length() > MAX_ACCOUNT_NAME_LEN )) {
             throw new IllegalArgumentException("account names can only be 12 chars long"); // changed from dawn3
         }
     }

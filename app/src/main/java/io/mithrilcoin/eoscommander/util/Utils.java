@@ -36,8 +36,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAsset;
-import io.mithrilcoin.eoscommander.data.remote.model.types.TypeName;
+import io.mithrilcoin.eoscommander.data.util.GsonEosTypeAdapterFactory;
 
 /**
  * Created by swapnibble on 2017-10-18.
@@ -136,8 +135,7 @@ public class Utils {
 
     public static String prettyPrintJson(Object object) {
         return new GsonBuilder()
-                .registerTypeAdapter(TypeName.class, new TypeName.GsonTypeAdapter())
-                .registerTypeAdapter(TypeAsset.class, new TypeAsset.GsonTypeAdapter())
+                .registerTypeAdapterFactory(new GsonEosTypeAdapterFactory())
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting().create().toJson( object );
     }

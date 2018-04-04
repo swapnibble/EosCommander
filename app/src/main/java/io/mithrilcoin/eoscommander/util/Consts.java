@@ -40,4 +40,10 @@ public final class Consts {
 
     public static final String EOS_SYSTEM_ACCOUNT = "eosio";
     public static final int TX_EXPIRATION_IN_MILSEC = 30000;
+
+
+    // constants from /libraries/include/eosio/chain/config.hpp
+    public static final int DEFAULT_BASE_PER_TRANSACTION_NET_USAGE  = 100;
+    public static final int DEFAULT_BASE_PER_TRANSACTION_CPU_USAGE  = 500;
+    public static final int DEFAULT_BASE_PER_ACTION_CPU_USAGE       = 1000;
 }

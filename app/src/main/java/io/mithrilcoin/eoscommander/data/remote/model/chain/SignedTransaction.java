@@ -76,6 +76,10 @@ public class SignedTransaction extends Transaction {
         this.signatures = signatures;
     }
 
+    public int getCtxFreeDataCount() {
+        return ( context_free_data == null ) ? 0 : context_free_data.size();
+    }
+
 
     private Sha256 getDigestForSignature(TypeChainId chainId) {
         EosByteWriter writer = new EosByteWriter(255);
@@ -97,23 +101,4 @@ public class SignedTransaction extends Transaction {
         EcSignature signature = EcDsa.sign(getDigestForSignature( chainId ), privateKey);
         this.signatures.add( signature.toString());
     }
-
-//    private void putStringList(EosType.Writer writer, List<String> list){
-//        if ( list == null || list.size() == 0) {
-//            writer.putVariableUInt(0);
-//            return;
-//        }
-//
-//        for ( String val : list ) {
-//            writer.putString( val );
-//        }
-//    }
-
-//    @Override
-//    public void pack(EosType.Writer writer) {
-//        super.pack(writer);
-//
-//        putStringList( writer, signatures );
-//        putStringList( writer, context_free_data );
-//    }
 }
