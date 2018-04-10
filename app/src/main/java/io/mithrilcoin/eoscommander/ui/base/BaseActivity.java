@@ -158,7 +158,7 @@ public class BaseActivity extends AppCompatActivity implements MvpView{
 
     @Override
     public void onError(String message) {
-        ShowResultDialog.newInstance( getString(R.string.error), message)
+        ShowResultDialog.newInstance( getString(R.string.error), message, null)
                 .show( getSupportFragmentManager());
     }
 
@@ -173,8 +173,8 @@ public class BaseActivity extends AppCompatActivity implements MvpView{
     }
 
     @Override
-    public void showResult( String resultMsg ) {
-        ShowResultDialog.newInstance( getString(R.string.result), resultMsg)
+    public void showResult( String resultMsg, String statusInfo ) {
+        ShowResultDialog.newInstance( getString(R.string.result), resultMsg, statusInfo)
                 .show( getSupportFragmentManager());
     }
 

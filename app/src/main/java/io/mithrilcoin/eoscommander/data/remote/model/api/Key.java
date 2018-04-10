@@ -32,10 +32,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Key {
 
-    @SerializedName("key")
     @Expose
     private String key;
-    @SerializedName("weight")
+
     @Expose
     private Integer weight;
 

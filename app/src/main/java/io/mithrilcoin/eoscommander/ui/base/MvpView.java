@@ -40,7 +40,7 @@ public interface MvpView {
 
     void showToast(@StringRes int resId);
 
-    void showResult( String result );
+    void showResult( String result, String statusInfo );
 
     void hideKeyboard();
 }

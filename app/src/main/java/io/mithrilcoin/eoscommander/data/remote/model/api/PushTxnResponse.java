@@ -29,6 +29,9 @@ package io.mithrilcoin.eoscommander.data.remote.model.api;
 
 import com.google.gson.annotations.Expose;
 
+import io.mithrilcoin.eoscommander.data.remote.model.chain.TransactionTrace;
+import io.mithrilcoin.eoscommander.util.StringUtils;
+
 public class PushTxnResponse {
 
     @Expose
@@ -53,4 +56,10 @@ public class PushTxnResponse {
         this.processed = processed;
     }
 
+    @Override
+    public String toString() {
+        if (StringUtils.isEmpty(transaction_id) || (processed == null )) return "";
+
+        return "transaction: " + transaction_id + "\n" + processed.toString();
+    }
 }

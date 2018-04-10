@@ -31,19 +31,19 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AccountInfoRequest {
-    @SerializedName("account_name")
+
     @Expose
-    private String name;
+    private String account_name;
 
     public AccountInfoRequest(String name) {
         setName(name);
     }
 
     public String getName() {
-        return name;
+        return account_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.account_name = name;
     }
 }

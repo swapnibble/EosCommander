@@ -23,33 +23,64 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.chain;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
- * Created by swapnibble on 2017-11-15.
+ * Created by swapnibble on 2017-09-11.
  */
 
-public class GetRequiredKeys {
+import com.google.gson.JsonElement;
+import com.google.gson.annotations.Expose;
+
+import java.util.List;
+
+import io.mithrilcoin.eoscommander.data.remote.model.chain.ActionTrace;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.TransactionReceipt;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeSharedLock;
+import io.mithrilcoin.eoscommander.util.StringUtils;
+
+public class TransactionTrace extends TransactionReceipt {
+
     @Expose
-    private SignedTransaction transaction;
+    private List<ActionTrace> action_traces;
 
-    @SerializedName("available_keys")
     @Expose
-    private List<String> availableKeys ;
+    private JsonElement deferred_transaction_requests;
 
-    public GetRequiredKeys(SignedTransaction transaction, List<String> keys ) {
-        this.transaction = transaction;
+    @Expose
+    private List<TypeSharedLock> read_locks;
 
-        if ( null != keys ) {
-            availableKeys = new ArrayList<>(keys);
+    @Expose
+    private List<TypeSharedLock> write_locks;
+
+    @Expose
+    private long cpu_usage; // uint64_t
+
+    @Expose
+    private long net_usage; // uint64_t
+
+    @Expose
+    private String packed_trx_digest;
+
+    @Expose
+    private long region_id; // uint64_t
+
+    @Expose
+    private long cycle_index; // uint64_t
+
+    @Expose
+    private long shard_index; // uint64_t
+
+    @Expose
+    private long _profiling_us; // fc::microseconds
+
+    @Expose
+    private long _setup_profiling_us; // fc::microseconds
+
+    @Override
+    public String toString(){
+        if (StringUtils.isEmpty( status)) {
+            return "empty status";
         }
-        else {
-            availableKeys = new ArrayList<>();
-        }
+
+        return status + " " + kcpu_usage + " bytes " + net_usage_words + " cycles";
     }
 }

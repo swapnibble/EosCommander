@@ -113,9 +113,9 @@ public class AccountMainFragment extends BaseFragment
 
 
     @Override
-    public void showAccountInfo(int titleRscId, String account, String info) {
+    public void showAccountInfo(int titleRscId, String account, String info, String statusInfo) {
         String title = String.format( getString(R.string.account_info_title_fmt), getString(titleRscId), account);
 
-        ShowResultDialog.newInstance( title, info).show( getChildFragmentManager());
+        ShowResultDialog.newInstance( title, info, statusInfo).show( getChildFragmentManager());
     }
 }

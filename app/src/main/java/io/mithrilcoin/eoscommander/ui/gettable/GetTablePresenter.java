@@ -106,7 +106,7 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
                             getMvpView().showLoading( false );
 
                             if ( !StringUtils.isEmpty( result)) {
-                                getMvpView().showTableResult( result );
+                                getMvpView().showTableResult( result, null );
                             }
                         }
                     })

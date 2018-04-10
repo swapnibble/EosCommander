@@ -31,7 +31,7 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
  */
 
 public interface GetTableMvpView extends MvpView {
-    void showTableResult(String result);
+    void showTableResult(String result, String statusInfo);
     void showTableList( List<String> tables );
 }
 

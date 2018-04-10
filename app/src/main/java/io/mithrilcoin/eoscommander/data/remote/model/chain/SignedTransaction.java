@@ -24,27 +24,16 @@
 package io.mithrilcoin.eoscommander.data.remote.model.chain;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
-import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosByteWriter;
 import io.mithrilcoin.eoscommander.crypto.digest.Sha256;
 import io.mithrilcoin.eoscommander.crypto.ec.EcDsa;
 import io.mithrilcoin.eoscommander.crypto.ec.EcSignature;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
-import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
-import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeChainId;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-11.
@@ -78,6 +67,10 @@ public class SignedTransaction extends Transaction {
 
     public int getCtxFreeDataCount() {
         return ( context_free_data == null ) ? 0 : context_free_data.size();
+    }
+
+    public List<String> getCtxFreeData() {
+        return context_free_data;
     }
 
 

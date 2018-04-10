@@ -115,4 +115,6 @@
     <string name="action">"Action: "</string>
     <string name="action_loaded">action loaded !</string>
     <string name="table_loaded">table names loaded !</string>
+
+    <string name="console_output">Console output:</string>
 </resources>

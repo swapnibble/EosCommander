@@ -144,7 +144,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
 
                         if ( ( null != result) && ! StringUtils.isEmpty( result.getTransactionId()) ) {
                             getMvpView().exitWithResult( true );
-                            getMvpView().showResult(Utils.prettyPrintJson(result ) );
+                            getMvpView().showResult(Utils.prettyPrintJson(result ), result.toString() );
                         }
                         else {
                             getMvpView().showToast( R.string.failed );

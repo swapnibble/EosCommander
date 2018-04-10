@@ -38,6 +38,8 @@ import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.jraska.console.Console;
+
 import javax.inject.Inject;
 
 import io.mithrilcoin.eoscommander.R;
@@ -118,6 +120,8 @@ public class PushFragment extends BaseFragment
 
         // NEW_ACCOUNT_SUGGEST
         setupAccountHistory();
+
+        Console.writeLine("Hello Console!");
     }
 
     @Override

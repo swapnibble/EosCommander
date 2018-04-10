@@ -85,7 +85,7 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
                 Completable.fromAction( () -> mDataManager.addAccountHistory( account ))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn( getSchedulerProvider().ui())
-                    .doOnComplete(() -> getMvpView().showAccountInfo( titleId, account, result) )
+                    .doOnComplete(() -> getMvpView().showAccountInfo( titleId, account, result, null) )
                     .subscribe()
         );
     }

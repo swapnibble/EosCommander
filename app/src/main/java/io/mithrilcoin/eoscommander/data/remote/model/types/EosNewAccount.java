@@ -36,7 +36,7 @@ public class EosNewAccount implements EosType.Packer {
     private TypeAuthority mActive;
     private TypeAuthority mRecovery;
 
-    public String getTypeName() {
+    public String getActionName() {
         return "newaccount";
     }
 

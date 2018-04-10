@@ -2,11 +2,9 @@ package io.mithrilcoin.eoscommander.data.remote.model.chain;
 
 import com.google.gson.annotations.Expose;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosType;
 
 /**

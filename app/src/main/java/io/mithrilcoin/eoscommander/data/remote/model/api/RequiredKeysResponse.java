@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.mithrilcoin.eoscommander.data.remote.model.chain;
+package io.mithrilcoin.eoscommander.data.remote.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -36,17 +36,17 @@ import io.mithrilcoin.eoscommander.crypto.ec.EosPublicKey;
  */
 
 public class RequiredKeysResponse {
-    @SerializedName("required_keys")
+
     @Expose
-    private List<String> keys ;
+    private List<String> required_keys ;
 
     public List<EosPublicKey> getKeys() {
-        if ( null == keys ){
+        if ( null == required_keys ){
             return new ArrayList<>();
         }
 
-        ArrayList<EosPublicKey> retKeys = new ArrayList<>(keys.size());
-        for ( String pubKey: keys ){
+        ArrayList<EosPublicKey> retKeys = new ArrayList<>(required_keys.size());
+        for ( String pubKey: required_keys ){
             retKeys.add( new EosPublicKey( pubKey));
         }
 

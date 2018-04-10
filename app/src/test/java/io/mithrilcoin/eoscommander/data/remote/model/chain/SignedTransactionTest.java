@@ -33,9 +33,7 @@ import io.mithrilcoin.eoscommander.crypto.ec.EcDsa;
 import io.mithrilcoin.eoscommander.crypto.ec.EcSignature;
 import io.mithrilcoin.eoscommander.crypto.ec.EcTools;
 import io.mithrilcoin.eoscommander.crypto.ec.EosPrivateKey;
-import io.mithrilcoin.eoscommander.crypto.util.BitUtils;
 import io.mithrilcoin.eoscommander.crypto.util.HexUtils;
-import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAsset;
 
 import static org.junit.Assert.*;

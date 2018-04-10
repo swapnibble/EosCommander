@@ -2,6 +2,9 @@ package io.mithrilcoin.eoscommander.data.remote.model.chain;
 
 import com.google.gson.annotations.Expose;
 
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeAccountName;
+import io.mithrilcoin.eoscommander.data.remote.model.types.TypeScopeName;
+
 
 /**
  * Created by swapnibble on 2018-03-20.
@@ -11,14 +14,14 @@ public class DataAccessInfo {
     //public enum Type { read, write };
 
     @Expose
-    public String type; // access type
+    private String type; // access type
 
     @Expose
-    public String code;
+    private TypeAccountName code;
 
     @Expose
-    public String scope;
+    private TypeScopeName scope;
 
     @Expose
-    public long   sequence;
+    private long   sequence; // uint64_t
 }

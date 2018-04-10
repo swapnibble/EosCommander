@@ -28,26 +28,53 @@ public class PackedTransaction {
     final String compression;
 
     @Expose
-    final String data;
+    private String packed_context_free_data;
+
+    @Expose
+    private String packed_trx;
 
     public PackedTransaction(SignedTransaction stxn, CompressType compressType){
-        EosByteWriter byteWriter = new EosByteWriter(512);
-        stxn.pack(byteWriter);
-
         compression = compressType.name();
-
-        // pack -> compress -> toHex
-        data = HexUtils.toHex( compress( byteWriter.toBytes(), compressType ) );
         signatures = stxn.getSignatures();
+
+        packed_trx = HexUtils.toHex( packTransaction( stxn, compressType) );
+
+        packed_context_free_data = HexUtils.toHex(  packContextFreeData( stxn.getCtxFreeData(), compressType ) );
     }
+
+    private byte[] packTransaction( Transaction transaction, CompressType compressType ) {
+        EosByteWriter byteWriter = new EosByteWriter(512);
+        transaction.pack(byteWriter);
+
+        // pack -> compress
+        return compress( byteWriter.toBytes(), compressType ) ;
+    }
+
+
+    private byte[] packContextFreeData(  List<String> ctxFreeData, CompressType compressType ){
+        EosByteWriter byteWriter = new EosByteWriter(64);
+
+        int ctxFreeDataCount = ( ctxFreeData == null ) ? 0 : ctxFreeData.size();
+        byteWriter.putVariableUInt( ctxFreeDataCount);
+        if ( ctxFreeDataCount == 0 ){
+            return byteWriter.toBytes();
+        }
+
+        for ( String hexData : ctxFreeData ) {
+            byteWriter.putBytes( HexUtils.toBytes( hexData));
+        }
+
+        return  compress( byteWriter.toBytes(), compressType ) ;
+    }
+
 
     public PackedTransaction(SignedTransaction stxn){
         this( stxn, CompressType.none);
     }
 
-    public long getDataSize() {
-        return data.length() / 2; // hex -> raw bytes
-    }
+//    public long getDataSize() {
+//        return data.length() / 2; // hex -> raw bytes
+//    }
 
     private byte[] compress( byte[] uncompressedBytes, CompressType compressType) {
         if ( compressType == null || !CompressType.zlib.equals( compressType)) {

@@ -104,27 +104,4 @@ public class TypeName implements EosType.Packer {
         return name_to_string( mValue );
     }
 
-//    public static class GsonTypeAdapter extends TypeAdapter<TypeName> {
-//
-//        @Override
-//        public TypeName read(JsonReader in) throws IOException {
-//            if (in.peek() == JsonToken.NULL) {
-//                in.nextNull();
-//                return null;
-//            }
-//
-//            return new TypeName( in.nextString());
-//        }
-//
-//        @Override
-//        public void write(JsonWriter out, TypeName value) throws IOException {
-//            if (value == null) {
-//                out.nullValue();
-//                return;
-//            }
-//
-//            out.value(value.toString());
-//        }
-//    }
-
 }

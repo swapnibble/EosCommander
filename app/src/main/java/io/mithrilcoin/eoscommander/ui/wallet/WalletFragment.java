@@ -154,7 +154,7 @@ public class WalletFragment extends BaseFragment
 
     @Override
     public void showKeys( String keysString) {
-        ShowResultDialog.newInstance( getString(R.string.view_wallet_keys), keysString).show( getChildFragmentManager());
+        ShowResultDialog.newInstance( getString(R.string.view_wallet_keys), keysString, null).show( getChildFragmentManager());
     }
 
     @Override

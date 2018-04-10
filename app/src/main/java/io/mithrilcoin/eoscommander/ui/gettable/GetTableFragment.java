@@ -111,10 +111,10 @@ public class GetTableFragment extends BaseFragment
 
 
     @Override
-    public void showTableResult(String result) {
+    public void showTableResult(String result, String statusInfo) {
         String title = String.format("%s: %s", getString(R.string.get_table), mTableNameSpinner.getSelectedItem() );
 
-        ShowResultDialog.newInstance( title, result).show( getChildFragmentManager());
+        ShowResultDialog.newInstance( title, result, statusInfo).show( getChildFragmentManager());
     }
 
     private void setupAccountHistory(){

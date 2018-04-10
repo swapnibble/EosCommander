@@ -30,6 +30,6 @@ import io.mithrilcoin.eoscommander.ui.base.MvpView;
  */
 
 public interface AccountMainMvpView extends MvpView {
-    void showAccountInfo( int titleRscId, String account, String info );
+    void showAccountInfo( int titleRscId, String account, String info, String statusInfo );
     void openCreateAccountDialog();
 }

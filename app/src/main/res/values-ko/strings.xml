@@ -108,4 +108,6 @@
     <string name="action">"액션: "</string>
     <string name="action_loaded">액션 로드됨 !</string>
     <string name="table_loaded">테이블 로드됨 !</string>
+
+    <string name="console_output">콘솔 출력:</string>
 </resources>

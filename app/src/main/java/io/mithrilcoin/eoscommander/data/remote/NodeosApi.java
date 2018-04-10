@@ -26,22 +26,18 @@ package io.mithrilcoin.eoscommander.data.remote;
 
 import com.google.gson.JsonObject;
 
-import javax.inject.Singleton;
-
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeResponse;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.GetRequiredKeys;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetCodeRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetCodeResponse;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetRequiredKeys;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.PackedTransaction;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.RequiredKeysResponse;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
+import io.mithrilcoin.eoscommander.data.remote.model.api.RequiredKeysResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.EosChainInfo;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetTableRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;

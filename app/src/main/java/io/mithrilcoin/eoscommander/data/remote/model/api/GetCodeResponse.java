@@ -1,4 +1,4 @@
-package io.mithrilcoin.eoscommander.data.remote.model.chain;
+package io.mithrilcoin.eoscommander.data.remote.model.api;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
@@ -12,19 +12,15 @@ import io.mithrilcoin.eoscommander.util.StringUtils;
  */
 
 public class GetCodeResponse {
-    @SerializedName("account_name")
     @Expose
-    private String name;
+    private String account_name;
 
-    @SerializedName("wast")
     @Expose
     private String wast;
 
-    @SerializedName("code_hash")
     @Expose
     private String code_hash;
 
-    @SerializedName("abi")
     @Expose
     private JsonObject abi;
 

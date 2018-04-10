@@ -23,49 +23,34 @@
  */
 package io.mithrilcoin.eoscommander.data.remote.model.api;
 
-/**
- * Created by swapnibble on 2017-09-11.
- */
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Output {
+import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 
-    @SerializedName("notify")
+
+/**
+ * Created by swapnibble on 2017-11-15.
+ */
+
+public class GetRequiredKeys {
     @Expose
-    private List<Object> notify = null;
-    @SerializedName("sync_transactions")
+    private SignedTransaction transaction;
+
     @Expose
-    private List<Object> syncTransactions = null;
-    @SerializedName("async_transactions")
-    @Expose
-    private List<Object> asyncTransactions = null;
+    private List<String> available_keys ;
 
-    public List<Object> getNotify() {
-        return notify;
+    public GetRequiredKeys(SignedTransaction transaction, List<String> keys ) {
+        this.transaction = transaction;
+
+        if ( null != keys ) {
+            available_keys = new ArrayList<>(keys);
+        }
+        else {
+            available_keys = new ArrayList<>();
+        }
     }
-
-    public void setNotify(List<Object> notify) {
-        this.notify = notify;
-    }
-
-    public List<Object> getSyncTransactions() {
-        return syncTransactions;
-    }
-
-    public void setSyncTransactions(List<Object> syncTransactions) {
-        this.syncTransactions = syncTransactions;
-    }
-
-    public List<Object> getAsyncTransactions() {
-        return asyncTransactions;
-    }
-
-    public void setAsyncTransactions(List<Object> asyncTransactions) {
-        this.asyncTransactions = asyncTransactions;
-    }
-
 }

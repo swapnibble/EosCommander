@@ -39,13 +39,13 @@ import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.NodeosApi;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
-import io.mithrilcoin.eoscommander.data.remote.model.api.Action;
+import io.mithrilcoin.eoscommander.data.remote.model.chain.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.api.EosChainInfo;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetTableRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.GetCodeRequest;
-import io.mithrilcoin.eoscommander.data.remote.model.chain.GetRequiredKeys;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetCodeRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetRequiredKeys;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.PackedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.mithrilcoin.eoscommander.data.remote.model.types.EosNewAccount;
@@ -57,7 +57,6 @@ import io.mithrilcoin.eoscommander.util.Consts;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Observable;
 
-import static io.mithrilcoin.eoscommander.util.Consts.EOS_SYSTEM_ACCOUNT;
 import static io.mithrilcoin.eoscommander.util.Consts.TX_EXPIRATION_IN_MILSEC;
 
 /**
@@ -165,14 +164,16 @@ public class EoscDataManager {
 
 
     private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign ) {
-        if ( mPrefHelper.shouldSkipSigning() ) {
-            // TODO estimateRscUsages
-            return Observable.just( new PackedTransaction( estimateResources(txnBeforeSign , 0) ) );
-        }
 
         return mNodeosApi.getRequiredKeys( new GetRequiredKeys( txnBeforeSign, mWalletMgr.listPubKeys() ))
-                .map( keys -> mWalletMgr.signTransaction( estimateResources(txnBeforeSign, keys.getKeys().size()), keys.getKeys(), new TypeChainId() ))
-                .map( signedTx -> new PackedTransaction(signedTx) );
+                .map( keys -> {
+                    SignedTransaction stxn = estimateResources(txnBeforeSign, keys.getKeys().size() );
+                    if ( ! mPrefHelper.shouldSkipSigning() ) {
+                        stxn = mWalletMgr.signTransaction(stxn, keys.getKeys(), new TypeChainId());
+                    }
+
+                    return new PackedTransaction(stxn);
+                });
     }
 
 
@@ -188,14 +189,20 @@ public class EoscDataManager {
     public Observable<JsonObject> transferEos( String from, String to, long amount, String memo ) {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
+//
+//        return pushActionRetJson( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), Utils.prettyPrintJson( transfer), getActivePermission(from));
 
-        return pushAction( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), Utils.prettyPrintJson( transfer), getActivePermission(from));
+        return getChainInfo()
+                .map( info -> createTransaction( "eosio.token", transfer.getActionName(), transfer.getAsHex()
+                        , getActivePermission( from ), info ))
+                .flatMap( txn -> signAndPackTransaction( txn))
+                .flatMap( packedTxn -> mNodeosApi.pushTransactionRetJson( packedTxn ));
     }
 
     public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
 
         return getChainInfo()
-                .map( info -> createTransaction( Consts.EOS_SYSTEM_ACCOUNT, newAccountData.getTypeName(), newAccountData.getAsHex()
+                .map( info -> createTransaction( Consts.EOS_SYSTEM_ACCOUNT, newAccountData.getActionName(), newAccountData.getAsHex()
                                     , getActivePermission( newAccountData.getCreatorName() ), info ))
                 .flatMap( txn -> signAndPackTransaction( txn))
                 .flatMap( packedTxn -> mNodeosApi.pushTransaction( packedTxn ));
@@ -210,7 +217,6 @@ public class EoscDataManager {
     }
 
     public Observable<JsonObject> getServants( String accountName ) {
-        // controlling_account
 
         JsonObject gsonObject = new JsonObject();
         gsonObject.addProperty( NodeosApi.GET_SERVANTS_KEY, accountName);
@@ -218,13 +224,22 @@ public class EoscDataManager {
         return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
     }
 
-    public Observable<JsonObject> pushAction(String contract, String action, String data, String[] permissions) {
+    public Observable<JsonObject> pushActionRetJson(String contract, String action, String data, String[] permissions) {
 
         return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                                             .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
                 .flatMap( this::signAndPackTransaction )
                 .flatMap( mNodeosApi::pushTransactionRetJson );
+    }
+
+    public Observable<PushTxnResponse> pushAction(String contract, String action, String data, String[] permissions) {
+
+        return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
+                .flatMap( jsonToBinResp -> getChainInfo()
+                        .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
+                .flatMap( this::signAndPackTransaction )
+                .flatMap( mNodeosApi::pushTransaction );
     }
 
     public Observable<EosAbiMain> getCodeAbi( String contract ) {

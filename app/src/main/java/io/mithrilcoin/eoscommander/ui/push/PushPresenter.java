@@ -40,6 +40,7 @@ import javax.inject.Inject;
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
+import io.mithrilcoin.eoscommander.data.remote.model.api.PushTxnResponse;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
@@ -165,14 +166,14 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
                 .mergeWith( jsonObject -> mDataManager.addAccountHistory( getAccountListForHistory( contract, permissionAccount) ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
-                .subscribeWith(new RxCallbackWrapper<JsonObject>( this) {
+                .subscribeWith(new RxCallbackWrapper<PushTxnResponse>( this) {
                        @Override
-                       public void onNext(JsonObject result) {
+                       public void onNext(PushTxnResponse result) {
                            if (!isViewAttached()) return;
 
                             getMvpView().showLoading(false);
 
-                            getMvpView().showResult( Utils.prettyPrintJson( result ) );
+                            getMvpView().showResult( Utils.prettyPrintJson( result ), result.toString() );
                        }
                    }
                 )

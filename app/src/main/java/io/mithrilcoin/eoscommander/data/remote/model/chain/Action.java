@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.mithrilcoin.eoscommander.data.remote.model.api;
+package io.mithrilcoin.eoscommander.data.remote.model.chain;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class Action implements EosType.Packer {
     private List<TypePermissionLevel> authorization = null;
 
     @Expose
-    private String data;
+    private JsonElement data;
 
     public Action(String account, String name, TypePermissionLevel authorization, String data){
         this.account = new TypeAccountName(account);
@@ -62,7 +64,7 @@ public class Action implements EosType.Packer {
         }
 
         if ( null != data ) {
-            this.data = data;
+            this.data = new JsonPrimitive(data);
         }
     }
 
@@ -113,12 +115,12 @@ public class Action implements EosType.Packer {
         }
     }
 
-    public String getData() {
+    public JsonElement getData() {
         return data;
     }
 
     public void setData(String data) {
-        this.data = data;
+        this.data = new JsonPrimitive(data);
     }
 
     @Override
@@ -129,7 +131,7 @@ public class Action implements EosType.Packer {
         writer.putCollection( authorization );
 
         if ( null != data ) {
-            byte[] dataAsBytes = HexUtils.toBytes( data);
+            byte[] dataAsBytes = HexUtils.toBytes( data.getAsString());
             writer.putVariableUInt(dataAsBytes.length);
             writer.putBytes( dataAsBytes );
         }

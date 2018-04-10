@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
+import io.mithrilcoin.eoscommander.util.StringUtils;
 
 /**
  * Created by swapnibble on 2017-11-13.
@@ -39,15 +40,17 @@ import io.mithrilcoin.eoscommander.ui.base.BaseDialog;
 
 public class ShowResultDialog extends BaseDialog {
     private static final String TAG = ShowResultDialog.class.getSimpleName();
-    private static final String ARG_TITLE       = "show.data.title";
-    private static final String ARG_RESULT_DATA = "show.data.result";
+    private static final String ARG_TITLE           = "show.data.title";
+    private static final String ARG_RESULT_DATA     = "show.data.result";
+    private static final String ARG_RESULT_STATUS   = "show.data.status";
 
 
-    public static ShowResultDialog newInstance(String title, String info ) {
+    public static ShowResultDialog newInstance(String title, String info, String status ) {
         ShowResultDialog fragment = new ShowResultDialog();
         Bundle bundle = new Bundle();
         bundle.putString( ARG_TITLE, title );
         bundle.putString( ARG_RESULT_DATA, info );
+        bundle.putString( ARG_RESULT_STATUS, status );
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -68,6 +71,14 @@ public class ShowResultDialog extends BaseDialog {
 
         // info
         ((TextView) view.findViewById(R.id.tv_get_response)).setText( args.getString(ARG_RESULT_DATA) );
+
+        // status
+        String status = args.getString( ARG_RESULT_STATUS);
+        if (StringUtils.isEmpty(status)) {
+            view.findViewById(R.id.tv_processed_status).setVisibility( View.GONE );
+        }else {
+            ((TextView) view.findViewById(R.id.tv_processed_status)).setText(args.getString(ARG_RESULT_STATUS));
+        }
 
         view.findViewById(R.id.btn_close).setOnClickListener( v -> dismiss() );
 

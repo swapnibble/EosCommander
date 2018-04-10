@@ -69,7 +69,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
 
                         getMvpView().showLoading( false );
 
-                        getMvpView().showResult( Utils.prettyPrintJson(result));
+                        getMvpView().showResult( Utils.prettyPrintJson(result), null);
                     }
                 })
 

@@ -8,19 +8,15 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GetTableRequest {
-    @SerializedName("json")
     @Expose
-    private boolean isJson = true;
+    private boolean json = true;
 
-    @SerializedName("scope")
     @Expose
     private String scope;
 
-    @SerializedName("code")
     @Expose
     private String code;
 
-    @SerializedName("table")
     @Expose
     private String table;
 

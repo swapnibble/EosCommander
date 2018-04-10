@@ -34,13 +34,12 @@ import java.util.List;
 
 public class RequiredAuth {
 
-    @SerializedName("threshold")
     @Expose
     private Integer threshold;
-    @SerializedName("keys")
+
     @Expose
     private List<Key> keys = null;
-    @SerializedName("accounts")
+
     @Expose
     private List<Object> accounts = null;
 

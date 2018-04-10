@@ -25,11 +25,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:text="@string/get_table"/>
+
+            <TextView
+                android:id="@+id/tv_processed_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorPrimary"
+                tools:text="executed 100 bytes 1000 cycles"/>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -37,18 +47,39 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:fillViewport="true" >
-                    <TextView
-                        android:id="@+id/tv_get_response"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textIsSelectable="true"
-                        android:background="@color/colorLight"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="12sp"
-                        tools:text="Response code" />
+                <TextView
+                    android:id="@+id/tv_get_response"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textIsSelectable="true"
+                    android:background="@color/colorLight"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    tools:text="Response code" />
             </ScrollView>
 
+            <!--
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:textStyle="bold"
+                android:text="@string/console_output"/>
+
+            <ScrollView
+                android:id="@+id/console_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:fillViewport="true" >
+                <com.jraska.console.Console
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </ScrollView>
+            -->
 
             <TextView
                 android:id="@+id/btn_close"
@@ -56,7 +87,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="right"
                 android:gravity="center_vertical"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:paddingStart="8dp"

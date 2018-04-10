@@ -164,9 +164,9 @@ public abstract class BaseDialog extends DialogFragment implements DialogMvpView
     }
 
     @Override
-    public void showResult( String resultMsg ) {
+    public void showResult( String resultMsg, String statusInfo ) {
         if (mActivity != null) {
-            mActivity.showResult(resultMsg);
+            mActivity.showResult(resultMsg, statusInfo);
         }
     }
 
