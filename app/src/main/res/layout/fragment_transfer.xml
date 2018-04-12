@@ -6,6 +6,10 @@
     android:padding="16dp"
     tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
 
+    <include layout="@layout/label_with_name"
+        android:id="@+id/input_token_contract"
+        android:nextFocusDown="@+id/et_from"/>
+
     <AutoCompleteTextView
         style="@style/EosNameTextWithNext"
         android:id="@+id/et_from"
@@ -46,6 +50,10 @@
         android:maxLines="1"
         android:imeOptions="actionSend"
         android:hint="@string/amount"/>
+
+    <include android:id="@+id/input_memo"
+        layout="@layout/label_with_name"
+        android:nextFocusDown="@+id/et_from"/>
 
     <TextView
         android:id="@+id/btn_transfer"

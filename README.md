@@ -1,7 +1,14 @@
 # EOS commander for developer 
 
+<p align="center">
+  <img src="https://github.com/plactal/files/blob/master/eos_commander/eosc_icon.png?raw=true">
+</p>
+
 EOS commander is an Android client for EOS blockchain for EOS DApp developer. 
-It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. Mithrilcoin team hopes this makes more EOS mobile DApps activated. 
+It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. PLACTAL team hopes this makes more EOS mobile DApps activated.  
+
+[PLACTAL](#about_plactal) is new name of Mithrilcoin.  
+ 
 
 # Table of contents
 - [Getting Started](#getting_started)
@@ -11,7 +18,7 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 - [Transfer](#transfer)
 - [Push](#push)
 - [Get table](#get_tabel)
-- [About Mithrilcoin](#about_mithrilcoin)
+- [About PLACTAL](#about_plactal)
 - [License](#license)
 
 <a name="getting_started"></a>
@@ -21,7 +28,7 @@ For Testing on Public test net:
 Set testnet1.eos.io or testnet2.eos.io, port: 80 on EOS commander settings screen. 
 
 For Testing on private net:  
-You shoud have running eosd node.  
+You should have running eosd node.  
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
@@ -32,14 +39,14 @@ See [EOSIO github](https://github.com/EOSIO/eos).
 ### Build
 On the console type:
 
-	git clone https://github.com/mithrilcoin-io/eoscommander.git
+	git clone https://github.com/plactal/eoscommander.git
 
 Open in Android studio 3.0 or later.
 
 ### Install from Play Store
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
 
-Or download apk : [link](https://github.com/mithrilcoin-io/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
+Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
 SHA1 : e4ad0adcd52181e235954fa08bd7c100cea8e3f4  
 SHA256: 0a1a163d22484229705c11043123273d9ae7220f51a0f6d9b23fce0e44354036  
 
@@ -106,14 +113,14 @@ You can type json manually, or edit via form input UI( after reading ABI from EO
 Lists the contract table.
 [See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#readingcontract)
 
-<a name="about_mithrilcoin"></a>
-# About mithrilcoin.io
-[Mithril](https://mithrilcoin.io) is a decentralized mobile game ad platform. And runs on EOS network as smart contract. Mithril aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
+<a name="about_plactal"></a>
+# About plactal.io
+[PLACTAL](https://plactal.io) is a data-driven, decentralized mobile game advertising platform. And runs on EOS network as smart contract. PLACTAL aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
 
 <a name="lincense"></a>
 ## License
 
-    Copyright (c) 2017-2018 Mithril coin.
+    Copyright (c) 2017-2018 PLACTAL.
 
     The MIT License
 

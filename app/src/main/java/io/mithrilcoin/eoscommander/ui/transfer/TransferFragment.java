@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *
@@ -37,6 +37,7 @@ import javax.inject.Inject;
 import io.mithrilcoin.eoscommander.R;
 import io.mithrilcoin.eoscommander.di.component.ActivityComponent;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
+import io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView;
 import io.mithrilcoin.eoscommander.util.UiUtils;
 
 public class TransferFragment extends BaseFragment implements TransferMvpView{
@@ -44,9 +45,7 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
     @Inject
     TransferPresenter mPresenter;
 
-    private AutoCompleteTextView mEtFrom;
-    private AutoCompleteTextView mEtTo;
-    private EditText mEtAmount;
+    private View mRootView;
 
 
     public static TransferFragment newInstance() {
@@ -74,14 +73,14 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
     protected void setUpView(View view) {
 
         //  from, to, amount edit text
-        mEtFrom = view.findViewById(R.id.et_from);
-        mEtTo = view.findViewById(R.id.et_to);
-        mEtAmount = view.findViewById(R.id.et_amount);
+        AutoCompleteTextView etFrom = view.findViewById(R.id.et_from);
+        AutoCompleteTextView etTo = view.findViewById(R.id.et_to);
+        EditText etAmount = view.findViewById(R.id.et_amount);
 
         // click handler
         view.findViewById(R.id.btn_transfer).setOnClickListener(v -> onSend() );
 
-        mEtAmount.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+        etAmount.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (EditorInfo.IME_ACTION_SEND == actionId) {
                 onSend();
                 return true;
@@ -91,11 +90,37 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
         });
 
 
-        UiUtils.setupAccountHistory( mEtFrom, mEtTo );
+        // account history
+        UiUtils.setupAccountHistory( view.findViewById(R.id.input_token_contract).findViewById(R.id.et_input), etFrom, etTo );
     }
 
     private void onSend() {
-        mPresenter.transfer(mEtFrom.getText().toString(), mEtTo.getText().toString(), mEtAmount.getText().toString());
+        mPresenter.transfer(getTextInputValue(R.id.input_token_contract),
+                getTextFromAutoComplete(R.id.et_from), getTextFromAutoComplete(R.id.et_to)
+                , getTextFromAutoComplete(R.id.et_amount), getTextInputValue(R.id.input_memo));
+    }
+
+    private String getTextFromAutoComplete( int viewId ) {
+        AutoCompleteTextView itemView = mRootView.findViewById( viewId );
+        if ( itemView == null ) {
+            return "";
+        }
+
+        return itemView.getText().toString();
+    }
+
+    private String getTextInputValue(int viewId) {
+        View itemView = mRootView.findViewById( viewId );
+        if ( itemView == null ) {
+            return "";
+        }
+
+        TextInputAutoCompleteTextView tiauto = itemView.findViewById( R.id.et_input );
+        if ( tiauto != null ) {
+            return tiauto.getText().toString();
+        }
+
+        return "";
     }
 
     @Override

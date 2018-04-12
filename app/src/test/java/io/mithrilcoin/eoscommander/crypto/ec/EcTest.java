@@ -37,7 +37,7 @@ public class EcTest {
     }
 
     private void recover_by_paramType( int curveParamType, String msgOnFailed ) {
-        String payload = "Mithril coin";
+        String payload = "PLACTAL";
         Sha256 digest = Sha256.from( payload.getBytes());
         EosPrivateKey privateKey = new EosPrivateKey(curveParamType);
         EosPublicKey  publicKey  = privateKey.getPublicKey();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *

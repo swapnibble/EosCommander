@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *
@@ -32,7 +32,6 @@ import io.mithrilcoin.eoscommander.data.EoscDataManager;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.Utils;
-import io.reactivex.Single;
 
 /**
  * Created by swapnibble on 2017-11-07.
@@ -47,7 +46,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
     public TransferPresenter(){
     }
 
-    public void transfer(String from, String to, String amount){
+    public void transfer( String tokenContract, String from, String to, String amount, String memo){
         long amountAsLong = Utils.parseLongSafely( amount, 0);
         if ( amountAsLong < 0 ) {
             getMvpView().onError( R.string.invalid_amount);
@@ -57,7 +56,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
         getMvpView().showLoading( true );
 
         addDisposable( mDataManager
-                .transferEos( from, to, amountAsLong, null)
+                .transferCurrency( tokenContract, from, to, amountAsLong, memo)
                 .doOnNext( jsonObject -> mDataManager.addAccountHistory( from, to ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())

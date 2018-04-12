@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *
@@ -186,14 +186,14 @@ public class EoscDataManager {
         return mNodeosApi.getAccountInfo(new AccountInfoRequest(accountName));
     }
 
-    public Observable<JsonObject> transferEos( String from, String to, long amount, String memo ) {
+    public Observable<JsonObject> transferCurrency(String currencyContract, String from, String to, long amount, String memo ) {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
 //
 //        return pushActionRetJson( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), Utils.prettyPrintJson( transfer), getActivePermission(from));
 
         return getChainInfo()
-                .map( info -> createTransaction( "eosio.token", transfer.getActionName(), transfer.getAsHex()
+                .map( info -> createTransaction( currencyContract, transfer.getActionName(), transfer.getAsHex()
                         , getActivePermission( from ), info ))
                 .flatMap( txn -> signAndPackTransaction( txn))
                 .flatMap( packedTxn -> mNodeosApi.pushTransactionRetJson( packedTxn ));

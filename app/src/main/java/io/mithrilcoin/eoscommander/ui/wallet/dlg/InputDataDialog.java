@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *
@@ -24,6 +24,7 @@
 package io.mithrilcoin.eoscommander.ui.wallet.dlg;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;

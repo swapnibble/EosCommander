@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Mithril coin.
+ * Copyright (c) 2017-2018 PLACTAL.
  *
  * The MIT License
  *
@@ -34,6 +34,7 @@ import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.Consts;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-11-08.
@@ -132,6 +133,7 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
     }
 
     public void unlockWallet(String walletName, String password){
+        Timber.i("UNLOCK WALLET!");
         mDataManager.getWalletManager().unlock(walletName, password);
 
         // 바뀐 상태를 update 하도록..
