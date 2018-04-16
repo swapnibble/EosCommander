@@ -39,6 +39,8 @@ import io.mithrilcoin.eoscommander.data.prefs.PreferencesHelper;
 import io.mithrilcoin.eoscommander.data.remote.NodeosApi;
 import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.mithrilcoin.eoscommander.data.remote.model.api.AccountInfoRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetBalanceRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetRequestForCurrency;
 import io.mithrilcoin.eoscommander.data.remote.model.chain.Action;
 import io.mithrilcoin.eoscommander.data.remote.model.api.EosChainInfo;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetTableRequest;
@@ -57,6 +59,7 @@ import io.mithrilcoin.eoscommander.util.Consts;
 import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Observable;
 
+import static io.mithrilcoin.eoscommander.util.Consts.EOS_SYSTEM_ACCOUNT;
 import static io.mithrilcoin.eoscommander.util.Consts.TX_EXPIRATION_IN_MILSEC;
 
 /**
@@ -123,8 +126,10 @@ public class EoscDataManager {
         return mNodeosApi.readInfo("get_info");
     }
 
-    public Observable<String> getTable( String accountName, String code, String table ){
-        return mNodeosApi.getTable( new GetTableRequest(accountName, code, table))
+    public Observable<String> getTable( String accountName, String code, String table,
+                                        String tableKey, String lowerBound, String upperBound, int limit ){
+        return mNodeosApi.getTable(
+                new GetTableRequest(accountName, code, table, tableKey, lowerBound, upperBound, limit))
                 .map( tableResult -> Utils.prettyPrintJson(tableResult));
     }
 
@@ -186,14 +191,12 @@ public class EoscDataManager {
         return mNodeosApi.getAccountInfo(new AccountInfoRequest(accountName));
     }
 
-    public Observable<JsonObject> transferCurrency(String currencyContract, String from, String to, long amount, String memo ) {
+    public Observable<JsonObject> transfer( String from, String to, long amount, String memo ) {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
-//
-//        return pushActionRetJson( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), Utils.prettyPrintJson( transfer), getActivePermission(from));
 
         return getChainInfo()
-                .map( info -> createTransaction( currencyContract, transfer.getActionName(), transfer.getAsHex()
+                .map( info -> createTransaction( EOS_SYSTEM_ACCOUNT, transfer.getActionName(), transfer.getAsHex()
                         , getActivePermission( from ), info ))
                 .flatMap( txn -> signAndPackTransaction( txn))
                 .flatMap( packedTxn -> mNodeosApi.pushTransactionRetJson( packedTxn ));
@@ -202,7 +205,7 @@ public class EoscDataManager {
     public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
 
         return getChainInfo()
-                .map( info -> createTransaction( Consts.EOS_SYSTEM_ACCOUNT, newAccountData.getActionName(), newAccountData.getAsHex()
+                .map( info -> createTransaction( EOS_SYSTEM_ACCOUNT, newAccountData.getActionName(), newAccountData.getAsHex()
                                     , getActivePermission( newAccountData.getCreatorName() ), info ))
                 .flatMap( txn -> signAndPackTransaction( txn))
                 .flatMap( packedTxn -> mNodeosApi.pushTransaction( packedTxn ));
@@ -252,5 +255,15 @@ public class EoscDataManager {
     public Observable<EosAbiMain> getAbiMainFromJson( String jsonStr ) {
         return Observable.just( new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
                 .create().fromJson(jsonStr, EosAbiMain.class));
+    }
+
+    public Observable<String> getCurrencyBalance(String contract, String account, String symbol){
+        return mNodeosApi.getCurrencyBalance( new GetBalanceRequest(contract,account,symbol))
+                .map( result -> Utils.prettyPrintJson(result));
+    }
+
+    public Observable<String> getCurrencyStats(String contract, String symbol){
+        return mNodeosApi.getCurrencyStats( new GetRequestForCurrency(contract, symbol))
+                .map( result -> Utils.prettyPrintJson(result));
     }
 }

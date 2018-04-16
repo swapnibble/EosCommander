@@ -1,97 +1,142 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
-
-    <AutoCompleteTextView
-        style="@style/EosNameTextWithNext"
-        android:id="@+id/et_account"
-        android:nextFocusDown="@+id/et_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/colorLightGray"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/round_box_input"
-        android:padding="16dp"
-        android:hint="@string/account" />
-
-    <AutoCompleteTextView
-        style="@style/EosNameTextWithNext"
-        android:id="@+id/et_code"
-        android:nextFocusDown="@+id/et_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/colorLightGray"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/round_box_input"
-        android:padding="16dp"
-        android:hint="@string/contract_code" />
-
-    <TextView
-        android:id="@+id/btn_query_table_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:background="@drawable/round_box_btn"
-        android:text="@string/read_table_list"/>
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        android:background="@drawable/round_border_input">
-        <TextView
-            android:id="@+id/label_table_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:padding="8dp"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/table_name" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/sp_table_list"
+        <AutoCompleteTextView
+            style="@style/EosNameTextWithNext"
+            android:id="@+id/et_code"
+            android:nextFocusDown="@+id/et_scope"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_alignBaseline="@+id/label_table_name"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
-            android:padding="8dp"
-            android:spinnerMode="dropdown"/>
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:hint="@string/contract_code" />
+
+        <AutoCompleteTextView
+            style="@style/EosNameText"
+            android:id="@+id/et_scope"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:hint="@string/scope" />
+
+        <TextView
+            android:id="@+id/btn_query_table_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:background="@drawable/round_box_btn"
+            android:text="@string/read_table_list"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:background="@drawable/round_border_input">
+            <TextView
+                android:id="@+id/label_table_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/table_name" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_table_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_alignBaseline="@+id/label_table_name"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:padding="8dp"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/et_lower_bound"
+            android:hint="@string/table_key" />
+
+        <EditText
+            android:id="@+id/et_lower_bound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/et_upper_bound"
+            android:hint="@string/lower_bound" />
+
+        <EditText
+            android:id="@+id/et_upper_bound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/et_upper_bound"
+            android:hint="@string/upper_bound" />
+
+        <EditText
+            android:id="@+id/et_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorLightGray"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/round_box_input"
+            android:padding="16dp"
+            android:inputType="number"
+            android:hint="@string/limit" />
+
+        <TextView
+            android:id="@+id/btn_get"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:background="@drawable/round_box_btn_dark"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:text="@string/get_table"/>
+
     </LinearLayout>
-    <!--
-    <EditText
-        style="@style/EosNameTextWithDone"
-        android:id="@+id/et_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/colorLightGray"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/round_box_input"
-        android:padding="16dp"
-        android:hint="@string/table_name" />
-    -->
-
-    <TextView
-        android:id="@+id/btn_get"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textAlignment="center"
-        android:background="@drawable/round_box_btn_dark"
-        android:textAllCaps="true"
-        android:textColor="@color/colorWhite"
-        android:text="@string/get_table"/>
-
-</LinearLayout>
+</ScrollView>

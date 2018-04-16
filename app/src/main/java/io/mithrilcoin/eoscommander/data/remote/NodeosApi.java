@@ -24,8 +24,11 @@
 package io.mithrilcoin.eoscommander.data.remote;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetBalanceRequest;
+import io.mithrilcoin.eoscommander.data.remote.model.api.GetRequestForCurrency;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.mithrilcoin.eoscommander.data.remote.model.api.JsonToBinResponse;
 import io.mithrilcoin.eoscommander.data.remote.model.api.GetCodeRequest;
@@ -68,11 +71,11 @@ public interface NodeosApi {
 
 
 
-//    @POST("/v1/chain/get_currency_balance")
-//    Observable<RequiredKeysResponse> getCurrencyBalance(@Body GetRequiredKeys body);
-//
-//    @POST("/v1/chain/get_currency_stats")
-//    Observable<RequiredKeysResponse> getCurrencyStats(@Body GetRequiredKeys body);
+    @POST("/v1/chain/get_currency_balance")
+    Observable<JsonArray> getCurrencyBalance(@Body GetBalanceRequest body);
+
+    @POST("/v1/chain/get_currency_stats")
+    Observable<JsonArray> getCurrencyStats(@Body GetRequestForCurrency body);
 
 
 

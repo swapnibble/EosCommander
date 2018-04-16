@@ -1,88 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
+    android:padding="16dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/round_box_input">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/sp_currency_cmd"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:spinnerMode="dropdown"/> <!-- android:background="@drawable/arrow_gray" unlock 된 지갑을 선택하는 스피너 -->
+    </FrameLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_from"
+        android:id="@+id/til_token_contract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp">
 
         <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
-            android:id="@+id/et_from"
+            style="@style/EosNameTextWithNext"
+            android:id="@+id/et_token_contract"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textVisiblePassword"
             android:digits=".12345abcdefghijklmnopqrstuvwxyz"
             android:padding="16dp"
-            android:nextFocusDown="@+id/et_to"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:hint="@string/from"/>
+            android:nextFocusDown="@+id/et_account"
+            android:hint="@string/token_contract"/>
+
     </android.support.design.widget.TextInputLayout>
 
-
-
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_to"
+        android:id="@+id/til_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
 
         <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
-            android:id="@+id/et_to"
+            style="@style/EosNameTextWithNext"
+            android:id="@+id/et_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textVisiblePassword"
             android:digits=".12345abcdefghijklmnopqrstuvwxyz"
             android:padding="16dp"
-            android:nextFocusDown="@+id/et_amount"
-            android:singleLine="true"
-            android:hint="@string/to"/>
+            android:nextFocusDown="@+id/et_symbol"
+            android:hint="@string/account"/>
+
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_amount"
+        android:id="@+id/til_symbol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="24dp">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/et_amount"
+        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+            android:id="@+id/et_symbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:padding="16dp"
-            android:inputType="number"
-            android:nextFocusDown="@+id/et_memo"
             android:singleLine="true"
-            android:hint="@string/amount"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_memo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/et_memo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:inputType="text"
-            android:singleLine="true"
-            android:maxLines="1"
             android:imeOptions="actionSend"
-            android:hint="@string/memo"/>
-    </android.support.design.widget.TextInputLayout>
+            android:hint="@string/currency_symbol"/>
 
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/btn_transfer"
+        android:id="@+id/btn_get"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -90,5 +90,5 @@
         android:background="@drawable/round_box_btn_dark"
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
-        android:text="@string/transfer"/>
+        android:text="@string/get"/>
 </LinearLayout>

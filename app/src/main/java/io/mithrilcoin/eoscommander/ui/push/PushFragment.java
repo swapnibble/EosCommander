@@ -67,7 +67,6 @@ public class PushFragment extends BaseFragment
     private ArrayAdapter<String> mActionNameAdapter;
 
     private AbiViewBuilder mAbiViewBuilder;
-    private MultiAutoCompleteTextView mEtScopes;
     private AutoCompleteTextView mEtPermissionAccount;
     private EditText mEtPermissionName;
     private EditText mEtMsg;
@@ -104,7 +103,6 @@ public class PushFragment extends BaseFragment
         mEtContract.setOnEditorActionListener( this);
         mActionSpinner  = view.findViewById( R.id.sp_action_name );
         mEtMsg          = view.findViewById(R.id.et_message);
-        mEtScopes = view.findViewById( R.id.et_scopes );
         mEtPermissionAccount= view.findViewById( R.id.et_permission_account );
         mEtPermissionAccount.setOnEditorActionListener( this);
 
@@ -146,7 +144,6 @@ public class PushFragment extends BaseFragment
 
         mPresenter.pushAction(mEtContract.getText().toString(),mActionSpinner.getSelectedItem().toString()// mEtAction.getText().toString()      // contract, action
                 , mEtMsg.getText().toString() // message,
-                , mEtScopes.getText().toString()   // scope
                 , mEtPermissionAccount.getText().toString()     // account for permission
                 , mEtPermissionName.getText().toString()     // permission name
         );
@@ -172,7 +169,7 @@ public class PushFragment extends BaseFragment
             }
         });
 
-        UiUtils.setupAccountHistory( mEtContract, mEtScopes, mEtPermissionAccount );
+        UiUtils.setupAccountHistory( mEtContract, mEtPermissionAccount );
     }
 
     @Override

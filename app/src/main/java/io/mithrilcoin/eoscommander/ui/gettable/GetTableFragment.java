@@ -28,11 +28,10 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -45,18 +44,18 @@ import io.mithrilcoin.eoscommander.ui.result.ShowResultDialog;
 import io.mithrilcoin.eoscommander.util.StringUtils;
 import io.mithrilcoin.eoscommander.util.UiUtils;
 
-public class GetTableFragment extends BaseFragment
-        implements GetTableMvpView {
+public class GetTableFragment extends BaseFragment implements GetTableMvpView {
 
     @Inject
     GetTablePresenter mPresenter;
 
-    private AutoCompleteTextView mTvAccountName;
+    private AutoCompleteTextView mScope;
     private AutoCompleteTextView mTvCode;
-    //private TextView mTvTable;
 
     private AppCompatSpinner        mTableNameSpinner;
     private ArrayAdapter<String>    mTableNameAdapter;
+
+    private View mRootView;
 
 
     public static GetTableFragment newInstance() {
@@ -83,7 +82,9 @@ public class GetTableFragment extends BaseFragment
 
     @Override
     protected void setUpView(View view) {
-        mTvAccountName = view.findViewById( R.id.et_account);
+        mRootView = view;
+
+        mScope = view.findViewById( R.id.et_scope);
         mTvCode = view.findViewById( R.id.et_code);
 
         view.findViewById( R.id.btn_get).setOnClickListener( v -> onGetTable() );
@@ -100,7 +101,16 @@ public class GetTableFragment extends BaseFragment
             return;
         }
 
-        mPresenter.getTable ( mTvAccountName.getText().toString(), mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString());
+        mPresenter.getTable ( mScope.getText().toString()
+                , mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString(),
+                getEditString( R.id.et_key), getEditString(R.id.et_lower_bound), getEditString(R.id.et_upper_bound), getEditString(R.id.et_limit));
+    }
+
+    private String getEditString( int id ) {
+        EditText et = mRootView.findViewById( id );
+        if ( et == null ) return "";
+
+        return et.getText().toString();
     }
 
     @Override
@@ -118,7 +128,7 @@ public class GetTableFragment extends BaseFragment
     }
 
     private void setupAccountHistory(){
-        UiUtils.setupAccountHistory( mTvAccountName, mTvCode);
+        UiUtils.setupAccountHistory(mScope, mTvCode);
 
         // when contract selected
         mTvCode.setOnItemClickListener( (adapterView, view, position, id) -> {

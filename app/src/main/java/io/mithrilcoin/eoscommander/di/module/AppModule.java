@@ -71,6 +71,7 @@ public class AppModule {
     Gson providesGson() {
         return new GsonBuilder()
                 .registerTypeAdapterFactory(new GsonEosTypeAdapterFactory())
+                .serializeNulls()
                 .excludeFieldsWithoutExposeAnnotation().create();
     }
 

@@ -46,7 +46,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
     public TransferPresenter(){
     }
 
-    public void transfer( String tokenContract, String from, String to, String amount, String memo){
+    public void transfer( String from, String to, String amount, String memo){
         long amountAsLong = Utils.parseLongSafely( amount, 0);
         if ( amountAsLong < 0 ) {
             getMvpView().onError( R.string.invalid_amount);
@@ -56,7 +56,7 @@ public class TransferPresenter extends BasePresenter<TransferMvpView> {
         getMvpView().showLoading( true );
 
         addDisposable( mDataManager
-                .transferCurrency( tokenContract, from, to, amountAsLong, memo)
+                .transfer( from, to, amountAsLong, memo)
                 .doOnNext( jsonObject -> mDataManager.addAccountHistory( from, to ))
                 .subscribeOn( getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())

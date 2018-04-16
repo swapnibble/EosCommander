@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab().setText( R.string.wallet));
         tabLayout.addTab(tabLayout.newTab().setText( R.string.account ));
         tabLayout.addTab(tabLayout.newTab().setText( R.string.transfer ));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.currency ));
         tabLayout.addTab(tabLayout.newTab().setText( R.string.push ));
         tabLayout.addTab(tabLayout.newTab().setText( R.string.get_table));
         tabLayout.setTabGravity(TabLayout.MODE_SCROLLABLE);

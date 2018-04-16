@@ -35,6 +35,7 @@ import io.mithrilcoin.eoscommander.data.remote.model.abi.EosAbiTable;
 import io.mithrilcoin.eoscommander.ui.base.BasePresenter;
 import io.mithrilcoin.eoscommander.ui.base.RxCallbackWrapper;
 import io.mithrilcoin.eoscommander.util.StringUtils;
+import io.mithrilcoin.eoscommander.util.Utils;
 import io.reactivex.Single;
 
 /**
@@ -91,9 +92,9 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
         );
     }
 
-    public void getTable(String accountName, String contract, String table ) {
+    public void getTable(String accountName, String contract, String table, String tableKey, String lowerBound, String upperBound, String limit ) {
         addDisposable(
-            mDataManager.getTable( accountName, contract, table)
+            mDataManager.getTable( accountName, contract, table, tableKey, lowerBound, upperBound, Utils.parseIntSafely(limit, 0))
                     .doOnNext( result -> mDataManager.addAccountHistory( accountName, contract) )
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())

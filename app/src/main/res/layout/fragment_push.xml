@@ -140,6 +140,7 @@
                 android:hint="@string/push_message_hint" />
         </android.support.v4.widget.NestedScrollView>
 
+        <!-- scopes are removed on dawn3
         <MultiAutoCompleteTextView
             android:id="@+id/et_scopes"
             android:nextFocusDown="@+id/permissions"
@@ -158,11 +159,12 @@
             android:singleLine="true"
             android:maxLines="1"
             android:hint="@string/scope_hint" />
+        -->
 
         <LinearLayout android:id="@+id/permissions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_scopes"
+            android:layout_below="@id/et_message_scroller"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
             <AutoCompleteTextView

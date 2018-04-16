@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import io.mithrilcoin.eoscommander.ui.account.AccountMainFragment;
 import io.mithrilcoin.eoscommander.ui.base.BaseActivity;
 import io.mithrilcoin.eoscommander.ui.base.BaseFragment;
+import io.mithrilcoin.eoscommander.ui.currency.CurrencyFragment;
 import io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment;
 import io.mithrilcoin.eoscommander.ui.push.PushFragment;
 import io.mithrilcoin.eoscommander.ui.transfer.TransferFragment;
@@ -41,8 +42,9 @@ public class CmdPagerAdapter extends FragmentPagerAdapter {
     private static final int TAB_IDX_WALLET     = 0;
     private static final int TAB_IDX_ACCOUNT    = 1;
     private static final int TAB_IDX_TRANSFER   = 2;
-    private static final int TAB_IDX_PUSH       = 3;
-    private static final int TAB_IDX_GET_TABLE  = 4;
+    private static final int TAB_IDX_CURRENCY   = 3;
+    private static final int TAB_IDX_PUSH       = 4;
+    private static final int TAB_IDX_GET_TABLE  = 5;
 
     private int mTabCount;
 
@@ -95,6 +97,9 @@ public class CmdPagerAdapter extends FragmentPagerAdapter {
 
             case TAB_IDX_TRANSFER:
                 fragment = TransferFragment.newInstance(); break;
+
+            case TAB_IDX_CURRENCY:
+                fragment = CurrencyFragment.newInstance(); break;
 
             case TAB_IDX_PUSH:
                 fragment = PushFragment.newInstance(); break;

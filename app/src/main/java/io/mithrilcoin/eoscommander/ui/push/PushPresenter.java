@@ -151,7 +151,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
         return historyAccounts;
     }
 
-    public void pushAction(String contract, String action, String message, String scopes, String permissionAccount, String permissionName ){
+    public void pushAction(String contract, String action, String message, String permissionAccount, String permissionName ){
 
         getMvpView().showLoading( true );
 

@@ -24,6 +24,7 @@
 package io.mithrilcoin.eoscommander.ui.transfer;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
     @Override
     protected void setUpView(View view) {
 
+        mRootView = view;
+
         //  from, to, amount edit text
         AutoCompleteTextView etFrom = view.findViewById(R.id.et_from);
         AutoCompleteTextView etTo = view.findViewById(R.id.et_to);
@@ -91,36 +94,30 @@ public class TransferFragment extends BaseFragment implements TransferMvpView{
 
 
         // account history
-        UiUtils.setupAccountHistory( view.findViewById(R.id.input_token_contract).findViewById(R.id.et_input), etFrom, etTo );
+        UiUtils.setupAccountHistory( etFrom, etTo );
     }
 
     private void onSend() {
-        mPresenter.transfer(getTextInputValue(R.id.input_token_contract),
-                getTextFromAutoComplete(R.id.et_from), getTextFromAutoComplete(R.id.et_to)
-                , getTextFromAutoComplete(R.id.et_amount), getTextInputValue(R.id.input_memo));
+        mPresenter.transfer( getTextFromEt(R.id.et_from), getTextFromEt(R.id.et_to)
+                , getTextFromEt(R.id.et_amount), getTextFromEt(R.id.et_memo));
     }
 
-    private String getTextFromAutoComplete( int viewId ) {
-        AutoCompleteTextView itemView = mRootView.findViewById( viewId );
-        if ( itemView == null ) {
+    private String getTextFromEt( int textEditId ) {
+        EditText et = mRootView.findViewById( textEditId );
+        if ( et == null ){
             return "";
         }
 
-        return itemView.getText().toString();
+        return et.getText().toString();
     }
 
-    private String getTextInputValue(int viewId) {
+    private TextInputAutoCompleteTextView getTiAutoTv( int viewId ) {
         View itemView = mRootView.findViewById( viewId );
         if ( itemView == null ) {
-            return "";
+            return null;
         }
 
-        TextInputAutoCompleteTextView tiauto = itemView.findViewById( R.id.et_input );
-        if ( tiauto != null ) {
-            return tiauto.getText().toString();
-        }
-
-        return "";
+        return itemView.findViewById( R.id.et_input );
     }
 
     @Override

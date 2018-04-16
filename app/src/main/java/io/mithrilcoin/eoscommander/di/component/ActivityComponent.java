@@ -7,6 +7,7 @@ import io.mithrilcoin.eoscommander.di.module.ActivityModule;
 import io.mithrilcoin.eoscommander.ui.account.AccountMainFragment;
 import io.mithrilcoin.eoscommander.ui.account.create.CreateEosAccountDialog;
 import io.mithrilcoin.eoscommander.ui.account.info.InputAccountDialog;
+import io.mithrilcoin.eoscommander.ui.currency.CurrencyFragment;
 import io.mithrilcoin.eoscommander.ui.push.abiview.MsgInputActivity;
 import io.mithrilcoin.eoscommander.ui.settings.SettingsActivity;
 import io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment;
@@ -32,6 +33,8 @@ public interface ActivityComponent {
     void inject(WalletFragment fragment);
     void inject(PushFragment fragment);
     void inject(GetTableFragment fragment);
+
+    void inject(CurrencyFragment fragment);
     void inject(TransferFragment fragment);
 
     void inject(InputDataDialog dialog);

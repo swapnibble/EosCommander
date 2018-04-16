@@ -5,7 +5,7 @@
     <string name="about">About</string>
 
     <string name="wallet">Wallet</string>
-    <string name="account">Account</string>
+    <string name="account">account</string>
     <string name="transfer">Transfer</string>
     <string name="push">Push</string>
     <string name="get_table">Get table</string>
@@ -70,7 +70,7 @@
     <string name="contract_account">Contract account</string>
     <string name="contract_action">Contract Action :</string>
 
-    <string name="scope_hint">Scope accounts (separate by space or comma)</string>
+    <string name="scope">scope</string>
 
     <string name="permission_account_hint">Account for permission</string>
     <string name="permission_level_active">active</string>
@@ -117,4 +117,16 @@
     <string name="table_loaded">table names loaded !</string>
 
     <string name="console_output">Console output:</string>
+    <string name="token_contract">token contract</string>
+    <string name="memo">memo</string>
+    <string name="get">get</string>
+    <string name="currency">currency</string>
+    <string name="currency_symbol">currency symbol</string>
+    <string name="get_balance">get balance</string>
+    <string name="get_stats">get stats</string>
+
+    <string name="table_key">key to index</string>
+    <string name="lower_bound">lower bound</string>
+    <string name="upper_bound">upper bound</string>
+    <string name="limit">limit</string>
 </resources>

@@ -118,7 +118,7 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
 
         mWalletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 hideKeyboard();
             }
 

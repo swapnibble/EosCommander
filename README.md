@@ -4,10 +4,10 @@
   <img src="https://github.com/plactal/files/blob/master/eos_commander/eosc_icon.png?raw=true">
 </p>
 
-EOS commander is an Android client for EOS blockchain for EOS DApp developer. 
+EOS commander is an Android client for EOSIO blockchain for EOS DApp developer. 
 It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. PLACTAL team hopes this makes more EOS mobile DApps activated.  
 
-[PLACTAL](#about_plactal) is new name of Mithrilcoin.  
+#### [PLACTAL](#about_plactal) is the new name of Mithrilcoin.  
  
 
 # Table of contents
@@ -32,7 +32,7 @@ You should have running eosd node.
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOS version [83009a6](https://github.com/EOSIO/eos/tree/83990a6494a8e2dfcd445c098a677cbec8f71d7b).
+EOS Commander has been tested with EOSIO version [83009a6](https://github.com/EOSIO/eos/tree/83990a6494a8e2dfcd445c098a677cbec8f71d7b).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
