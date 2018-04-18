@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:background="@color/colorLight"
     android:orientation="vertical"
-    tools:context="io.mithrilcoin.eoscommander.ui.MainActivity">
+    tools:context="io.plactal.eoscommander.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

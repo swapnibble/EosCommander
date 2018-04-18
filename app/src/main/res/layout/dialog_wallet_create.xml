@@ -56,7 +56,7 @@
                     android:gravity="center"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textColor="@color/colorMithril"
+                    android:textColor="@color/colorPlactal"
                     android:text="@string/create"/>
 
                 <TextView

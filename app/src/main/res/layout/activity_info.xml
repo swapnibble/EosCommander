@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="io.mithrilcoin.eoscommander.ui.InfoActivity">
+    tools:context="io.plactal.eoscommander.ui.InfoActivity">
 
     <ImageView
         android:id="@+id/iv_eos_logo"
@@ -30,16 +30,16 @@
         android:text="@string/app_title_with_ver_fmt"/>
 
     <ImageView
-        android:id="@+id/iv_mithril_logo"
+        android:id="@+id/iv_plactal_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:scaleType="fitXY"
         android:layout_gravity="center"
         android:tint="@color/colorWhite"
-        app:srcCompat="@drawable/ic_mithril_logo" />
+        app:srcCompat="@drawable/ic_plactal_logo" />
 
     <TextView
-        android:id="@+id/iv_mithril_logo_txt"
+        android:id="@+id/iv_plactal_logo_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10sp"
@@ -47,10 +47,10 @@
         android:paddingBottom="48dp"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:text="@string/mithril_coin_io"/>
+        android:text="@string/plactal_io"/>
 
     <TextView
-        android:id="@+id/iv_mithril_web"
+        android:id="@+id/iv_plactal_web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -60,10 +60,10 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_mithril_web"/>
+        android:text="@string/info_plactal_web"/>
 
     <TextView
-        android:id="@+id/iv_mithril_github"
+        android:id="@+id/iv_plactal_github"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -73,10 +73,10 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_mithril_github"/>
+        android:text="@string/info_plactal_github"/>
 
     <TextView
-        android:id="@+id/iv_mithril_telegram"
+        android:id="@+id/iv_plactal_telegram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -86,10 +86,10 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_mithril_telegram"/>
+        android:text="@string/info_plactal_telegram"/>
 
     <TextView
-        android:id="@+id/iv_mithril_facebook"
+        android:id="@+id/iv_plactal_facebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -99,6 +99,6 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_mithril_facebook"/>
+        android:text="@string/info_plactal_facebook"/>
 
 </LinearLayout>

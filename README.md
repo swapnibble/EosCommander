@@ -28,7 +28,7 @@ For Testing on Public test net:
 Set testnet1.eos.io or testnet2.eos.io, port: 80 on EOS commander settings screen. 
 
 For Testing on private net:  
-You should have running eosd node.  
+You should have running nodeos node.  
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
@@ -44,7 +44,7 @@ On the console type:
 Open in Android studio 3.0 or later.
 
 ### Install from Play Store
-You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
+You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)  
 
 Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
 SHA1 : e4ad0adcd52181e235954fa08bd7c100cea8e3f4  
@@ -57,7 +57,7 @@ For Public test net:
 Set testnet1.eos.io or testnet2.eos.io, port: 80  
 
 For Private test net:  
-You shoud have running eosd node.  
+You should have running nodeos node.  
 Set "http-server-address" other than "127.0.0.1" in config.ini.  
 
  on EOS commander settings screen. 
@@ -67,7 +67,7 @@ Connect to eos network and check the status.
 On connected state, you can use the command function.
 
 ### Skipping signature
-You can run commands without signing. But in this case, the eosd must have been started with "--skip-transaction-signatures" switch.
+You can run commands without signing. But in this case, the nodeos must have been started with "--skip-transaction-signatures" switch.
 [See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#localtestnet)
 
 <a name="getting_started"></a>

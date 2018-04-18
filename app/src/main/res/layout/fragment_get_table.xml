@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context="io.mithrilcoin.eoscommander.ui.gettable.GetTableFragment">
+        tools:context="io.plactal.eoscommander.ui.gettable.GetTableFragment">
 
         <AutoCompleteTextView
             style="@style/EosNameTextWithNext"

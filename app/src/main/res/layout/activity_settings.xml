@@ -65,7 +65,7 @@
                 android:background="@drawable/round_box_input"
                 android:padding="16dp"
                 android:inputType="number"
-                android:hint="@string/eosd_port" />
+                android:hint="@string/nodeos_port" />
 
             <EditText
                 android:id="@+id/et_host"
@@ -80,7 +80,7 @@
                 android:textColor="@color/colorPrimary"
                 android:background="@drawable/round_box_input"
                 android:padding="16dp"
-                android:hint="@string/eosd_ip" />
+                android:hint="@string/nodeos_ip" />
 
             <TextView
                 android:id="@+id/btn_connect"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+    <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
         android:id="@+id/et_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

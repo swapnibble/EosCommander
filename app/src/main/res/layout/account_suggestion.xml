@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
         app:srcCompat="@drawable/ic_delete_white_24px"
-        android:tint="@color/colorMithril"/>
+        android:tint="@color/colorPlactal"/>
 
     <TextView
         android:id="@+id/eos_account"
@@ -27,7 +27,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/del_history"
         android:layout_alignParentLeft="true"
-        android:textColor="@color/colorMithril"
+        android:textColor="@color/colorPlactal"
         android:gravity="center_vertical"
         android:lines="1"
         android:textStyle="bold"

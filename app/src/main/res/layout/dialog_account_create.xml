@@ -72,7 +72,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:textColor="@color/colorMithril"
+                    android:textColor="@color/colorPlactal"
                     android:text="@string/no_wallet_unlocked_or_selected"
                     android:visibility="gone"/>
 
@@ -148,7 +148,7 @@
                     android:gravity="center"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textColor="@color/colorMithril"
+                    android:textColor="@color/colorPlactal"
                     android:text="@string/create"/>
 
                 <TextView

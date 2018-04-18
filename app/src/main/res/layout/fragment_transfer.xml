@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="io.mithrilcoin.eoscommander.ui.transfer.TransferFragment">
+    tools:context="io.plactal.eoscommander.ui.transfer.TransferFragment">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_from"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
 
-        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
             android:id="@+id/et_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
 
-        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
             android:id="@+id/et_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

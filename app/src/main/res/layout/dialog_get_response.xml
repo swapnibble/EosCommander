@@ -94,7 +94,7 @@
                 android:paddingEnd="8dp"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textColor="@color/colorMithril"
+                android:textColor="@color/colorPlactal"
                 android:text="@string/close"/>
         </LinearLayout>
 

@@ -30,7 +30,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp">
 
-        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
             style="@style/EosNameTextWithNext"
             android:id="@+id/et_token_contract"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp">
 
-        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
             style="@style/EosNameTextWithNext"
             android:id="@+id/et_account"
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp">
 
-        <io.mithrilcoin.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
             android:id="@+id/et_symbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

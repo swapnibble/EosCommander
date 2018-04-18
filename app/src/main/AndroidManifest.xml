@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.mithrilcoin.eoscommander">
+    package="io.plactal.eoscommander">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".app.EosCommanderApp"
+        android:name="io.plactal.eoscommander.app.EosCommanderApp"
         tools:replace="allowBackup"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="io.mithrilcoin.eoscommander.ui.MainActivity"
+            android:name="io.plactal.eoscommander.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" >
@@ -29,21 +29,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.mithrilcoin.eoscommander.ui.settings.SettingsActivity"
+            android:name="io.plactal.eoscommander.ui.settings.SettingsActivity"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
 
         <activity
-            android:name="io.mithrilcoin.eoscommander.ui.InfoActivity"
+            android:name="io.plactal.eoscommander.ui.InfoActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".ui.file.FileChooserActivity"
+        <activity android:name="io.plactal.eoscommander.ui.file.FileChooserActivity"
             android:windowSoftInputMode="adjustPan"/>
 
 
-        <activity android:name=".ui.push.abiview.MsgInputActivity"
+        <activity android:name="io.plactal.eoscommander.ui.push.abiview.MsgInputActivity"
             android:theme="@style/AppTheme.TranslucentBack"
             android:windowSoftInputMode="adjustPan"/>
 

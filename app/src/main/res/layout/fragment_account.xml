@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.mithrilcoin.eoscommander.ui.account.AccountMainFragment">
+    tools:context="io.plactal.eoscommander.ui.account.AccountMainFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
         android:textColor="@color/colorGray"
         android:text="@string/command"/>
 
-    <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+    <io.plactal.eoscommander.ui.widget.TintVtDrTextView
         android:id="@+id/btn_command_create_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,13 +26,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:vectorRight="@drawable/ic_play_circle_outline"
-        app:vectorTint="@color/colorMithril"
+        app:vectorTint="@color/colorPlactal"
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         android:text="@string/create_account"/>
 
-    <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+    <io.plactal.eoscommander.ui.widget.TintVtDrTextView
         android:id="@+id/btn_get_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,13 +41,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         app:vectorRight="@drawable/ic_play_circle_outline"
-        app:vectorTint="@color/colorMithril"
+        app:vectorTint="@color/colorPlactal"
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         android:text="@string/get_account"/>
 
-    <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+    <io.plactal.eoscommander.ui.widget.TintVtDrTextView
         android:id="@+id/btn_get_transaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,13 +56,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         app:vectorRight="@drawable/ic_play_circle_outline"
-        app:vectorTint="@color/colorMithril"
+        app:vectorTint="@color/colorPlactal"
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         android:text="@string/get_transactions"/>
 
-    <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+    <io.plactal.eoscommander.ui.widget.TintVtDrTextView
         android:id="@+id/btn_get_servants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         app:vectorRight="@drawable/ic_play_circle_outline"
-        app:vectorTint="@color/colorMithril"
+        app:vectorTint="@color/colorPlactal"
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"

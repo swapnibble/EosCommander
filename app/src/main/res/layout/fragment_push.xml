@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.mithrilcoin.eoscommander.ui.push.PushFragment" >
+    tools:context="io.plactal.eoscommander.ui.push.PushFragment" >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textColorHint="@color/colorLightGray"
             android:hint="@string/contract_account" />
 
-        <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+        <io.plactal.eoscommander.ui.widget.TintVtDrTextView
             android:id="@+id/btn_get_abi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,7 +81,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
-            <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+            <io.plactal.eoscommander.ui.widget.TintVtDrTextView
                 android:id="@+id/btn_ui_input"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -98,7 +98,7 @@
                 android:textSize="12sp"
                 android:text="@string/form_input"/>
 
-            <io.mithrilcoin.eoscommander.ui.widget.TintVtDrTextView
+            <io.plactal.eoscommander.ui.widget.TintVtDrTextView
                 android:id="@+id/btn_import"
                 android:layout_width="0dp"
                 android:layout_weight="1"

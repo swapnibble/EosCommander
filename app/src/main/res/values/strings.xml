@@ -10,18 +10,18 @@
     <string name="push">Push</string>
     <string name="get_table">Get table</string>
 
-    <string name="eosd_ip">eosd host address</string>
-    <string name="eosd_port">Port</string>
+    <string name="nodeos_ip">nodeos host address</string>
+    <string name="nodeos_port">Port</string>
     <string name="connect">Connect</string>
     <string name="desc_for_connect_result">EOS network information will be displayed here when you connect.</string>
 
     <string name="app_title_with_ver_fmt">EOS Commander %s for developers\n\nby</string>
-    <string name="mithril_coin_io">mithrilcoin.io</string>
+    <string name="plactal_io">plactal.io</string>
 
-    <string name="info_mithril_web">Web\nhttps://mithrilcoin.io</string>
-    <string name="info_mithril_github">Github\nhttps://github.com/mithrilcoin-io</string>
-    <string name="info_mithril_telegram">Telegram\nhttps://t.me/mithrilcoin</string>
-    <string name="info_mithril_facebook">Facebook\nhttps://www.facebook.com/mithrilteam</string>
+    <string name="info_plactal_web">Web\nhttps://plactal.io</string>
+    <string name="info_plactal_github">Github\nhttps://github.com/plactal</string>
+    <string name="info_plactal_telegram">Telegram\nhttps://t.me/plactal_io</string>
+    <string name="info_plactal_facebook">Facebook\nhttps://www.facebook.com/plactal.io</string>
 
     <string name="input_account">Input account</string>
     <string name="account_info_title_fmt">%s: %s</string>
@@ -64,7 +64,7 @@
     <string name="wallet_password_info">Save password to use in the future to unlock this wallet.\nWithout password keys will not be retrievable.</string>
     <string name="wallet_already_exists">"Wallet : '%1$s' already exist!"</string>
 
-    <string name="invalid_connection_info">Invalid eosd host info!</string>
+    <string name="invalid_connection_info">Invalid nodeos host info!</string>
     <string name="conn_failed">Could not connect!</string>
 
     <string name="contract_account">Contract account</string>
@@ -78,7 +78,7 @@
     <string name="close">close</string>
 
     <string name="set_skip_signature">Set skipping signatures</string>
-    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `eosd` must have been started with --skip-transaction-signatures option.</string>
+    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `nodeos` must have been started with --skip-transaction-signatures option.</string>
 
     <string name="invalid_amount">Invalid amount !</string>
 
