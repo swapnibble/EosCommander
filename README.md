@@ -45,11 +45,16 @@ On the console type:
 Open in Android studio 3.0 or later.
 
 ### Install from Play Store
+```diff
+- Warning : Playstore link below is for old version ( dawn2 ). Latest version is not yet published.
+- Try direct apk link for dawn3.
+```
+  
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
 
-Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
-SHA1 : e4ad0adcd52181e235954fa08bd7c100cea8e3f4  
-SHA256: 0a1a163d22484229705c11043123273d9ae7220f51a0f6d9b23fce0e44354036  
+Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.0.0-release.apk?raw=true)  
+SHA1 : 8406318917155BED7C912325D2589DBF95C85150  
+SHA256: ea2bcc5e9a0195a0dce965c38092be5c20cfda130c08fdbec5b0497a8acf15f4   
 
 
 <a name="set_connection"></a>
