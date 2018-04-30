@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp">
 
-        <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/et_symbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

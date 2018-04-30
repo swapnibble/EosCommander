@@ -4,10 +4,10 @@
   <img src="https://github.com/plactal/files/blob/master/eos_commander/eosc_icon.png?raw=true">
 </p>
 
-EOS commander is an Android client for EOSIO blockchain for EOS DApp developer. 
+EOS commander is an Android client for EOSIO blockchain for EOS dApp developer. 
 It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. PLACTAL team hopes this makes more EOS mobile DApps activated.  
 
-#### [PLACTAL](#about_plactal) is the new name of Mithrilcoin.  
+#### [PLACTAL](#about_plactal) is the new name of Mithrilcoin on EOSIO.  
  
 
 # Table of contents
@@ -16,6 +16,7 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 - [Wallet](#wallet)
 - [Account](#account)
 - [Transfer](#transfer)
+- [Currency](#currency)
 - [Push](#push)
 - [Get table](#get_tabel)
 - [About PLACTAL](#about_plactal)
@@ -29,10 +30,10 @@ Set testnet1.eos.io or testnet2.eos.io, port: 80 on EOS commander settings scree
 
 For Testing on private net:  
 You should have running nodeos node.  
-Set "http-server-address" other than "127.0.0.1" in config.ini.  
+Set "http-server-address" other than "127.0.0.1" .  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOSIO version [83009a6](https://github.com/EOSIO/eos/tree/83990a6494a8e2dfcd445c098a677cbec8f71d7b).
+EOS Commander has been tested with EOSIO version [08cab1d](https://github.com/EOSIO/eos/tree/08cab1dcf81bd2514adbfbe88a567296443a9ee8).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -44,7 +45,7 @@ On the console type:
 Open in Android studio 3.0 or later.
 
 ### Install from Play Store
-You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)  
+You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
 
 Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v1.1.1-release.apk?raw=true)  
 SHA1 : e4ad0adcd52181e235954fa08bd7c100cea8e3f4  
@@ -100,7 +101,10 @@ Query list of transactions.
 Query the controlled_account.
 <a name="set_connection"></a>
 ## Transfer
-Transfer eos. (Push transfer message on built-in `eos` smart contract)
+Transfer eos. (Push transfer message on built-in `eosio` smart contract)
+
+## Currency
+Run "get balance" or "get stats" commands for currency contract.
 
 <a name="push"></a>
 ## Push
@@ -115,7 +119,7 @@ Lists the contract table.
 
 <a name="about_plactal"></a>
 # About plactal.io
-[PLACTAL](https://plactal.io) is a data-driven, decentralized mobile game advertising platform. And runs on EOS network as smart contract. PLACTAL aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
+[PLACTAL](https://plactal.io) is a platform for tokenizing billions of gamers's experience. And runs on EOS network as smart contract. PLACTAL aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
 
 <a name="lincense"></a>
 ## License

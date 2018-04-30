@@ -55,13 +55,8 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient providesOkHttpClient(HostInterceptor interceptor) {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(logging)
                 .build();
     }
 
