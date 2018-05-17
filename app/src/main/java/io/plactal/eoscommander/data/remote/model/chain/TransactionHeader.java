@@ -22,9 +22,6 @@ public class TransactionHeader implements EosType.Packer {
     private String expiration;
 
     @Expose
-    private int region = 0; // uint16_t
-
-    @Expose
     private int ref_block_num = 0; // uint16_t
 
     @Expose
@@ -34,7 +31,7 @@ public class TransactionHeader implements EosType.Packer {
     private long net_usage_words; // fc::unsigned_int
 
     @Expose
-    private long kcpu_usage;    // fc::unsigned_int
+    private long max_cpu_usage_ms;    // fc::unsigned_int
 
     @Expose
     private long delay_sec;     // fc::unsigned_int
@@ -44,11 +41,10 @@ public class TransactionHeader implements EosType.Packer {
 
     public TransactionHeader( TransactionHeader other ){
         this.expiration = other.expiration;
-        this.region = other.region;
         this.ref_block_num = other.ref_block_num;
         this.ref_block_prefix = other.ref_block_prefix;
         this.net_usage_words = other.net_usage_words;
-        this.kcpu_usage = other.kcpu_usage;
+        this.max_cpu_usage_ms = other.max_cpu_usage_ms;
         this.delay_sec = other.delay_sec;
     }
 
@@ -93,20 +89,19 @@ public class TransactionHeader implements EosType.Packer {
     }
 
     public void putKcpuUsage(long kCpuUsage) {
-        this.kcpu_usage = kCpuUsage;
+        this.max_cpu_usage_ms = kCpuUsage;
     }
 
     @Override
     public void pack(EosType.Writer writer) {
         writer.putIntLE( (int)(getExpirationAsDate(expiration).getTime() / 1000) ); // ms -> sec
 
-        writer.putShortLE( (short)(region  & 0xFFFF) );         // uint16
         writer.putShortLE( (short)(ref_block_num  & 0xFFFF) );  // uint16
         writer.putIntLE( (int)( ref_block_prefix & 0xFFFFFFFF) );// uint32
 
         // fc::unsigned_int
         writer.putVariableUInt( net_usage_words);
-        writer.putVariableUInt( kcpu_usage);
+        writer.putVariableUInt( max_cpu_usage_ms);
         writer.putVariableUInt( delay_sec);
     }
 }

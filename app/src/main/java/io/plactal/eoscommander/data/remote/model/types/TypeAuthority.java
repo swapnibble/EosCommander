@@ -24,6 +24,7 @@
 package io.plactal.eoscommander.data.remote.model.types;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by swapnibble on 2017-09-12.
@@ -32,28 +33,40 @@ import java.util.ArrayList;
 public class TypeAuthority implements EosType.Packer {
 
     private int mThreshold;
-    private ArrayList<TypeKeyPermissionWeight> mKeys;
-    private ArrayList<TypeAccountPermissionWeight> mAccounts;
+    private List<TypeKeyWeight> mKeys;
+    private List<TypePermissionLevelWeight> mAccounts;
+    private List<TypeWaitWeight> mWaits;
+
+    public TypeAuthority(int threshold, List<TypeKeyWeight> keyWeight,
+                         List<TypePermissionLevelWeight> permissionLevelWeight, List<TypeWaitWeight> waitWeight) {
+        mThreshold  = threshold;
+        mKeys       = keyWeight;
+
+        mAccounts   = permissionLevelWeight;
+        mWaits      = waitWeight;
+    }
+
+    private static <T> List<T> createList(T item ) {
+        ArrayList<T> retList = new ArrayList<>();
+        retList.add( item );
+
+        return retList;
+    }
 
 
-    TypeAuthority(int threshold, TypeKeyPermissionWeight oneKey, TypeAccountPermissionWeight onePermission) {
-        mThreshold = threshold;
-        mKeys = new ArrayList<>();
-        mAccounts = new ArrayList<>();
+    public TypeAuthority(TypeKeyWeight oneKey, long uint32DelaySec) {
+        this( 1, createList(oneKey), null, null);
 
-        if ( null != oneKey ) {
-            mKeys.add(oneKey);
-        }
-
-        if ( null != onePermission ) {
-            mAccounts.add(onePermission);
+        if ( uint32DelaySec > 0 ) {
+            mThreshold = 2;
+            mWaits = createList( new TypeWaitWeight(uint32DelaySec, 1));
         }
     }
 
-    TypeAuthority(int threshold, TypePublicKey pubKey, String permission) {
+    public TypeAuthority(int threshold, TypePublicKey pubKey, String permission) {
         this( threshold
-                ,( null == pubKey ? null: new TypeKeyPermissionWeight( pubKey, (short)1))
-                ,( null == permission ? null : new TypeAccountPermissionWeight(permission)) );
+                ,( null == pubKey ? null: createList(new TypeKeyWeight( pubKey, (short)1)) )
+                ,( null == permission ? null : createList(new TypePermissionLevelWeight(permission))), null );
     }
 
     @Override
@@ -66,5 +79,8 @@ public class TypeAuthority implements EosType.Packer {
 
         // accounts
         writer.putCollection( mAccounts );
+
+        // waits
+        writer.putCollection( mWaits );
     }
 }

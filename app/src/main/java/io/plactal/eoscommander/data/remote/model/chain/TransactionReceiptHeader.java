@@ -8,7 +8,7 @@ import io.plactal.eoscommander.util.StringUtils;
  * Created by swapnibble on 2018-04-04.
  */
 
-public class TransactionReceipt {
+public class TransactionReceiptHeader {
 
 //    enum status_enum {
 //        executed  = 0, ///< succeed, no error handler executed
@@ -21,11 +21,8 @@ public class TransactionReceipt {
     public String status ;
 
     @Expose
-    public String id; // sha256
+    public long cpu_usage_us;   ///< total billed CPU usage (microseconds)
 
     @Expose
-    public long kcpu_usage;
-
-    @Expose
-    public long net_usage_words;
+    public long net_usage_words;///<  total billed NET usage, so we can reconstruct resource state when skipping context free data... hard failures...
 }

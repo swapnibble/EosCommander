@@ -1,5 +1,6 @@
 package io.plactal.eoscommander.data.remote.model.chain;
 
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public class Transaction extends TransactionHeader {
     @Expose
     private List<Action> actions = null;
 
+    // Extentions are prefixed with type and are a buffer that can be interpreted by code that is aware and ignored by unaware code.
+    @Expose
+    private List<String> transaction_extensions = new ArrayList<>();
+
     public Transaction(){
         super();
     }
@@ -27,6 +32,7 @@ public class Transaction extends TransactionHeader {
         super(other);
         this.context_free_actions = deepCopyOnlyContainer( other.context_free_actions );
         this.actions = deepCopyOnlyContainer( other.actions );
+        this.transaction_extensions = other.transaction_extensions;
     }
 
     public void addAction(Action msg ){
@@ -66,5 +72,10 @@ public class Transaction extends TransactionHeader {
 
         writer.putCollection(context_free_actions);
         writer.putCollection(actions);
+        //writer.putCollection(transaction_extensions);
+        writer.putVariableUInt( transaction_extensions.size());
+        if ( transaction_extensions.size() > 0 ){
+            // TODO 구체적 코드가 나오면 확인후 구현할 것.
+        }
     }
 }

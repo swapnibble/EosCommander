@@ -126,7 +126,7 @@ public class CreateEosAccountPresenter extends BasePresenter<CreateEosAccountMvp
         // create account and save keys if successful.
         addDisposable( mDataManager
                 .createAccount( new EosNewAccount(creator, newAccount
-                        , TypePublicKey.from( mOwnerKey.getPublicKey()) , TypePublicKey.from(mActiveKey.getPublicKey()) , creator))
+                        , TypePublicKey.from( mOwnerKey.getPublicKey()) , TypePublicKey.from(mActiveKey.getPublicKey()) ))
                 .doOnNext( jsonObject -> mDataManager.addAccountHistory( creator, newAccount ))
                 .subscribeOn(getSchedulerProvider().io())
                 .doOnNext( pushTxnResult -> {

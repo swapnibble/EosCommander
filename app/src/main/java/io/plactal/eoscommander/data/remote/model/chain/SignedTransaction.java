@@ -34,6 +34,8 @@ import io.plactal.eoscommander.crypto.ec.EcDsa;
 import io.plactal.eoscommander.crypto.ec.EcSignature;
 import io.plactal.eoscommander.crypto.ec.EosPrivateKey;
 import io.plactal.eoscommander.data.remote.model.types.TypeChainId;
+import io.plactal.eoscommander.util.StringUtils;
+import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-11.
@@ -55,6 +57,7 @@ public class SignedTransaction extends Transaction {
     public SignedTransaction( SignedTransaction anotherTxn){
         super(anotherTxn);
         this.signatures = deepCopyOnlyContainer( anotherTxn.signatures );
+        this.context_free_data = context_free_data;
     }
 
     public List<String> getSignatures() {
@@ -78,10 +81,15 @@ public class SignedTransaction extends Transaction {
         EosByteWriter writer = new EosByteWriter(255);
 
         // data layout to sign :
-        // [ {chainId}, {Transaction( parent class )} ]
+        // [ {chainId}, {Transaction( parent class )}, {hash of context_free_data only when exists ]
 
         writer.putBytes(chainId.getBytes());
-        pack( writer); // don't include members of current class!
+        pack( writer);
+        if (context_free_data.size() > 0 ) {
+        }
+        else {
+            writer.putBytes( Sha256.ZERO_HASH.getBytes());
+        }
 
         return Sha256.from(writer.toBytes());
     }

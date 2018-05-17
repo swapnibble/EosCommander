@@ -27,19 +27,19 @@ package io.plactal.eoscommander.data.remote.model.types;
  * Created by swapnibble on 2017-09-12.
  */
 
-public class TypeAccountPermissionWeight implements EosType.Packer {
-    TypePermissionLevel mPermission;
-    short mWeight;
+public class TypePermissionLevelWeight implements EosType.Packer {
+    private TypePermissionLevel mPermission;
+    private short mWeight;
 
     /**
      * single active permissin 용 생성자
      * @param nameForActive
      */
-    TypeAccountPermissionWeight(String nameForActive ) {
+    TypePermissionLevelWeight(String nameForActive ) {
         this( nameForActive, (short)1);
     }
 
-    TypeAccountPermissionWeight(String nameForActive, short weight ) {
+    TypePermissionLevelWeight(String nameForActive, short weight ) {
         mPermission = new TypePermissionLevel( nameForActive, "active");
         mWeight = weight;
     }

@@ -53,9 +53,7 @@ import io.plactal.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.plactal.eoscommander.data.remote.model.types.EosNewAccount;
 import io.plactal.eoscommander.data.remote.model.types.EosTransfer;
 import io.plactal.eoscommander.data.remote.model.types.TypeChainId;
-import io.plactal.eoscommander.data.util.EstimateRsc;
 import io.plactal.eoscommander.data.wallet.EosWalletManager;
-import io.plactal.eoscommander.util.StringUtils;
 import io.plactal.eoscommander.util.Utils;
 import io.reactivex.Observable;
 
@@ -164,18 +162,18 @@ public class EoscDataManager {
         return txn;
     }
 
-    private SignedTransaction estimateResources( SignedTransaction txn, int keyCount ) {
-        return new EstimateRsc().estimate( txn, PackedTransaction.CompressType.none, keyCount);
-    }
 
 
     private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign ) {
 
         return mNodeosApi.getRequiredKeys( new GetRequiredKeys( txnBeforeSign, mWalletMgr.listPubKeys() ))
                 .map( keys -> {
-                    SignedTransaction stxn = estimateResources(txnBeforeSign, keys.getKeys().size() );
-                    if ( ! mPrefHelper.shouldSkipSigning() ) {
-                        stxn = mWalletMgr.signTransaction(stxn, keys.getKeys(), new TypeChainId());
+                    final SignedTransaction stxn ;
+                    if ( mPrefHelper.shouldSkipSigning() ) {
+                        stxn = txnBeforeSign;
+                    }
+                    else {
+                        stxn = mWalletMgr.signTransaction(txnBeforeSign, keys.getKeys(), new TypeChainId());
                     }
 
                     return new PackedTransaction(stxn);

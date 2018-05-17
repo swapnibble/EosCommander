@@ -34,35 +34,32 @@ public class EosNewAccount implements EosType.Packer {
     private TypeAccountName mNewName;
     private TypeAuthority mOwner;
     private TypeAuthority mActive;
-    private TypeAuthority mRecovery;
 
     public String getActionName() {
         return "newaccount";
     }
 
     public EosNewAccount(String creator, String newName,
-                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery ) {
+                         TypeAuthority owner, TypeAuthority active ) {
 
-        this( new TypeAccountName(creator), new TypeAccountName(newName), owner, active, recovery );
+        this( new TypeAccountName(creator), new TypeAccountName(newName), owner, active);
     }
 
     public EosNewAccount( String creator, String newName,
-                          TypePublicKey ownerPubKey, TypePublicKey activePubKey, String recoveryAccountWithOneWeight) {
+                          TypePublicKey ownerPubKey, TypePublicKey activePubKey) {
 
         this( new TypeAccountName(creator), new TypeAccountName(newName)
                 , new TypeAuthority(1, ownerPubKey, null)
-                , new TypeAuthority(1, activePubKey, null)
-                , new TypeAuthority(1, null, recoveryAccountWithOneWeight)  );
+                , new TypeAuthority(1, activePubKey, null)  );
     }
 
     public EosNewAccount(TypeAccountName creator, TypeAccountName newName,
-                         TypeAuthority owner, TypeAuthority active, TypeAuthority recovery) {
+                         TypeAuthority owner, TypeAuthority active) {
 
         mCreator = creator;
         mNewName = newName;
         mOwner = owner;
         mActive = active;
-        mRecovery = recovery;
     }
 
     public String getCreatorName(){
@@ -76,7 +73,6 @@ public class EosNewAccount implements EosType.Packer {
         mNewName.pack(writer);
         mOwner.pack(writer);
         mActive.pack(writer);
-        mRecovery.pack(writer);
     }
 
     public String getAsHex() {

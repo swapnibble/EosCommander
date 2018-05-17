@@ -57,10 +57,17 @@ public class EosChainInfo {
     private String head_block_producer;
 
     @Expose
-    private String recent_slots;
+    private long virtual_block_cpu_limit;
 
     @Expose
-    private String participation_rate;
+    private long virtual_block_net_limit;
+
+    @Expose
+    private long block_cpu_limit;
+
+    @Expose
+    private long block_net_limit;
+
 
     public Integer getHeadBlockNum() {
         return head_block_num;
@@ -120,21 +127,6 @@ public class EosChainInfo {
         this.head_block_producer = headBlockProducer;
     }
 
-    public String getRecentSlots() {
-        return recent_slots;
-    }
-
-    public void setRecentSlots(String recentSlots) {
-        this.recent_slots = recentSlots;
-    }
-
-    public String getParticipationRate() {
-        return participation_rate;
-    }
-
-    public void setParticipationRate(String participationRate) {
-        this.participation_rate = participationRate;
-    }
 
     public String getBrief(){
         return    "server_version: "  + server_version

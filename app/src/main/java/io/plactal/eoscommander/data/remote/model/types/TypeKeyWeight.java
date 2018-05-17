@@ -26,11 +26,11 @@ package io.plactal.eoscommander.data.remote.model.types;
  * Created by swapnibble on 2017-09-12.
  */
 
-public class TypeKeyPermissionWeight implements EosType.Packer {
+public class TypeKeyWeight implements EosType.Packer {
     private TypePublicKey mPubKey;
     private short mWeight = 0;
 
-    public TypeKeyPermissionWeight(TypePublicKey pubKey, short weight) {
+    public TypeKeyWeight(TypePublicKey pubKey, short weight) {
         mPubKey = pubKey;
         mWeight = weight;
     }

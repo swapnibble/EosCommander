@@ -32,55 +32,59 @@ import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-import io.plactal.eoscommander.data.remote.model.chain.ActionTrace;
-import io.plactal.eoscommander.data.remote.model.chain.TransactionReceipt;
-import io.plactal.eoscommander.data.remote.model.types.TypeSharedLock;
 import io.plactal.eoscommander.util.StringUtils;
 
-public class TransactionTrace extends TransactionReceipt {
+public class TransactionTrace {
 
     @Expose
-    private List<ActionTrace> action_traces;
+    private String id;
 
     @Expose
-    private JsonElement deferred_transaction_requests;
+    private TransactionReceiptHeader receipt;
 
     @Expose
-    private List<TypeSharedLock> read_locks;
-
-    @Expose
-    private List<TypeSharedLock> write_locks;
-
-    @Expose
-    private long cpu_usage; // uint64_t
+    private long elapsed;
 
     @Expose
     private long net_usage; // uint64_t
 
     @Expose
-    private String packed_trx_digest;
+    private boolean scheduled = false;
 
     @Expose
-    private long region_id; // uint64_t
+    private List<ActionTrace> action_traces;
 
     @Expose
-    private long cycle_index; // uint64_t
+    private JsonElement failed_dtrx_trace;
 
     @Expose
-    private long shard_index; // uint64_t
-
-    @Expose
-    private long _profiling_us; // fc::microseconds
-
-    @Expose
-    private long _setup_profiling_us; // fc::microseconds
+    private JsonElement except;
 
     @Override
     public String toString(){
-        if (StringUtils.isEmpty( status)) {
-            return "empty status";
+        if ( receipt == null) {
+            return "empty receipt";
         }
 
-        return status + " " + kcpu_usage + " bytes " + net_usage_words + " cycles";
+        String result = ": " + receipt.status;
+
+        if ( receipt.net_usage_words < 0 ) {
+            result +=  "<unknown>";
+        }
+        else {
+            result += (receipt.net_usage_words  * 8 );
+        }
+        result += " bytes ";
+
+
+        if ( receipt.cpu_usage_us < 0 ) {
+            result +=  "<unknown>";
+        }
+        else {
+            result += (receipt.net_usage_words  * 8 );
+        }
+        result += " us\n";
+
+        return result;
     }
 }

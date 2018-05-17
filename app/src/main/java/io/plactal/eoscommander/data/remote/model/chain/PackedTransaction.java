@@ -39,7 +39,8 @@ public class PackedTransaction {
 
         packed_trx = HexUtils.toHex( packTransaction( stxn, compressType) );
 
-        packed_context_free_data = HexUtils.toHex(  packContextFreeData( stxn.getCtxFreeData(), compressType ) );
+        byte[] packed_ctx_free_bytes = packContextFreeData( stxn.getCtxFreeData(), compressType );
+        packed_context_free_data = ( packed_ctx_free_bytes.length == 0 ) ? "" : HexUtils.toHex( packed_ctx_free_bytes  );
     }
 
     private byte[] packTransaction( Transaction transaction, CompressType compressType ) {
@@ -55,10 +56,11 @@ public class PackedTransaction {
         EosByteWriter byteWriter = new EosByteWriter(64);
 
         int ctxFreeDataCount = ( ctxFreeData == null ) ? 0 : ctxFreeData.size();
-        byteWriter.putVariableUInt( ctxFreeDataCount);
         if ( ctxFreeDataCount == 0 ){
             return byteWriter.toBytes();
         }
+
+        byteWriter.putVariableUInt( ctxFreeDataCount);
 
         for ( String hexData : ctxFreeData ) {
             byteWriter.putBytes( HexUtils.toBytes( hexData));
