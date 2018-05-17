@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eos Commander For Developers</string>
+    <string name="app_name">Commander For EOSIO dawn4</string>
     <string name="settings">설정</string>
     <string name="set_connection">연결 설정</string>
     <string name="about">About</string>

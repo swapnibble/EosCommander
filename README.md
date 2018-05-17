@@ -33,7 +33,7 @@ You should have running nodeos node.
 Set "http-server-address" other than "127.0.0.1" .  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOSIO version [08cab1d](https://github.com/EOSIO/eos/tree/08cab1dcf81bd2514adbfbe88a567296443a9ee8).
+EOS Commander has been tested with EOSIO version [dawn-v4.0.0](https://github.com/EOSIO/eos/tree/dawn-v4.0.0).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -50,11 +50,11 @@ Open in Android studio 3.0 or later.
 - Try direct apk link for dawn3.
 ```
   
-You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)  
+You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)  
 
-Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.0.0-release.apk?raw=true)  
-SHA1 : 8406318917155BED7C912325D2589DBF95C85150  
-SHA256: ea2bcc5e9a0195a0dce965c38092be5c20cfda130c08fdbec5b0497a8acf15f4   
+Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.1.0-release.apk?raw=true)  
+SHA1 : eeb3e9e5d77e7ff1f04ad06141e70f20e1181f9e  
+SHA256: 9b461e4dd927aea63dd476e62bb6f970f69bd9d8b4e445864700edaab9e2428d   
 
 
 <a name="set_connection"></a>
