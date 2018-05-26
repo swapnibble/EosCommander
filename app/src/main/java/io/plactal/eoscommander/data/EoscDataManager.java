@@ -39,15 +39,15 @@ import io.plactal.eoscommander.data.prefs.PreferencesHelper;
 import io.plactal.eoscommander.data.remote.NodeosApi;
 import io.plactal.eoscommander.data.remote.model.abi.EosAbiMain;
 import io.plactal.eoscommander.data.remote.model.api.AccountInfoRequest;
-import io.plactal.eoscommander.data.remote.model.api.GetBalanceRequest;
-import io.plactal.eoscommander.data.remote.model.api.GetRequestForCurrency;
-import io.plactal.eoscommander.data.remote.model.chain.Action;
 import io.plactal.eoscommander.data.remote.model.api.EosChainInfo;
+import io.plactal.eoscommander.data.remote.model.api.GetBalanceRequest;
+import io.plactal.eoscommander.data.remote.model.api.GetCodeRequest;
+import io.plactal.eoscommander.data.remote.model.api.GetRequestForCurrency;
+import io.plactal.eoscommander.data.remote.model.api.GetRequiredKeys;
 import io.plactal.eoscommander.data.remote.model.api.GetTableRequest;
 import io.plactal.eoscommander.data.remote.model.api.JsonToBinRequest;
 import io.plactal.eoscommander.data.remote.model.api.PushTxnResponse;
-import io.plactal.eoscommander.data.remote.model.api.GetCodeRequest;
-import io.plactal.eoscommander.data.remote.model.api.GetRequiredKeys;
+import io.plactal.eoscommander.data.remote.model.chain.Action;
 import io.plactal.eoscommander.data.remote.model.chain.PackedTransaction;
 import io.plactal.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.plactal.eoscommander.data.remote.model.types.EosNewAccount;
@@ -143,8 +143,11 @@ public class EoscDataManager {
         } );
     }
 
-    private SignedTransaction createTransaction( String contract, String actionName, String dataAsHex,
-                                String[] permissions, EosChainInfo chainInfo ){
+
+
+    private SignedTransaction createTransaction(String contract, String actionName, String dataAsHex,
+                                                String[] permissions, EosChainInfo chainInfo ){
+        currentBlockInfo = chainInfo;
         Action action = new Action(contract, actionName);
         action.setAuthorization(permissions);
         action.setData( dataAsHex );
@@ -164,7 +167,7 @@ public class EoscDataManager {
 
 
 
-    private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign ) {
+    private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign) {
 
         return mNodeosApi.getRequiredKeys( new GetRequiredKeys( txnBeforeSign, mWalletMgr.listPubKeys() ))
                 .map( keys -> {
@@ -173,7 +176,7 @@ public class EoscDataManager {
                         stxn = txnBeforeSign;
                     }
                     else {
-                        stxn = mWalletMgr.signTransaction(txnBeforeSign, keys.getKeys(), new TypeChainId());
+                        stxn = mWalletMgr.signTransaction(txnBeforeSign, keys.getKeys(), new TypeChainId(currentBlockInfo.getChain_id()));
                     }
 
                     return new PackedTransaction(stxn);
@@ -208,8 +211,12 @@ public class EoscDataManager {
         return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
     }
 
-    public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
+    EosChainInfo currentBlockInfo;
+    void setInfo(EosChainInfo info){
+        currentBlockInfo = info;
+    }
 
+    public Observable<PushTxnResponse> createAccount(EosNewAccount newAccountData) {
         return getChainInfo()
                 .map( info -> createTransaction(EOSIO_SYSTEM_ACCOUNT, newAccountData.getActionName(), newAccountData.getAsHex()
                         , getActivePermission( newAccountData.getCreatorName() ), info ))
@@ -227,7 +234,6 @@ public class EoscDataManager {
     }
 
     public Observable<JsonObject> pushActionRetJson(String contract, String action, String data, String[] permissions) {
-
         return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                                             .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
@@ -236,7 +242,6 @@ public class EoscDataManager {
     }
 
     public Observable<PushTxnResponse> pushAction(String contract, String action, String data, String[] permissions) {
-
         return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                         .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )

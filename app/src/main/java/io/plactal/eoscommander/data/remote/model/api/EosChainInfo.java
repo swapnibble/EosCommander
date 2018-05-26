@@ -28,7 +28,6 @@ package io.plactal.eoscommander.data.remote.model.api;
  */
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,6 +54,9 @@ public class EosChainInfo {
 
     @Expose
     private String head_block_producer;
+
+    @Expose
+    private String chain_id;
 
     @Expose
     private long virtual_block_cpu_limit;
@@ -134,5 +136,13 @@ public class EosChainInfo {
                 + "\nlast irreversible block: " + last_irreversible_block_num
                 + "\nhead block time: " + head_block_time
                 + "\nhead block producer: " + head_block_producer ;
+    }
+
+    public String getChain_id() {
+        return chain_id;
+    }
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
     }
 }
