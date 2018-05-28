@@ -28,7 +28,7 @@ public class TransactionHeader implements EosType.Packer {
     private long ref_block_prefix= 0;// uint32_t
 
     @Expose
-    private long net_usage_words; // fc::unsigned_int
+    private long max_net_usage_words; // fc::unsigned_int
 
     @Expose
     private long max_cpu_usage_ms;    // fc::unsigned_int
@@ -43,7 +43,7 @@ public class TransactionHeader implements EosType.Packer {
         this.expiration = other.expiration;
         this.ref_block_num = other.ref_block_num;
         this.ref_block_prefix = other.ref_block_prefix;
-        this.net_usage_words = other.net_usage_words;
+        this.max_net_usage_words = other.max_net_usage_words;
         this.max_cpu_usage_ms = other.max_cpu_usage_ms;
         this.delay_sec = other.delay_sec;
     }
@@ -85,7 +85,7 @@ public class TransactionHeader implements EosType.Packer {
     }
 
     public void putNetUsageWords(long netUsage) {
-        this.net_usage_words = netUsage;
+        this.max_net_usage_words = netUsage;
     }
 
     public void putKcpuUsage(long kCpuUsage) {
@@ -100,7 +100,7 @@ public class TransactionHeader implements EosType.Packer {
         writer.putIntLE( (int)( ref_block_prefix & 0xFFFFFFFF) );// uint32
 
         // fc::unsigned_int
-        writer.putVariableUInt( net_usage_words);
+        writer.putVariableUInt(max_net_usage_words);
         writer.putVariableUInt( max_cpu_usage_ms);
         writer.putVariableUInt( delay_sec);
     }
