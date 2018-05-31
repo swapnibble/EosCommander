@@ -25,15 +25,14 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 <a name="getting_started"></a>
 ## Getting Started
 ### Prerequisite
-For Testing on Public test net:  
-Set testnet1.eos.io or testnet2.eos.io, port: 80 on EOS commander settings screen. 
+
 
 For Testing on private net:  
 You should have running nodeos node.  
 Set "http-server-address" other than "127.0.0.1" .  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOSIO version [dawn-v4.0.0](https://github.com/EOSIO/eos/tree/dawn-v4.0.0).
+EOS Commander has been tested with EOSIO version [dawn-v4.2.0](https://github.com/EOSIO/eos/tree/dawn-v4.2.0).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -48,9 +47,9 @@ Open in Android studio 3.0 or later.
   
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)
 
-Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.1.0-release.apk?raw=true)  
-SHA1 : eeb3e9e5d77e7ff1f04ad06141e70f20e1181f9e  
-SHA256: 9b461e4dd927aea63dd476e62bb6f970f69bd9d8b4e445864700edaab9e2428d   
+Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.2.0-release.apk?raw=true)  
+SHA1 : 71db34dfc6ad7e2a7c4a71b8df8b9eda7dc0cdde  
+SHA256: d56b59e1687a991c621c2709545075373fcf60e653cb1c75ab8d4c8c63fa4445   
 
 
 old version(for dawn2.0) on PlayStore: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)

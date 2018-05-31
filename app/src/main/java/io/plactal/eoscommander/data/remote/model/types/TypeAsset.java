@@ -23,12 +23,6 @@
  */
 package io.plactal.eoscommander.data.remote.model.types;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,8 +33,8 @@ import java.util.regex.Pattern;
 
 public class TypeAsset implements EosType.Packer {
 
-    // 
-    private static final long EOS_SYMBOL = 0x00000000534F4504L; // (int64_t(4) | (uint64_t('E') << 8) | (uint64_t('O') << 16) | (uint64_t('S') << 24))
+    private static final String CORE_SYMBOL_NAME = "SYS";
+    private static final long CORE_SYMBOL = 0x0000000053595304L; // (int64_t(4) | (uint64_t('S') << 8) | (uint64_t('Y') << 16) | (uint64_t('S') << 24))
 
     // 아래 table 은, eos/libraries/types/Asset.cpp 에서 가져옴.
     private static final long[] PRECISION_TABLE = {
@@ -55,33 +49,7 @@ public class TypeAsset implements EosType.Packer {
     private final long mAssetSymbol;
     private final String mSymbolName;
 
-//    public static TypeAsset fromString(String value) {
-//        if ( null == value ) {
-//            return null;
-//        }
-//
-//        value = value.trim();
-//
-//        Pattern pattern = Pattern.compile("^([0-9]+)\\.?([0-9]*)[ ]([a-zA-Z0-9]{1,7})$");//\\s(\\w)$");
-//        Matcher matcher = pattern.matcher(value);
-//
-//        if ( matcher.find()) {
-//            String beforeDotVal = matcher.group(1), afterDotVal = matcher.group(2) ;
-//
-//            long amount = Long.valueOf( beforeDotVal + afterDotVal);
-//            int decimals = afterDotVal.length();
-//
-//            return new TypeAsset( amount, decimals, matcher.group(3));
-//        }
-//        else {
-//            return null;
-//        }
-//    }
-
     public TypeAsset(String value) {
-//        if ( null == value ) {
-//            return ;
-//        }
 
         value = value.trim();
 
@@ -100,13 +68,13 @@ public class TypeAsset implements EosType.Packer {
         }
         else {
             this.mAmount = 0;
-            this.mSymbolName = "EOS";
-            this.mAssetSymbol = EOS_SYMBOL;
+            this.mSymbolName = CORE_SYMBOL_NAME;
+            this.mAssetSymbol = CORE_SYMBOL;
         }
     }
 
     public TypeAsset(long amount) {
-        this( amount, EOS_SYMBOL );
+        this( amount, CORE_SYMBOL );
     }
 
 
@@ -131,12 +99,6 @@ public class TypeAsset implements EosType.Packer {
         mSymbolName = new String( sym, 1, symbolLen);
     }
 
-//    public TypeAsset(long amount, int decimals, String symbolName) {
-//        mAmount = amount;
-//        this.mSymbolName = symbolName;
-//
-//        mAssetSymbol = makeAssetSymbol( symbolName, decimals);
-//    }
 
     private long makeAssetSymbol(String symbolName, int decimals ) {
         long symbol = 0;
@@ -199,27 +161,4 @@ public class TypeAsset implements EosType.Packer {
     public void add( TypeAsset other) {
         //mAmount
     }
-
-//    public static class GsonTypeAdapter extends TypeAdapter<TypeAsset> {
-//
-//        @Override
-//        public TypeAsset read(JsonReader in) throws IOException {
-//            if (in.peek() == JsonToken.NULL) {
-//                in.nextNull();
-//                return null;
-//            }
-//
-//            return new TypeAsset( in.nextString());
-//        }
-//
-//        @Override
-//        public void write(JsonWriter out, TypeAsset value) throws IOException {
-//            if (value == null) {
-//                out.nullValue();
-//                return;
-//            }
-//
-//            out.value(value.toString());
-//        }
-//    }
 }

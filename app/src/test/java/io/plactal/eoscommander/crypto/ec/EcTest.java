@@ -26,6 +26,7 @@ public class EcTest {
         assertEquals( "ec(secp256k1) key pair not match! - 3"
                 , new EosPrivateKey("5Hv22aPcjnENBv6X9o9nKGdkfrW44En6z4zJUt2PobAvbQXrT9z").getPublicKey().toString()
                 , "EOS7d9A3uLe6As66jzN8j44TXJUqJSK3bFjjEEqR4oTvNAB3iM9SA" );
+
     }
 
     @Test
