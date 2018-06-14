@@ -77,7 +77,7 @@ public class EcDsa {
 
     private static BigInteger deterministicGenerateK(CurveParam curveParam, byte[] hash, BigInteger d, SigChecker checker, int nonce ){
         if ( nonce > 0 ){
-            hash = Sha256.from(hash, EosPrivateKey.getSecuRandom().generateSeed(nonce)).getBytes();
+            hash = Sha256.from(hash, BigInteger.valueOf(nonce).toByteArray()).getBytes();
         }
 
         byte[] dBytes = d.toByteArray();
