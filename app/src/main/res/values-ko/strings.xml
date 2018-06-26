@@ -26,9 +26,9 @@
     <string name="active_public_key">Active 공개 키</string>
     <string name="create">생성</string>
     <string name="get_transactions">트랜잭션 보기</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
-    <string name="amount">Amount</string>
+    <string name="from">보내는 계정</string>
+    <string name="to">받는 계정</string>
+    <string name="amount">수량</string>
     <string name="send">보내기</string>
     <string name="create_wallet">지갑 생성</string>
     <string name="create_wallet_default">기본(default) 지갑을 만들고\n샘플 eosio 의 키를 import 합니다.</string>
@@ -122,4 +122,8 @@
     <string name="lower_bound">하한(lower bound)</string>
     <string name="upper_bound">상한(upper bound)</string>
     <string name="limit">갯수 limit</string>
+
+    <string name="stake_net">network 에 임대할 EOS 량</string>
+    <string name="stake_cpu">CPU 에 임대할 EOS 량</string>
+    <string name="buy_ram_eos">RAM 구매에 사용할 EOS 량</string>
 </resources>

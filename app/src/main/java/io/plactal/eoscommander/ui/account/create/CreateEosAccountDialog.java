@@ -33,6 +33,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -63,6 +64,10 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
     private AutoCompleteTextView mEtNewAccount;
     private TextView mTvOwner;
     private TextView mTvActive;
+
+    private EditText mStake4Net;
+    private EditText mStake4Cpu;
+    private EditText mBuyRamInEOS;
 
     private TextView mTvNoWalletWarn;
     private AppCompatSpinner mWalletSpinner;
@@ -108,6 +113,11 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
         mTvOwner        = view.findViewById( R.id.tv_owner_key );
         mTvActive       = view.findViewById( R.id.tv_active_key );
 
+        // 2018.06.25. added.
+        mStake4Net      = view.findViewById( R.id.et_stake_net );
+        mStake4Cpu      = view.findViewById( R.id.et_stake_cpu );
+        mBuyRamInEOS    = view.findViewById( R.id.et_buy_ram_eos );
+
 
         view.findViewById( R.id.btn_create).setOnClickListener( v -> onClickCreate() );
 
@@ -132,7 +142,13 @@ public class CreateEosAccountDialog extends BaseDialog implements CreateEosAccou
 
     private void onClickCreate() {
 
-        mPresenter.createAccount(mEtCreator.getText().toString(), mEtNewAccount.getText().toString());
+        mPresenter.createAccountVerbose(mEtCreator.getText().toString()
+                , mEtNewAccount.getText().toString()
+                , mStake4Net.getText().toString()
+                , mStake4Cpu.getText().toString()
+                , mBuyRamInEOS.getText().toString()
+        );
+
     }
 
     @Override

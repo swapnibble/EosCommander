@@ -44,31 +44,14 @@ import static org.junit.Assert.*;
 public class SignedTransactionTest {
 
     @Test
-    public void testSymbol(){
-        final int precision = 4;
-        final String name = "EOS";
-        long result = 0;
-        for ( int i = 0; i < name.length(); i++) {
-            result |= ((byte) name.charAt(i)) << 8*(i+1);
-        }
-
-        result |= precision;
-
-        System.out.println( "Symbol name: " + name +", symVal: 0x" + Long.toHexString( result));
-    }
-
-    @Test
     public void setRefBlockId_okRefBlockNumAndPrefix() {
         SignedTransaction signedTransaction = new SignedTransaction();
         signedTransaction.setReferenceBlock( "000000044af9aacdb9329e7f875b44907bacb972e0c3ff49cd054660318c707e");
 
-//        assertEquals( "incorrect ref block num", new BigInteger("4"), signedTransaction.getRefBlockNum());
-//        assertEquals( "incorrect ref block prefix", new BigInteger(1, HexUtils.toBytes("7F9E32B9")), signedTransaction.getRefBlockPrefix());
-
         assertEquals( "incorrect ref block num", 4, signedTransaction.getRefBlockNum());
         assertEquals( "incorrect ref block prefix", 0x7F9E32B9, signedTransaction.getRefBlockPrefix());
 
-        assertEquals( "asset symbol parse error", "EOS", new TypeAsset(1).symbolName());
+        assertEquals( "asset symbol parse error", TypeAsset.CORE_SYMBOL_NAME, new TypeAsset(1).symbolName());
 
         String assetStr = "12.34567 EOS";
         TypeAsset testAsset = new TypeAsset(assetStr);
@@ -76,6 +59,14 @@ public class SignedTransactionTest {
         assertEquals( "invalid parsed asset symbol", "EOS", testAsset.symbolName());
         assertEquals( "invalid parsed asset decimals", 5, testAsset.decimals());
         assertEquals( "invalid parsed eos asset", assetStr, testAsset.toString());
+
+
+        assetStr = "12.3456";
+        TypeAsset testAsset2 = new TypeAsset(assetStr);
+        assertNotNull( "fail parse SYSTEM asset from string", testAsset2);
+        assertEquals( "invalid parsed SYSTEM asset symbol", TypeAsset.CORE_SYMBOL_NAME, testAsset2.symbolName());
+        assertEquals( "invalid parsed SYSTEM asset decimals", 4, testAsset2.decimals());
+        assertEquals( "invalid parsed SYSTEM asset", assetStr + " " + TypeAsset.CORE_SYMBOL_NAME, testAsset2.toString());
     }
 
 

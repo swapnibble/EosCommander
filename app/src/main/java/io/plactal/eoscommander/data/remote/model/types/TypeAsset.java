@@ -26,6 +26,8 @@ package io.plactal.eoscommander.data.remote.model.types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.plactal.eoscommander.util.StringUtils;
+
 
 /**
  * Created by swapnibble on 2017-09-12.
@@ -33,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class TypeAsset implements EosType.Packer {
 
-    private static final String CORE_SYMBOL_NAME = "SYS";
+    public static final String CORE_SYMBOL_NAME = "SYS";
     private static final long CORE_SYMBOL = 0x0000000053595304L; // (int64_t(4) | (uint64_t('S') << 8) | (uint64_t('Y') << 16) | (uint64_t('S') << 24))
 
     // 아래 table 은, eos/libraries/types/Asset.cpp 에서 가져옴.
@@ -53,7 +55,7 @@ public class TypeAsset implements EosType.Packer {
 
         value = value.trim();
 
-        Pattern pattern = Pattern.compile("^([0-9]+)\\.?([0-9]*)[ ]([a-zA-Z0-9]{1,7})$");//\\s(\\w)$");
+        Pattern pattern = Pattern.compile("^([0-9]+)\\.?([0-9]*)([ ][a-zA-Z0-9]{1,7})?$");//\\s(\\w)$");
         Matcher matcher = pattern.matcher(value);
 
         if ( matcher.find()) {
@@ -61,8 +63,12 @@ public class TypeAsset implements EosType.Packer {
 
             mAmount = Long.valueOf( beforeDotVal + afterDotVal);
 
-            int decimals = afterDotVal.length();
-            this.mSymbolName = matcher.group(3);
+            boolean symbolNameIsEmpty = StringUtils.isEmpty(matcher.group(3));
+
+            this.mSymbolName = symbolNameIsEmpty ? CORE_SYMBOL_NAME : matcher.group(3).trim();
+
+            long decimals = ( symbolNameIsEmpty && CORE_SYMBOL_NAME.equals( this.mSymbolName))
+                            ? ( CORE_SYMBOL & 0xFFL ) : afterDotVal.length();
 
             this.mAssetSymbol = makeAssetSymbol( mSymbolName, decimals);
         }
@@ -100,7 +106,7 @@ public class TypeAsset implements EosType.Packer {
     }
 
 
-    private long makeAssetSymbol(String symbolName, int decimals ) {
+    private long makeAssetSymbol(String symbolName, long decimals ) {
         long symbol = 0;
         int nameLen = symbolName.length();
         for (int i = 0; (i < nameLen) && ( i < 7); i++ ) {

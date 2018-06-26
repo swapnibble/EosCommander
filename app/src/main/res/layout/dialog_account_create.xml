@@ -12,7 +12,10 @@
         app:cardCornerRadius="4dp"
         app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="24dp"
@@ -30,33 +33,101 @@
                 android:textColor="@color/colorPrimary"
                 android:text="@string/create_account"/>
 
-            <AutoCompleteTextView
-                style="@style/EosNameTextWithNext"
-                android:id="@+id/et_creator_name"
-                android:nextFocusDown="@+id/et_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/colorLightGray"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/round_box_input"
-                android:padding="16dp"
-                android:hint="@string/creator_name"/>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_creator_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp">
 
-            <AutoCompleteTextView
-                style="@style/EosNameTextWithDone"
-                android:id="@+id/et_new_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:textColorHint="@color/colorLightGray"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/round_box_input"
-                android:padding="16dp"
-                android:hint="@string/new_account_name"/>
+                    <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
+                        android:id="@+id/et_creator_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textVisiblePassword"
+                        android:digits=".12345abcdefghijklmnopqrstuvwxyz"
+                        android:padding="16dp"
+                        android:nextFocusDown="@+id/et_code"
+                        android:singleLine="true"
+                        android:hint="@string/creator_name"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_new_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp">
+
+                    <io.plactal.eoscommander.ui.widget.TextInputAutoCompleteTextView
+                        android:id="@+id/et_new_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textVisiblePassword"
+                        android:digits=".12345abcdefghijklmnopqrstuvwxyz"
+                        android:padding="16dp"
+                        android:nextFocusDown="@+id/et_stake_net"
+                        android:singleLine="true"
+                        android:hint="@string/new_account_name"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_stake_net"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_stake_net"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:inputType="text"
+                        android:nextFocusDown="@+id/et_stake_cpu"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:hint="@string/stake_net"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_stake_cpu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_stake_cpu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:inputType="text"
+                        android:nextFocusDown="@+id/et_buy_ram_eos"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:hint="@string/stake_cpu"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_buy_ram_eos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_buy_ram_eos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:hint="@string/buy_ram_eos"/>
+                </android.support.design.widget.TextInputLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -167,5 +238,6 @@
 
             </RelativeLayout>
         </LinearLayout>
+        </ScrollView>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

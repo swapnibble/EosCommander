@@ -25,17 +25,17 @@ package io.plactal.eoscommander.data.remote.model.chain;
 
 import com.google.gson.annotations.Expose;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.plactal.eoscommander.crypto.util.HexUtils;
 import io.plactal.eoscommander.data.remote.model.types.EosByteWriter;
 import io.plactal.eoscommander.crypto.digest.Sha256;
 import io.plactal.eoscommander.crypto.ec.EcDsa;
 import io.plactal.eoscommander.crypto.ec.EcSignature;
 import io.plactal.eoscommander.crypto.ec.EosPrivateKey;
 import io.plactal.eoscommander.data.remote.model.types.TypeChainId;
-import io.plactal.eoscommander.util.StringUtils;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-09-11.
@@ -57,7 +57,7 @@ public class SignedTransaction extends Transaction {
     public SignedTransaction( SignedTransaction anotherTxn){
         super(anotherTxn);
         this.signatures = deepCopyOnlyContainer( anotherTxn.signatures );
-        this.context_free_data = context_free_data;
+        this.context_free_data = deepCopyOnlyContainer(anotherTxn.context_free_data);
     }
 
     public List<String> getSignatures() {
@@ -76,20 +76,31 @@ public class SignedTransaction extends Transaction {
         return context_free_data;
     }
 
+    private byte[] getCfdHash() {
+        if (context_free_data.size() <= 0 ) {
+            return Sha256.ZERO_HASH.getBytes();
+        }
+
+        MessageDigest sha256 = Sha256.getSha256Digest();
+
+        for ( String hexData : context_free_data) {
+            byte[] rawData = HexUtils.toBytes( hexData);
+            sha256.update(rawData, 0, rawData.length);
+        }
+
+        return sha256.digest();
+    }
+
 
     private Sha256 getDigestForSignature(TypeChainId chainId) {
         EosByteWriter writer = new EosByteWriter(255);
 
         // data layout to sign :
-        // [ {chainId}, {Transaction( parent class )}, {hash of context_free_data only when exists ]
+        // [ {chainId}, {Transaction( parent class )}, {hash of context_free_data} ]
 
         writer.putBytes(chainId.getBytes());
         pack( writer);
-        if (context_free_data.size() > 0 ) {
-        }
-        else {
-            writer.putBytes( Sha256.ZERO_HASH.getBytes());
-        }
+        writer.putBytes( getCfdHash());
 
         return Sha256.from(writer.toBytes());
     }

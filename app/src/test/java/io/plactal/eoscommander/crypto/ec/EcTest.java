@@ -13,6 +13,7 @@ public class EcTest {
 
     @Test
     public void testSampleK1Keys(){
+
         // followings are example keys in EOS documents.
 
         assertEquals( "ec(secp256k1) key pair not match! - 1"

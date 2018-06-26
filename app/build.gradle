@@ -7,8 +7,8 @@ android {
         applicationId "io.plactal.eoscommander"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 12
-        versionName "2.2.0"
+        versionCode 13
+        versionName "2.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // 벡터 이미지

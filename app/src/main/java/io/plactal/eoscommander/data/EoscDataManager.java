@@ -23,6 +23,7 @@
  */
 package io.plactal.eoscommander.data;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.plactal.eoscommander.crypto.ec.EosPrivateKey;
+import io.plactal.eoscommander.crypto.ec.EosPublicKey;
 import io.plactal.eoscommander.data.local.repository.EosAccountRepository;
 import io.plactal.eoscommander.data.prefs.PreferencesHelper;
 import io.plactal.eoscommander.data.remote.NodeosApi;
@@ -52,10 +54,14 @@ import io.plactal.eoscommander.data.remote.model.chain.PackedTransaction;
 import io.plactal.eoscommander.data.remote.model.chain.SignedTransaction;
 import io.plactal.eoscommander.data.remote.model.types.EosNewAccount;
 import io.plactal.eoscommander.data.remote.model.types.EosTransfer;
+import io.plactal.eoscommander.data.remote.model.types.TypeAccountName;
+import io.plactal.eoscommander.data.remote.model.types.TypeAsset;
 import io.plactal.eoscommander.data.remote.model.types.TypeChainId;
+import io.plactal.eoscommander.data.remote.model.types.TypePublicKey;
 import io.plactal.eoscommander.data.wallet.EosWalletManager;
 import io.plactal.eoscommander.util.Utils;
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 import static io.plactal.eoscommander.util.Consts.EOSIO_SYSTEM_ACCOUNT;
 import static io.plactal.eoscommander.util.Consts.EOSIO_TOKEN_CONTRACT;
@@ -165,6 +171,20 @@ public class EoscDataManager {
         return txn;
     }
 
+    private SignedTransaction createTransaction(List<Action> actions, EosChainInfo chainInfo ){
+        currentBlockInfo = chainInfo;
+        SignedTransaction txn = new SignedTransaction();
+        txn.setActions( actions );
+        txn.putSignatures( new ArrayList<>());
+
+
+        if ( null != chainInfo ) {
+            txn.setReferenceBlock(chainInfo.getHeadBlockId());
+            txn.setExpiration(chainInfo.getTimeAfterHeadBlockTime(TX_EXPIRATION_IN_MILSEC));
+        }
+
+        return txn;
+    }
 
 
     private Observable<PackedTransaction> signAndPackTransaction(SignedTransaction txnBeforeSign) {
@@ -224,11 +244,58 @@ public class EoscDataManager {
                 .flatMap( packedTxn -> mNodeosApi.pushTransaction( packedTxn ));
     }
 
+    public Observable<Action> createAccountAction(String creator, String newAccount, EosPublicKey ownerKey, EosPublicKey activeKey) {
+        Timber.w("create account %s", newAccount);
+        EosNewAccount newAccountData = new EosNewAccount(creator, newAccount
+                , TypePublicKey.from( ownerKey) , TypePublicKey.from( activeKey) );
+
+
+        Action action = new Action(EOSIO_SYSTEM_ACCOUNT, newAccountData.getActionName());
+        action.setAuthorization( getActivePermission( newAccountData.getCreatorName() ) );
+        action.setData( newAccountData.getAsHex() );
+
+        return Observable.just( action );
+    }
+
+
+
+    private Observable<Action> getActionAfterBindArgs( String contract, String permissionAccount, String actionName, String args) {
+        return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, actionName, args) )
+                .map( binResp -> {
+                    Action action = new Action(contract, actionName );
+                    action.setAuthorization( getActivePermission(permissionAccount));
+                    action.setData( binResp.getBinargs());
+
+                    return action;
+                });
+    }
+
+    public Observable<Action> buyRamInAssetAction(String payer, String receiver, String assetQuantity) {
+        JsonObject object = new JsonObject();
+        object.addProperty("payer", new TypeAccountName(payer).toString());
+        object.addProperty("receiver", new TypeAccountName(receiver).toString());
+        object.addProperty("quant", new TypeAsset( assetQuantity ).toString());
+
+        Timber.w("buyRamInAssetAction payer: %s, receiver: %s quant:%s", payer, receiver, assetQuantity);
+
+        return getActionAfterBindArgs( EOSIO_SYSTEM_ACCOUNT, payer, "buyram", new Gson().toJson(object));
+    }
+
+
+    public Observable<Action> delegateAction( String from, String receiver, String networkAsset, String cpuAsset, boolean transfer) {
+        JsonObject object = new JsonObject();
+        object.addProperty("from", new TypeAccountName(from).toString());
+        object.addProperty("receiver", new TypeAccountName(receiver).toString());
+        object.addProperty("stake_net_quantity", new TypeAsset(networkAsset).toString() );
+        object.addProperty("stake_cpu_quantity", new TypeAsset(cpuAsset).toString() );
+        object.addProperty( "transfer", transfer);
+
+        return getActionAfterBindArgs( EOSIO_SYSTEM_ACCOUNT, from, "delegatebw", new Gson().toJson(object) );
+    }
+
     public Observable<JsonObject> transfer( String from, String to, long amount, String memo ) {
 
         EosTransfer transfer = new EosTransfer(from, to, amount, memo);
-
-
 
         return pushActionRetJson(EOSIO_TOKEN_CONTRACT, transfer.getActionName(),Utils.prettyPrintJson(transfer) , getActivePermission( from ) ); //transfer.getAsHex()
     }
@@ -245,6 +312,14 @@ public class EoscDataManager {
         return mNodeosApi.jsonToBin( new JsonToBinRequest( contract, action, data ))
                 .flatMap( jsonToBinResp -> getChainInfo()
                         .map( info -> createTransaction( contract, action, jsonToBinResp.getBinargs(), permissions, info )) )
+                .flatMap( this::signAndPackTransaction )
+                .flatMap( mNodeosApi::pushTransaction );
+    }
+
+
+    public Observable<PushTxnResponse> pushActions(List<Action> actions ){
+        return getChainInfo()
+                .map( info -> createTransaction( actions, info ))
                 .flatMap( this::signAndPackTransaction )
                 .flatMap( mNodeosApi::pushTransaction );
     }
@@ -270,4 +345,6 @@ public class EoscDataManager {
         return mNodeosApi.getCurrencyStats( new GetRequestForCurrency(contract, symbol))
                 .map( result -> Utils.prettyPrintJson(result));
     }
+
+
 }

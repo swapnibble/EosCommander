@@ -78,7 +78,7 @@
     <string name="close">close</string>
 
     <string name="set_skip_signature">Set skipping signatures</string>
-    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `nodeos` must have been started with --skip-transaction-signatures option.</string>
+    <string name="skip_signature_info">Test functionality without dealing with keys.\nYour `nodeos` must have been started with --skip-sign option.</string>
 
     <string name="invalid_amount">Invalid amount !</string>
 
@@ -129,4 +129,8 @@
     <string name="lower_bound">lower bound</string>
     <string name="upper_bound">upper bound</string>
     <string name="limit">limit</string>
+
+    <string name="stake_net">EOS delegated for net</string>
+    <string name="stake_cpu">EOS delegated for CPU</string>
+    <string name="buy_ram_eos">amount of EOS to buy ram for new account</string>
 </resources>

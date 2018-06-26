@@ -4,10 +4,8 @@
   <img src="https://github.com/plactal/files/blob/master/eos_commander/eosc_icon.png?raw=true">
 </p>
 
-EOS commander is an Android client for EOSIO blockchain for EOS dApp developer. 
-It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. with simple input on the Android device. PLACTAL team hopes this makes more EOS mobile DApps activated.  
-
-#### [PLACTAL](#about_plactal) is the new name of Mithrilcoin on EOSIO.  
+EOS commander is an Android client for EOSIO DApp developer. 
+It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. on the Android device. PLACTAL team hopes this makes more EOS mobile DApps activated.  
  
 
 # Table of contents
@@ -32,7 +30,7 @@ You should have running nodeos node.
 Set "http-server-address" other than "127.0.0.1" .  
 EOS commander includes wallet function, you don't need to specify "wallet_api_plugin" in config.ini.
 
-EOS Commander has been tested with EOSIO version [dawn-v4.2.0](https://github.com/EOSIO/eos/tree/dawn-v4.2.0).
+EOS Commander has been tested with EOSIO version [1.0.6](https://github.com/EOSIO/eos/tree/v1.0.6).
 
 See [EOSIO github](https://github.com/EOSIO/eos).
 
@@ -47,42 +45,32 @@ Open in Android studio 3.0 or later.
   
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)
 
-Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.2.0-release.apk?raw=true)  
-SHA1 : 71db34dfc6ad7e2a7c4a71b8df8b9eda7dc0cdde  
-SHA256: d56b59e1687a991c621c2709545075373fcf60e653cb1c75ab8d4c8c63fa4445   
+Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.3.0-release.apk?raw=true)  
+SHA1 : b9b1c5c2c19c5b4bece09ce5ee225f70e8bd4308  
+SHA256: 13a52b99a8adc2f09ab715af90f2c0d32df02219e08d561bc4e666d76eb2c84c   
 
-
-old version(for dawn2.0) on PlayStore: [link](https://play.google.com/store/apps/details?id=io.mithrilcoin.eoscommander)
 
 
 <a name="set_connection"></a>
 ## Set connection  
-For Public test net:  
-Set testnet1.eos.io or testnet2.eos.io, port: 80  
 
 For Private test net:  
 You should have running nodeos node.  
-Set "http-server-address" other than "127.0.0.1" in config.ini.  
+Set "http-server-address" other than "127.0.0.1".  
 
- on EOS commander settings screen. 
-Set test1.eos.io or test2.eos.io, port: 80
 ### Connect
 Connect to eos network and check the status.
 On connected state, you can use the command function.
-
-### Skipping signature
-You can run commands without signing. But in this case, the nodeos must have been started with "--skip-transaction-signatures" switch.
-[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#localtestnet)
 
 <a name="getting_started"></a>
 ## Wallet
 ### create default wallet and import key of eosio.
 This creates a wallet named 'default' and import the private key of `eosio` account.
-[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#walletimport)
+[See EOSIO wiki](https://github.com/EOSIO/eos/wiki/CLI%20Wallet)
 ### create wallet
 You can also create wallets other than "default".
 Also provides option for saving password for easy testing.
-(This makes password filled automatically when you unlock a wallet.)
+(This makes password automatically filled when you unlock a wallet.)
 
 ### view keys
 Lists imported private keys and their respective public key.
@@ -112,13 +100,13 @@ Run "get balance" or "get stats" commands for currency contract.
 <a name="push"></a>
 ## Push
 Push the contract message.
-[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#pushamessage)  
+[See EOSIO wiki](https://github.com/EOSIO/eos/wiki/Command%20Reference#push-message-to-contract)  
 You can type json manually, or edit via form input UI( after reading ABI from EOS network), or importing JSON file.  
 
 <a name="get_table"></a>
 ## Get table
 Lists the contract table.
-[See EOS README](https://github.com/EOSIO/eos/blob/master/README.md#readingcontract)
+[See EOSIO wiki](https://github.com/EOSIO/eos/wiki/Command%20Reference#querying-contract)
 
 <a name="about_plactal"></a>
 # About plactal.io

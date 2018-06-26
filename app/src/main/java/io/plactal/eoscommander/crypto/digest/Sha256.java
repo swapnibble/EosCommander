@@ -29,7 +29,7 @@ public class Sha256 {
       this.mHashBytes = bytes;
    }
 
-   private static MessageDigest getSha256Digest() {
+   public static MessageDigest getSha256Digest() {
       try {
          return MessageDigest.getInstance( "SHA-256" );
       } catch (NoSuchAlgorithmException e) {
