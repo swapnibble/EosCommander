@@ -81,14 +81,17 @@ public class SignedTransaction extends Transaction {
             return Sha256.ZERO_HASH.getBytes();
         }
 
-        MessageDigest sha256 = Sha256.getSha256Digest();
+        EosByteWriter writer = new EosByteWriter(255);
+
+        writer.putVariableUInt( context_free_data.size());
 
         for ( String hexData : context_free_data) {
             byte[] rawData = HexUtils.toBytes( hexData);
-            sha256.update(rawData, 0, rawData.length);
+            writer.putVariableUInt( rawData.length);
+            writer.putBytes( rawData);
         }
 
-        return sha256.digest();
+        return Sha256.from( writer.toBytes()).getBytes();
     }
 
 
