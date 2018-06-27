@@ -61,7 +61,6 @@ import io.plactal.eoscommander.data.remote.model.types.TypePublicKey;
 import io.plactal.eoscommander.data.wallet.EosWalletManager;
 import io.plactal.eoscommander.util.Utils;
 import io.reactivex.Observable;
-import timber.log.Timber;
 
 import static io.plactal.eoscommander.util.Consts.EOSIO_SYSTEM_ACCOUNT;
 import static io.plactal.eoscommander.util.Consts.EOSIO_TOKEN_CONTRACT;
@@ -245,7 +244,6 @@ public class EoscDataManager {
     }
 
     public Observable<Action> createAccountAction(String creator, String newAccount, EosPublicKey ownerKey, EosPublicKey activeKey) {
-        Timber.w("create account %s", newAccount);
         EosNewAccount newAccountData = new EosNewAccount(creator, newAccount
                 , TypePublicKey.from( ownerKey) , TypePublicKey.from( activeKey) );
 
@@ -275,8 +273,6 @@ public class EoscDataManager {
         object.addProperty("payer", new TypeAccountName(payer).toString());
         object.addProperty("receiver", new TypeAccountName(receiver).toString());
         object.addProperty("quant", new TypeAsset( assetQuantity ).toString());
-
-        Timber.w("buyRamInAssetAction payer: %s, receiver: %s quant:%s", payer, receiver, assetQuantity);
 
         return getActionAfterBindArgs( EOSIO_SYSTEM_ACCOUNT, payer, "buyram", new Gson().toJson(object));
     }

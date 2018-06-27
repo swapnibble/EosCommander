@@ -133,7 +133,6 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
     }
 
     public void unlockWallet(String walletName, String password){
-        Timber.i("UNLOCK WALLET!");
         mDataManager.getWalletManager().unlock(walletName, password);
 
         // 바뀐 상태를 update 하도록..
