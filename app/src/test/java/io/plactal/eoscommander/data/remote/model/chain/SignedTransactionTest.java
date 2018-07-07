@@ -46,42 +46,56 @@ public class SignedTransactionTest {
     @Test
     public void setRefBlockId_okRefBlockNumAndPrefix() {
         SignedTransaction signedTransaction = new SignedTransaction();
-        signedTransaction.setReferenceBlock( "000000044af9aacdb9329e7f875b44907bacb972e0c3ff49cd054660318c707e");
+        signedTransaction.setReferenceBlock("000000044af9aacdb9329e7f875b44907bacb972e0c3ff49cd054660318c707e");
 
-        assertEquals( "incorrect ref block num", 4, signedTransaction.getRefBlockNum());
-        assertEquals( "incorrect ref block prefix", 0x7F9E32B9, signedTransaction.getRefBlockPrefix());
+        assertEquals("incorrect ref block num", 4, signedTransaction.getRefBlockNum());
+        assertEquals("incorrect ref block prefix", 0x7F9E32B9, signedTransaction.getRefBlockPrefix());
 
-        assertEquals( "asset symbol parse error", TypeAsset.CORE_SYMBOL_NAME, new TypeAsset(1).symbolName());
+        assertEquals("asset symbol parse error", TypeAsset.CORE_SYMBOL_NAME, new TypeAsset(1).symbolName());
 
         String assetStr = "12.34567 EOS";
         TypeAsset testAsset = new TypeAsset(assetStr);
-        assertNotNull( "fail parse asset from string", testAsset);
-        assertEquals( "invalid parsed asset symbol", "EOS", testAsset.symbolName());
-        assertEquals( "invalid parsed asset decimals", 5, testAsset.decimals());
-        assertEquals( "invalid parsed eos asset", assetStr, testAsset.toString());
+        assertNotNull("fail parse asset from string", testAsset);
+        assertEquals("invalid parsed asset symbol", "EOS", testAsset.symbolName());
+        assertEquals("invalid parsed asset decimals", 5, testAsset.decimals());
+        assertEquals("invalid parsed eos asset", assetStr, testAsset.toString());
 
 
         assetStr = "12.3456";
         TypeAsset testAsset2 = new TypeAsset(assetStr);
-        assertNotNull( "fail parse SYSTEM asset from string", testAsset2);
-        assertEquals( "invalid parsed SYSTEM asset symbol", TypeAsset.CORE_SYMBOL_NAME, testAsset2.symbolName());
-        assertEquals( "invalid parsed SYSTEM asset decimals", 4, testAsset2.decimals());
-        assertEquals( "invalid parsed SYSTEM asset", assetStr + " " + TypeAsset.CORE_SYMBOL_NAME, testAsset2.toString());
+        assertNotNull("fail parse SYSTEM asset from string", testAsset2);
+        assertEquals("invalid parsed SYSTEM asset symbol", TypeAsset.CORE_SYMBOL_NAME, testAsset2.symbolName());
+        assertEquals("invalid parsed SYSTEM asset decimals", 4, testAsset2.decimals());
+        assertEquals("invalid parsed SYSTEM asset", assetStr + " " + TypeAsset.CORE_SYMBOL_NAME, testAsset2.toString());
+
+        assetStr = "12.3456 JUNGLE";
+        TypeAsset testAsset3 = new TypeAsset(assetStr);
+        assertNotNull("fail parse SYSTEM asset from string", testAsset3);
+        assertEquals("invalid parsed SYSTEM asset symbol", "JUNGLE", testAsset3.symbolName());
+        assertEquals("invalid parsed SYSTEM asset decimals", 4, testAsset3.decimals());
+        assertEquals("invalid parsed SYSTEM asset", assetStr, testAsset3.toString());
+
+        long assetLong = 123456L;
+        TypeAsset testAsset4 = new TypeAsset(assetLong);
+        assertNotNull("fail parse SYSTEM asset from string", testAsset4);
+        assertEquals("invalid parsed SYSTEM asset symbol", TypeAsset.CORE_SYMBOL_NAME, testAsset4.symbolName());
+        assertEquals("invalid parsed SYSTEM asset decimals", 4, testAsset4.decimals());
+        assertEquals("invalid parsed SYSTEM asset", "12.3456 EOS", testAsset4.toString());
     }
 
 
-    private SignedTransaction createTxn( String contract, String action, String dataAsHex, String[] scopes, String[] permissions ){
+    private SignedTransaction createTxn(String contract, String action, String dataAsHex, String[] scopes, String[] permissions) {
         Action msg = new Action();
-        msg.setAccount( contract );
+        msg.setAccount(contract);
         msg.setAuthorization(permissions);
-        msg.setName( action );
-        msg.setData( dataAsHex );
+        msg.setName(action);
+        msg.setData(dataAsHex);
 
         SignedTransaction txn = new SignedTransaction();
         // dawn3 does not request scopes.. txn.setScope( scopes );
-        txn.addAction( msg );
+        txn.addAction(msg);
         // dawn3 does not request scopes.. txn.setReadScopeList(new ArrayList<>(0));
-        txn.putSignatures( new ArrayList<>());
+        txn.putSignatures(new ArrayList<>());
 
         return txn;
     }
@@ -97,9 +111,9 @@ public class SignedTransactionTest {
 
 
     @Test
-    public void signTransactionNew_matchSignature(){
-        SignedTransaction txn =createTxn( "eos", "newaccount", CREATE_ACCOUNT_DATA_AS_HEX,
-                new String[]{ "inita", "eos"}, new String[]{"inita@active"});
+    public void signTransactionNew_matchSignature() {
+        SignedTransaction txn = createTxn("eos", "newaccount", CREATE_ACCOUNT_DATA_AS_HEX,
+                new String[]{"inita", "eos"}, new String[]{"inita@active"});
 
         String head_block_id = "000009907e54bb84c7dc993e613e237f65dfbbc0a26f501b2ac7e1eb7b570df3";
         txn.setReferenceBlock(head_block_id);
@@ -107,21 +121,21 @@ public class SignedTransactionTest {
 
         EosPrivateKey key = new EosPrivateKey("5KiA2RDrwb9xq2j6Z3k8qaz58HVhwh7mAxjWPag9dwjpBFNCGYp");
 
-        assertEquals( "key parse failed-1",  "EOS6H6WZR2Nme3Sp4F8Krkdn19EYsTZLEyD8KasQYfa2EcqpZMohV", key.getPublicKey().toString());
+        assertEquals("key parse failed-1", "EOS6H6WZR2Nme3Sp4F8Krkdn19EYsTZLEyD8KasQYfa2EcqpZMohV", key.getPublicKey().toString());
 
         key = new EosPrivateKey("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3");
-        assertEquals( "key parse failed-2",  "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", key.getPublicKey().toString());
+        assertEquals("key parse failed-2", "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", key.getPublicKey().toString());
 
         byte[] data = HexUtils.toBytes("369a790be1b3192fa6eccd0e8e90b39692145d30c75eda7e435df083e30801a3");
         BigInteger r = new BigInteger(HexUtils.toBytes("545c106dfd35900fab318cc12e208140abba086ab1112c543a808e2248ddb62d"));
         BigInteger s = new BigInteger(HexUtils.toBytes("5fe909c18582e792116e418e5491d18a5c98be34e5bdccb577d6fa59806e6a28"));
-        CurveParam curveParamK1 = EcTools.getCurveParam( CurveParam.SECP256_K1);
-        EcSignature signature = new EcSignature( r,s, curveParamK1,1);
-        assertEquals("failed to recover pubKey from sig, (recId 1)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1,data, signature, 1) );
+        CurveParam curveParamK1 = EcTools.getCurveParam(CurveParam.SECP256_K1);
+        EcSignature signature = new EcSignature(r, s, curveParamK1, 1);
+        assertEquals("failed to recover pubKey from sig, (recId 1)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1, data, signature, 1));
 
         r = new BigInteger(HexUtils.toBytes("40361c656f284cd676d920108d3a63dfcf0779d0296cdb2f9421c0c1fd18244a"));
         s = new BigInteger(HexUtils.toBytes("284db40e8661d75067d45b6559266ba5345e86df0af83343951284121dddd1ec"));
-        signature = new EcSignature( r,s, curveParamK1,0);
-        assertEquals("failed to recover pubKey from sig, (recId 0)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1, data, signature, 0) );
+        signature = new EcSignature(r, s, curveParamK1, 0);
+        assertEquals("failed to recover pubKey from sig, (recId 0)", key.getPublicKey(), EcDsa.recoverPubKey(curveParamK1, data, signature, 0));
     }
 }
