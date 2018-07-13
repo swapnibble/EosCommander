@@ -18,6 +18,7 @@ It includes functions of wallet. Developers can test wallet, account, transactio
 - [Push](#push)
 - [Get table](#get_tabel)
 - [About PLACTAL](#about_plactal)
+- [Contact](#contact) 
 - [License](#license)
 
 <a name="getting_started"></a>
@@ -109,9 +110,13 @@ Lists the contract table.
 [See EOSIO wiki](https://github.com/EOSIO/eos/wiki/Command%20Reference#querying-contract)
 
 <a name="about_plactal"></a>
-# About plactal.io
+## About plactal.io
 [PLACTAL](https://plactal.io) is a platform for tokenizing billions of gamers's experience. And runs on EOS network as smart contract. PLACTAL aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
 
+<a name="contact"></a>
+## Contact
+eric.song@placta.io
+  
 <a name="lincense"></a>
 ## License
 
