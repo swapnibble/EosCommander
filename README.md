@@ -115,7 +115,7 @@ Lists the contract table.
 
 <a name="contact"></a>
 ## Contact
-eric.song@placta.io
+eric.song@plactal.io
   
 <a name="lincense"></a>
 ## License
