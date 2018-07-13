@@ -55,7 +55,6 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient providesOkHttpClient(HostInterceptor interceptor) {
-
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .build();
@@ -78,9 +77,10 @@ public class AppModule {
     @Singleton
     NodeosApi providesEosService(Gson gson, OkHttpClient okHttpClient, PreferencesHelper preferencesHelper) {
         RefValue<Integer> portRef = new RefValue<>(0);
-        String addr = preferencesHelper.getNodeosConnInfo( portRef );
+        RefValue<String> schemeRef = new RefValue<>();
+        String addr = preferencesHelper.getNodeosConnInfo( portRef, schemeRef );
 
-        String url = StringUtils.isEmpty( addr ) ? ENDPOINT : ( "http://"+addr+":"+portRef.data);
+        String url = StringUtils.isEmpty( addr ) ? ENDPOINT : ( schemeRef.data + "://"+addr+":"+portRef.data);
 
 
         Retrofit retrofit = new Retrofit.Builder()

@@ -31,8 +31,8 @@
         <activity
             android:name="io.plactal.eoscommander.ui.settings.SettingsActivity"
             android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:theme="@style/AppTheme.NoActionBarDark"
+            android:windowSoftInputMode="adjustPan"/> <!--  -->
 
         <activity
             android:name="io.plactal.eoscommander.ui.InfoActivity"

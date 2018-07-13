@@ -24,6 +24,8 @@
 package io.plactal.eoscommander.ui.settings;
 
 
+import java.util.List;
+
 import io.plactal.eoscommander.ui.base.MvpView;
 
 /**
@@ -39,4 +41,8 @@ public interface SettingsMvpView extends MvpView {
     void exitWithResult( boolean success );
 
     void showCheckOptions( boolean skipSigning );
+
+    void addConnScheme(List<String> schemes, int curSchemePosition);
+
+    void addCoreSymbols( List<String> coreSymbolStrs, int curSymbolPosition);
 }

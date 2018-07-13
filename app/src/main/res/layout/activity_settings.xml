@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical" >
+
+    android:orientation="vertical" > <!-- android:background="@color/colorPrimary" -->
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -20,8 +20,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:layout_height="?android:attr/actionBarSize"
             app:titleTextAppearance="@style/ToolBarFont"
             app:popupTheme="@style/AppTheme.PopupOverlay"> <!-- app:layout_scrollFlags="scroll|enterAlways" -->
 
@@ -50,15 +49,26 @@
                 android:paddingTop="2dp"
                 android:paddingBottom="16dp"
                 android:textStyle="bold"
-                android:textColor="@color/colorWhite"
                 android:text="@string/set_connection"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_scheme"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tv_subtitle_connection"
+                android:layout_marginBottom="16dp"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:spinnerMode="dropdown"/>
 
             <EditText
                 android:id="@+id/et_port"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/tv_subtitle_connection"
+                android:layout_below="@id/sp_scheme"
                 android:gravity="center"
                 android:textColorHint="@color/colorLightGray"
                 android:textColor="@color/colorPrimary"
@@ -71,7 +81,7 @@
                 android:id="@+id/et_host"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_subtitle_connection"
+                android:layout_below="@id/sp_scheme"
                 android:layout_alignParentStart="true"
                 android:layout_marginEnd="4dp"
                 android:layout_toStartOf="@id/et_port"
@@ -86,10 +96,10 @@
                 android:id="@+id/btn_connect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_box_btn_dark"
                 android:layout_marginTop="16dp"
                 android:padding="16dp"
                 android:textAlignment="center"
+                android:background="@drawable/round_box_btn_dark"
                 android:textColor="@color/colorWhite"
                 android:text="@string/connect"
                 android:layout_below="@id/et_host"
@@ -102,11 +112,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/top_side_round_cnr_dark"
                 android:textColor="@color/colorRed"
                 android:textIsSelectable="false"
                 android:textSize="11sp"
-                android:text="@string/disconnected"/>
+                android:text="@string/disconnected"/> <!-- android:background="@color/colorPrimaryDark" -->
 
             <TextView
                 android:id="@+id/tv_conn_msg"
@@ -115,13 +125,13 @@
                 android:layout_below="@id/tv_conn_status"
                 android:padding="8dp"
                 android:textIsSelectable="true"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/bottom_side_round_cnr_dark"
                 android:textColor="@color/colorWhite"
                 android:textSize="11sp"
                 android:text="@string/desc_for_connect_result" />
 
             <TextView
-                android:id="@+id/tv_label_skipsign"
+                android:id="@+id/tv_label_core_symbol"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_conn_msg"
@@ -130,7 +140,29 @@
                 android:paddingBottom="16dp"
                 android:layout_marginTop="24dp"
                 android:textStyle="bold"
-                android:textColor="@color/colorWhite"
+                android:text="@string/core_symbol"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/sp_core_symbol"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tv_label_core_symbol"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:spinnerMode="dropdown"/>
+
+            <TextView
+                android:id="@+id/tv_label_skipsign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sp_core_symbol"
+                android:textSize="12sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
                 android:text="@string/set_skip_signature"/>
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -141,9 +173,10 @@
                 android:paddingTop="5dp"
                 android:gravity="top"
                 android:textSize="12sp"
-                app:buttonTint="@color/colorWhite"
-                android:textColor="@color/colorWhite"
+
                 android:text="@string/skip_signature_info" />
+
+
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

@@ -35,21 +35,10 @@ import io.plactal.eoscommander.util.StringUtils;
 
 public class TypeAsset implements EosType.Packer {
 
-    public static final String CORE_SYMBOL_NAME = "SYS";
-    private static final long CORE_SYMBOL = 0x0000000053595304L; // (int64_t(4) | (uint64_t('S') << 8) | (uint64_t('Y') << 16) | (uint64_t('S') << 24))
-
-    // 아래 table 은, eos/libraries/types/Asset.cpp 에서 가져옴.
-    private static final long[] PRECISION_TABLE = {
-            1, 10, 100, 1000, 10000,
-            100000, 1000000, 10000000, 100000000,
-            1000000000, 10000000000L,
-            100000000000L, 1000000000000L,
-            10000000000000L, 100000000000000L
-    };
+    public static final long MAX_AMOUNT = ( 1 << 62 ) - 1;
 
     private long mAmount;
-    private final long mAssetSymbol;
-    private final String mSymbolName;
+    private TypeSymbol mSymbol;
 
     public TypeAsset(String value) {
 
@@ -61,85 +50,53 @@ public class TypeAsset implements EosType.Packer {
         if ( matcher.find()) {
             String beforeDotVal = matcher.group(1), afterDotVal = matcher.group(2) ;
 
+            String symbolStr = StringUtils.isEmpty(matcher.group(3)) ? null : matcher.group(3).trim();
+
             mAmount = Long.valueOf( beforeDotVal + afterDotVal);
-
-            boolean symbolNameIsEmpty = StringUtils.isEmpty(matcher.group(3));
-
-            this.mSymbolName = symbolNameIsEmpty ? CORE_SYMBOL_NAME : matcher.group(3).trim();
-
-            long decimals = ( symbolNameIsEmpty && CORE_SYMBOL_NAME.equals( this.mSymbolName))
-                            ? ( CORE_SYMBOL & 0xFFL ) : afterDotVal.length();
-
-            this.mAssetSymbol = makeAssetSymbol( mSymbolName, decimals);
+            mSymbol = new TypeSymbol( afterDotVal.length(), symbolStr );
         }
         else {
             this.mAmount = 0;
-            this.mSymbolName = CORE_SYMBOL_NAME;
-            this.mAssetSymbol = CORE_SYMBOL;
+            this.mSymbol = new TypeSymbol();
         }
     }
 
     public TypeAsset(long amount) {
-        this( amount, CORE_SYMBOL );
+        this( amount, new TypeSymbol() );
+    }
+
+    public TypeAsset( long amount, TypeSymbol symbol ){
+        this.mAmount = amount;
+        this.mSymbol = symbol ;
+    }
+
+    public boolean isAmountInRange(){
+        return -MAX_AMOUNT <= mAmount && mAmount <= MAX_AMOUNT;
+    }
+
+    public boolean isValid(){
+        return isAmountInRange() && ( mSymbol != null ) && mSymbol.valid();
     }
 
 
-    public TypeAsset(long amount, long symbol) {
-        mAmount = amount;
-        mAssetSymbol = symbol;
 
-        final int byteLen = Long.SIZE / Byte.SIZE;
-        int symbolLen = 0;
-        char[] sym = new char[byteLen];
-        for ( int i = 1; i < byteLen; i++) {
-            char oneChar = (char)( (symbol >> (8*i)) & 0xFF );
-            if ( oneChar != 0 ) {
-                sym[i] = oneChar;
-                symbolLen++;
-            }
-            else {
-                break;
-            }
-        }
-
-        mSymbolName = new String( sym, 1, symbolLen);
-    }
-
-
-    private long makeAssetSymbol(String symbolName, long decimals ) {
-        long symbol = 0;
-        int nameLen = symbolName.length();
-        for (int i = 0; (i < nameLen) && ( i < 7); i++ ) {
-            symbol |= (symbolName.charAt( i) <<  ( (i+1) * 8));
-        }
-
-        symbol |= decimals;
-
-        return symbol;
-    }
-
-    public byte decimals(){
-        return (byte)( mAssetSymbol & 0xFF );
+    public short decimals(){
+        return ( mSymbol != null ) ? mSymbol.decimals() : 0 ;
     }
 
     public long precision() {
-        int decimal = decimals();
-        if ( decimal >= PRECISION_TABLE.length ) {
-            decimal = 0;
-        }
-
-        return PRECISION_TABLE[ decimal ];
+        return ( mSymbol != null ) ? mSymbol.precision() : 0;
     }
 
-    public double toDouble() {
-        return mAmount / precision();
-    }
 
     public String symbolName() {
-        return mSymbolName;
+        if ( mSymbol != null ){
+            return mSymbol.name();
+        }
+
+        return "";
     }
 
-    public long assetSymbol(){ return mAssetSymbol;}
 
     public long getAmount(){ return mAmount;}
 
@@ -153,7 +110,7 @@ public class TypeAsset implements EosType.Packer {
             result += "." + String.valueOf( precisionVal + fract).substring(1);
         }
 
-        return result + " "+ mSymbolName;
+        return result + " "+ symbolName();
     }
 
     @Override
@@ -161,10 +118,12 @@ public class TypeAsset implements EosType.Packer {
 
         writer.putLongLE(mAmount);
 
-        writer.putLongLE( mAssetSymbol);
+        if ( mSymbol != null ) {
+            mSymbol.pack( writer );
+        }
+        else {
+            writer.putLongLE( 0 );
+        }
     }
 
-    public void add( TypeAsset other) {
-        //mAmount
-    }
 }

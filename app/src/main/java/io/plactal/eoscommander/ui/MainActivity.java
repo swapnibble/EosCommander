@@ -11,9 +11,11 @@ import javax.inject.Inject;
 
 import io.plactal.eoscommander.R;
 import io.plactal.eoscommander.data.EoscDataManager;
+import io.plactal.eoscommander.data.remote.model.types.TypeSymbol;
 import io.plactal.eoscommander.ui.base.BaseActivity;
 import io.plactal.eoscommander.ui.settings.SettingsActivity;
 import io.plactal.eoscommander.util.StringUtils;
+import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity {
@@ -35,8 +37,6 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
         setToolbarConfig(R.id.toolbar, false);
-
-
         TabLayout tabLayout = findViewById(R.id.tabs);
 
         tabLayout.addTab(tabLayout.newTab().setText( R.string.wallet));
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
         mDataManager.clearAbiObjects();
 
-        if (StringUtils.isEmpty( mDataManager.getPreferenceHelper().getNodeosConnInfo( null)) ) {
+        if (StringUtils.isEmpty( mDataManager.getPreferenceHelper().getNodeosConnInfo( null, null)) ) {
             openSettingsActivity();
         }
     }

@@ -23,6 +23,9 @@
  */
 package io.plactal.eoscommander.ui.settings;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.plactal.eoscommander.R;
@@ -31,6 +34,7 @@ import io.plactal.eoscommander.data.remote.HostInterceptor;
 import io.plactal.eoscommander.data.remote.model.api.EosChainInfo;
 import io.plactal.eoscommander.ui.base.BasePresenter;
 import io.plactal.eoscommander.ui.base.RxCallbackWrapper;
+import io.plactal.eoscommander.util.Consts;
 import io.plactal.eoscommander.util.RefValue;
 import io.plactal.eoscommander.util.StringUtils;
 
@@ -57,16 +61,25 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
     public void attachView(SettingsMvpView mvpView) {
         super.attachView( mvpView );
 
+        List<String> symbolList = Arrays.asList( Consts.DEFAULT_SYMBOL_STRING, Consts.EOS_SYMBOL_STRING);
+        mvpView.addCoreSymbols(symbolList
+                    , symbolList.indexOf( mDataManager.getPreferenceHelper().getCoreSymbolString()) );
+
+
         RefValue<Integer> portRef = new RefValue<>(0);
+        RefValue<String> schemeRef = new RefValue<>();
 
         // fetch connection info from preference
-        String host = mDataManager.getPreferenceHelper().getNodeosConnInfo( portRef );
-        String port = String.valueOf(portRef.data);
+        String host = mDataManager.getPreferenceHelper().getNodeosConnInfo( portRef, schemeRef );
+        String port = portRef.data != 0 ? String.valueOf(portRef.data) : "";
         boolean connInfoOk = false;
         if ( validateConnInfo( host, port ) > 0) {
             getMvpView().showConnInfo(host, portRef.data);
             connInfoOk = true;
         }
+
+        List<String> schemeList = Arrays.asList( "http", "https");
+        mvpView.addConnScheme(  schemeList, schemeList.indexOf( schemeRef.data ) );
 
         // get skip signing option
         boolean skipSigning = mDataManager.getPreferenceHelper().shouldSkipSigning();
@@ -74,21 +87,27 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
 
         // connect
         if ( connInfoOk ) {
-            tryConnectNodeos( host, port );
+            tryConnectNodeos( schemeRef.data, host, port );
         }
+    }
+
+    public void changeCoreSymbol( String symbolStr ) {
+        if ( StringUtils.isEmpty( symbolStr )) return;
+
+        mDataManager.updateCoreSymbol( symbolStr, Consts.DEFAULT_SYMBOL_PRECISION );
     }
 
 
     private int validateConnInfo( CharSequence host, CharSequence port ) {
 
-        if (StringUtils.isEmpty( host ) || StringUtils.isEmpty( port )) {
+        if (StringUtils.isEmpty( host ) ){
             return 0;
         }
 
         int parsedPort ;
         try {
             parsedPort = Integer.valueOf(port.toString());
-            if ( (parsedPort <= 0 ) || ( parsedPort >= 65536) ) {
+            if ( (parsedPort < 0 ) || ( parsedPort >= 65536) ) {
                 return -1;
             }
 
@@ -100,12 +119,12 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
         }
     }
 
-    private void processConnResult(EosChainInfo info, String host, int port){
+    private void processConnResult(EosChainInfo info, String scheme, String host, int port){
 
         try {
             if (info != null) {
                 mConnected = true;
-                mDataManager.getPreferenceHelper().putNodeosConnInfo(host, port);
+                mDataManager.getPreferenceHelper().putNodeosConnInfo(scheme, host, port);
                 getMvpView().showConnStatus( true, info.getBrief());
             }
             else {
@@ -119,7 +138,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
         }
     }
 
-    public void tryConnectNodeos(CharSequence host, CharSequence port){
+    public void tryConnectNodeos(String scheme, CharSequence host, CharSequence port){
         String hostAddress = host.toString();
         int nodeosPort = validateConnInfo( hostAddress, port );
         if ( nodeosPort <= 0 ) {
@@ -131,7 +150,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
         getMvpView().hideKeyboard();
 
         // change host info
-        mHostInterceptor.setInterceptor("http", hostAddress , nodeosPort);
+        mHostInterceptor.setInterceptor(scheme, hostAddress , nodeosPort); // "http"
 
         getMvpView().showLoading( true );
 
@@ -145,7 +164,7 @@ public class SettingsPresenter extends BasePresenter<SettingsMvpView> {
                             if ( !isViewAttached() ) return;
 
                             getMvpView().showLoading( false );
-                            processConnResult( info, hostAddress, nodeosPort );
+                            processConnResult( info, scheme, hostAddress, nodeosPort );
                         }
                     }
                 )

@@ -3,6 +3,7 @@ package io.plactal.eoscommander.crypto.ec;
 import org.junit.Test;
 
 import io.plactal.eoscommander.crypto.digest.Sha256;
+import io.plactal.eoscommander.crypto.util.HexUtils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,6 +49,7 @@ public class EcTest {
 
         assertEquals(msgOnFailure, publicKey, recoveredKey);
     }
+
 
     @Test
     public void test_recovery(){

@@ -27,6 +27,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -48,6 +50,7 @@ public class PreferencesHelper {
 
     private static final String PREF_NODEOS_HOST = "eosd.host";
     private static final String PREF_NODEOS_PORT = "eosd.port";
+    private static final String PREF_NODEOS_SCHEME = "eosd.scheme";
 
     private static final String PREF_PREFIX_WALLET_PW = "wallet.pw.";
     private static final String PREF_SAVE_PASS_FOR_TESTING = "wallet.save.pw";
@@ -55,6 +58,9 @@ public class PreferencesHelper {
 
 
     private static final String PREF_SKIP_SIGNING = "signing.skip";
+
+    private static final String PREF_CORE_SYMBOL_STRING = "core.sym.str";
+    private static final String PREF_CORE_SYMBOL_PRECISION = "core.sym.precision";
 
     private final SharedPreferences mPrefs;
     private final File mWalletDirFile;
@@ -80,19 +86,44 @@ public class PreferencesHelper {
         return mWalletDirFile;
     }
 
+    public String getCoreSymbolString(){
+        return mPrefs.getString( PREF_CORE_SYMBOL_STRING, Consts.DEFAULT_SYMBOL_STRING);
+    }
 
-    public void putNodeosConnInfo(String host, Integer port) {
+    public int getCoreSymbolPrecision(){
+        return mPrefs.getInt( PREF_CORE_SYMBOL_PRECISION, Consts.DEFAULT_SYMBOL_PRECISION );
+    }
+
+    public void putCoreSymbolInfo( String symbolStr, int symbolPrecision ){
         SharedPreferences.Editor editor = mPrefs.edit();
 
+        editor.putString(PREF_CORE_SYMBOL_STRING, symbolStr);
+        editor.putInt(PREF_CORE_SYMBOL_PRECISION, symbolPrecision );
+
+        editor.apply();
+    }
+
+    public void putNodeosConnInfo(String scheme, String host, Integer port) {
+        SharedPreferences.Editor editor = mPrefs.edit();
+
+        editor.putString(PREF_NODEOS_SCHEME, scheme);
         editor.putString(PREF_NODEOS_HOST, host );
         editor.putInt(PREF_NODEOS_PORT, port );
 
         editor.apply();
     }
 
-    public String getNodeosConnInfo(RefValue<Integer> portRef) {
+    public String getNodeosConnInfo(RefValue<Integer> portRef, RefValue<String> schemeRef) {
         if ( null != portRef ) {
             portRef.data = mPrefs.getInt(PREF_NODEOS_PORT, 0);
+        }
+
+        if ( null != schemeRef ) {
+            schemeRef.data = mPrefs.getString(PREF_NODEOS_SCHEME, "http");
+
+            if ( ( null != portRef ) && portRef.data <= 0) {
+                portRef.data = "https".equals( schemeRef.data ) ? 443 : 80;
+            }
         }
 
         return mPrefs.getString(PREF_NODEOS_HOST, "");

@@ -85,14 +85,19 @@ public interface NodeosApi {
     @POST("/v1/chain/get_code")
     Observable<GetCodeResponse> getCode(@Body GetCodeRequest body);
 
-    @POST("/v1/account_history/{history_path}")
-    Observable<JsonObject> getAccountHistory(@Path("history_path") String historyPath,  @Body JsonObject body);
+    @POST("/v1/history/get_controlled_accounts")
+    Observable<JsonObject> getServants(@Body JsonObject body);
 
-    String ACCOUNT_HISTORY_GET_TRANSACTIONS = "get_transactions" ;
+    @POST("/v1/history/get_transactions")
+    Observable<JsonObject> getTransactions( @Body JsonObject body);
+
+
+
+//    String ACCOUNT_HISTORY_GET_TRANSACTIONS = "get_transactions" ;
     String GET_TRANSACTIONS_KEY = "account_name";
-
-    String ACCOUNT_HISTORY_GET_SERVANTS = "get_controlled_accounts" ;
+//
+//    String ACCOUNT_HISTORY_GET_SERVANTS = "get_controlled_accounts" ;
     String GET_SERVANTS_KEY = "controlling_account";
-
-    String ACCOUNT_HISTORY_GET_KEY_ACCOUNTS = "get_key_accounts";
+//
+//    String ACCOUNT_HISTORY_GET_KEY_ACCOUNTS = "get_key_accounts";
 }

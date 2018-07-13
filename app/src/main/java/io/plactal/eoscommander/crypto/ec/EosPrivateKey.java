@@ -59,13 +59,21 @@ public class EosPrivateKey {
     }
 
     public EosPrivateKey(){
-        this( CurveParam.SECP256_K1);
+        this( CurveParam.SECP256_K1, null);
     }
 
-    public EosPrivateKey( int curveParamType){
+    public EosPrivateKey(int curveParamType){
+        this( curveParamType, null);
+    }
+
+    public EosPrivateKey(byte[] keyBytes){
+        this( CurveParam.SECP256_K1, keyBytes);
+    }
+
+    public EosPrivateKey( int curveParamType, byte[] keyBytes){
         mCurveParam = EcTools.getCurveParam(curveParamType);
 
-        mPrivateKey = getOrCreatePrivKeyBigInteger( null );
+        mPrivateKey = getOrCreatePrivKeyBigInteger( keyBytes );
         mPublicKey = new EosPublicKey(findPubKey( mPrivateKey ), mCurveParam);
     }
 

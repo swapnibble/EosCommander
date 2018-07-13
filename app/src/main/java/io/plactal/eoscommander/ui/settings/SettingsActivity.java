@@ -24,9 +24,15 @@
 package io.plactal.eoscommander.ui.settings;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,6 +40,7 @@ import io.plactal.eoscommander.R;
 import io.plactal.eoscommander.ui.base.BaseActivity;
 import io.plactal.eoscommander.util.StringUtils;
 import io.plactal.eoscommander.util.UiUtils;
+import timber.log.Timber;
 
 public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     private static final int COLOR_ID_CONNECTION_OK = R.color.colorPlactal;
@@ -57,8 +64,10 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
         setToolbarConfig(R.id.toolbar, true);
 
         //btn_connect 누르면 get info 를 보여준다.
-        findViewById(R.id.btn_connect).setOnClickListener(
-                v -> mPresenter.tryConnectNodeos(((TextView)findViewById(R.id.et_host)).getText()
+        findViewById(R.id.btn_connect).setOnClickListener( v ->
+                mPresenter.tryConnectNodeos(
+                        ((AppCompatSpinner)findViewById( R.id.sp_scheme)).getSelectedItem().toString()
+                        , ((TextView)findViewById(R.id.et_host)).getText()
                         , ((TextView)findViewById(R.id.et_port)).getText())
         );
 
@@ -68,8 +77,53 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
         mChkSkipSigning = findViewById(R.id.cb_skip_signature);
         mChkSkipSigning.setOnCheckedChangeListener( ( v, checked) -> mPresenter.onChangeIgnoreSignature( checked ));
 
-
         mPresenter.attachView( this );
+    }
+
+
+
+    @Override
+    public void addConnScheme(List<String> schemes, int curSchemePosition){
+        addSpinnerData( R.id.sp_scheme, schemes, curSchemePosition, null );
+    }
+
+    @Override
+    public void addCoreSymbols( List<String> coreSymbolStrs, int curSymbolPosition) {
+        AppCompatSpinner spinner = addSpinnerData(R.id.sp_core_symbol, coreSymbolStrs, curSymbolPosition,
+                        new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.changeCoreSymbol( parent.getItemAtPosition( position).toString() );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if ( ( spinner != null ) && ( curSymbolPosition >= 0) ){
+            spinner.setSelection( curSymbolPosition );
+        }
+    }
+
+    private AppCompatSpinner addSpinnerData(int spinnerViewId, List<String> list, int curPosition,
+                                            AdapterView.OnItemSelectedListener itemSelectedListener) {
+        if ( list == null ) return null;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        AppCompatSpinner spinner = findViewById( spinnerViewId);
+        spinner.setAdapter( adapter );
+
+        if ( (curPosition >= 0) && ( curPosition < list.size()) ){
+            spinner.setSelection(curPosition);
+        }
+
+        spinner.setOnItemSelectedListener( itemSelectedListener );
+
+        return spinner;
     }
 
     @Override

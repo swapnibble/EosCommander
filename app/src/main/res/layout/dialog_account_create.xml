@@ -152,7 +152,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:theme="@style/ThemeOverlay.AppCompat.Light"
-
                     android:padding="8dp"
                     android:spinnerMode="dropdown"/> <!-- android:background="@drawable/arrow_gray" unlock 된 지갑을 선택하는 스피너 -->
             </FrameLayout>

@@ -58,7 +58,10 @@ import io.plactal.eoscommander.data.remote.model.types.TypeAccountName;
 import io.plactal.eoscommander.data.remote.model.types.TypeAsset;
 import io.plactal.eoscommander.data.remote.model.types.TypeChainId;
 import io.plactal.eoscommander.data.remote.model.types.TypePublicKey;
+import io.plactal.eoscommander.data.remote.model.types.TypeSymbol;
 import io.plactal.eoscommander.data.wallet.EosWalletManager;
+import io.plactal.eoscommander.util.Consts;
+import io.plactal.eoscommander.util.StringUtils;
 import io.plactal.eoscommander.util.Utils;
 import io.reactivex.Observable;
 
@@ -86,10 +89,22 @@ public class EoscDataManager {
         mAccountRepository = accountRepository;
         mPrefHelper = prefHelper;
 
+        // set wallet directory
         mWalletMgr.setDir( mPrefHelper.getWalletDirFile() );
         mWalletMgr.openExistingsInDir();
 
+        // set core symbol
+        TypeSymbol.setCoreSymbol( mPrefHelper.getCoreSymbolPrecision(), mPrefHelper.getCoreSymbolString());
+
         mAbiObjHouse = new HashMap<>();
+    }
+
+
+    public void updateCoreSymbol(String symbolStr, int symbolPrecision){
+        mPrefHelper.putCoreSymbolInfo( StringUtils.isEmpty(symbolStr) ? Consts.DEFAULT_SYMBOL_STRING : symbolStr
+                , symbolPrecision <= 0 ? Consts.DEFAULT_SYMBOL_PRECISION : symbolPrecision );
+
+        TypeSymbol.setCoreSymbol( mPrefHelper.getCoreSymbolPrecision(), mPrefHelper.getCoreSymbolString());
     }
 
     public EosWalletManager getWalletManager() { return mWalletMgr; }
@@ -219,7 +234,7 @@ public class EoscDataManager {
         JsonObject gsonObject = new JsonObject();
         gsonObject.addProperty( NodeosApi.GET_TRANSACTIONS_KEY, accountName);
 
-        return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_TRANSACTIONS, gsonObject);
+        return mNodeosApi.getTransactions( gsonObject);
     }
 
     public Observable<JsonObject> getServants( String accountName ) {
@@ -227,7 +242,7 @@ public class EoscDataManager {
         JsonObject gsonObject = new JsonObject();
         gsonObject.addProperty( NodeosApi.GET_SERVANTS_KEY, accountName);
 
-        return mNodeosApi.getAccountHistory( NodeosApi.ACCOUNT_HISTORY_GET_SERVANTS, gsonObject);
+        return mNodeosApi.getServants( gsonObject);
     }
 
     EosChainInfo currentBlockInfo;

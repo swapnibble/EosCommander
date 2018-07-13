@@ -35,6 +35,7 @@ import io.plactal.eoscommander.crypto.ec.EcTools;
 import io.plactal.eoscommander.crypto.ec.EosPrivateKey;
 import io.plactal.eoscommander.crypto.util.HexUtils;
 import io.plactal.eoscommander.data.remote.model.types.TypeAsset;
+import io.plactal.eoscommander.data.remote.model.types.TypeSymbol;
 
 import static org.junit.Assert.*;
 
@@ -51,7 +52,7 @@ public class SignedTransactionTest {
         assertEquals( "incorrect ref block num", 4, signedTransaction.getRefBlockNum());
         assertEquals( "incorrect ref block prefix", 0x7F9E32B9, signedTransaction.getRefBlockPrefix());
 
-        assertEquals( "asset symbol parse error", TypeAsset.CORE_SYMBOL_NAME, new TypeAsset(1).symbolName());
+        assertEquals( "asset symbol parse error", TypeSymbol.sCoreSymbolString, new TypeAsset(1).symbolName());
 
         String assetStr = "12.34567 EOS";
         TypeAsset testAsset = new TypeAsset(assetStr);
@@ -64,9 +65,9 @@ public class SignedTransactionTest {
         assetStr = "12.3456";
         TypeAsset testAsset2 = new TypeAsset(assetStr);
         assertNotNull( "fail parse SYSTEM asset from string", testAsset2);
-        assertEquals( "invalid parsed SYSTEM asset symbol", TypeAsset.CORE_SYMBOL_NAME, testAsset2.symbolName());
+        assertEquals( "invalid parsed SYSTEM asset symbol", TypeSymbol.sCoreSymbolString, testAsset2.symbolName());
         assertEquals( "invalid parsed SYSTEM asset decimals", 4, testAsset2.decimals());
-        assertEquals( "invalid parsed SYSTEM asset", assetStr + " " + TypeAsset.CORE_SYMBOL_NAME, testAsset2.toString());
+        assertEquals( "invalid parsed SYSTEM asset", assetStr + " " + TypeSymbol.sCoreSymbolString, testAsset2.toString());
     }
 
 
