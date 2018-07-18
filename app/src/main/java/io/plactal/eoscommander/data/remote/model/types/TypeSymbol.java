@@ -53,7 +53,7 @@ public class TypeSymbol implements EosType.Packer {
         }
 
         for( int index = 0; index < str.length(); index++){
-            int value = (int) str.charAt( index );
+            long value = (long) str.charAt( index );
 
             // check range 'A' to 'Z'
             if ( (value < 65) || ( value > 90)) {
@@ -71,7 +71,7 @@ public class TypeSymbol implements EosType.Packer {
     public static TypeSymbol fromString( String str ) {
 
         String[] split = str.trim().split(",");
-        if ( ( split == null) || (split.length != 2 ) ){
+        if ( split.length != 2 ){
             throw new IllegalArgumentException("invalid symbol string: " + str );
         }
 
@@ -127,7 +127,7 @@ public class TypeSymbol implements EosType.Packer {
         long v = mValue;
         v >>= 8;
 
-        StringBuffer result = new StringBuffer(8);
+        StringBuilder result = new StringBuilder(8);
         while ( v > 0){
             result.append((char) ( v & 0xFF));
             v >>= 8;

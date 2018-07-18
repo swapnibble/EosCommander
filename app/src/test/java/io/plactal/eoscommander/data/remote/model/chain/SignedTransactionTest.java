@@ -68,6 +68,11 @@ public class SignedTransactionTest {
         assertEquals( "invalid parsed SYSTEM asset symbol", TypeSymbol.sCoreSymbolString, testAsset2.symbolName());
         assertEquals( "invalid parsed SYSTEM asset decimals", 4, testAsset2.decimals());
         assertEquals( "invalid parsed SYSTEM asset", assetStr + " " + TypeSymbol.sCoreSymbolString, testAsset2.toString());
+
+
+        TypeAsset testAsset3 = new TypeAsset("0.0100 EOSDAC");
+        assertEquals( "invalid parsed asset symbol", "EOSDAC", testAsset3.symbolName());
+        assertEquals( "invalid parsed precision", 4, testAsset3.decimals());
     }
 
 
