@@ -229,12 +229,14 @@ public class EoscDataManager {
 
 
 
-    public Observable<JsonObject> getTransactions(String accountName ) {
+    public Observable<JsonObject> getActions(String accountName, int pos, int offset  ) {
 
         JsonObject gsonObject = new JsonObject();
-        gsonObject.addProperty( NodeosApi.GET_TRANSACTIONS_KEY, accountName);
+        gsonObject.addProperty( "account_name", accountName);
+        gsonObject.addProperty( "pos", pos);
+        gsonObject.addProperty( "offset", offset);
 
-        return mNodeosApi.getTransactions( gsonObject);
+        return mNodeosApi.getActions( gsonObject);
     }
 
     public Observable<JsonObject> getServants( String accountName ) {

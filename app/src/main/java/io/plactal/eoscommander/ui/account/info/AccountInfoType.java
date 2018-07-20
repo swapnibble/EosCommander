@@ -33,9 +33,10 @@ import io.plactal.eoscommander.util.StringUtils;
  */
 
 public enum AccountInfoType {
-    REGISTRATION( R.string.get_account), // eosc get account <account>
-    TRANSACTIONS(R.string.get_transactions), // eosc get transaction <account>
-    SERVANTS(R.string.get_servants) ; // eosc get servants <account>
+    REGISTRATION( R.string.get_account), // cleos get account <account>
+    TRANSACTIONS(R.string.get_transactions), // cleos get transaction <account>
+    SERVANTS(R.string.get_servants), // cleos get servants <account>
+    ACTIONS(R.string.get_actions);
 
     private final int mTitleRscId;
 

@@ -48,7 +48,7 @@
         android:text="@string/get_account"/>
 
     <io.plactal.eoscommander.ui.widget.TintVtDrTextView
-        android:id="@+id/btn_get_transaction"
+        android:id="@+id/btn_get_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -60,7 +60,7 @@
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
-        android:text="@string/get_transactions"/>
+        android:text="@string/get_actions"/>
 
     <io.plactal.eoscommander.ui.widget.TintVtDrTextView
         android:id="@+id/btn_get_servants"

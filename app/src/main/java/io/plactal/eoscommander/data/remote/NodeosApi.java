@@ -88,16 +88,8 @@ public interface NodeosApi {
     @POST("/v1/history/get_controlled_accounts")
     Observable<JsonObject> getServants(@Body JsonObject body);
 
-    @POST("/v1/history/get_transactions")
-    Observable<JsonObject> getTransactions( @Body JsonObject body);
+    @POST("/v1/history/get_actions")
+    Observable<JsonObject> getActions(@Body JsonObject body);
 
-
-
-//    String ACCOUNT_HISTORY_GET_TRANSACTIONS = "get_transactions" ;
-    String GET_TRANSACTIONS_KEY = "account_name";
-//
-//    String ACCOUNT_HISTORY_GET_SERVANTS = "get_controlled_accounts" ;
     String GET_SERVANTS_KEY = "controlling_account";
-//
-//    String ACCOUNT_HISTORY_GET_KEY_ACCOUNTS = "get_key_accounts";
 }

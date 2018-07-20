@@ -135,4 +135,7 @@
     <string name="buy_ram_eos">amount of EOS to buy ram for new account</string>
 
     <string name="core_symbol">Core asset symbol</string>
+    <string name="get_actions">Get actions</string>
+    <string name="position">Position</string>
+    <string name="offset">Offset</string>
 </resources>

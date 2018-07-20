@@ -80,7 +80,7 @@ public class AccountMainFragment extends BaseFragment
         view.findViewById(R.id.btn_get_account).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.REGISTRATION));
 
         // eosc get transaction <account>
-        view.findViewById(R.id.btn_get_transaction).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.TRANSACTIONS));
+        view.findViewById(R.id.btn_get_actions).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.ACTIONS));
 
         // eosc get servants <account>
         view.findViewById(R.id.btn_get_servants).setOnClickListener(v -> openInputAccountDialog( AccountInfoType.SERVANTS));
@@ -102,7 +102,7 @@ public class AccountMainFragment extends BaseFragment
 
     private void openInputAccountDialog( AccountInfoType infoType ) {
         InputAccountDialog.newInstance( infoType)
-                .setCallback( (account, retInfoType) -> mPresenter.loadAccountInfo( account, retInfoType ) )
+                .setCallback( mPresenter::loadAccountInfo)
                 .show(getChildFragmentManager()) ;
     }
 

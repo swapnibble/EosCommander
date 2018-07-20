@@ -40,6 +40,7 @@ import io.plactal.eoscommander.di.component.ActivityComponent;
 import io.plactal.eoscommander.ui.base.BaseDialog;
 import io.plactal.eoscommander.util.RefValue;
 import io.plactal.eoscommander.util.UiUtils;
+import io.plactal.eoscommander.util.Utils;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -50,15 +51,9 @@ public class InputAccountDialog extends BaseDialog {
     private static final String TAG = InputAccountDialog.class.getSimpleName();
     private static final String ARG_INFO_TYPE = "type.for";
 
-    @Inject
-    EoscDataManager mDataManager;
-
     private AccountInfoType mAccountInfoType = AccountInfoType.REGISTRATION;
     private Callback mCallback;
     private AutoCompleteTextView mEtAccount;
-    private CompositeDisposable mCompositeDisposable;
-
-    protected RefValue<Long> mAccountHistoryVersion = new RefValue<>(0L);
 
     public static InputAccountDialog newInstance(AccountInfoType infoType ) {
         InputAccountDialog fragment = new InputAccountDialog();
@@ -80,8 +75,6 @@ public class InputAccountDialog extends BaseDialog {
         Bundle args = getArguments();
         mAccountInfoType = AccountInfoType.safeValueOf( args.getString( ARG_INFO_TYPE));
 
-        mCompositeDisposable = new CompositeDisposable();
-
         View view = inflater.inflate(R.layout.dialog_input_account, container, false);
 
         ActivityComponent component = getActivityComponent();
@@ -94,6 +87,15 @@ public class InputAccountDialog extends BaseDialog {
 
     @Override
     protected void setUpView(View view) {
+        if ( AccountInfoType.ACTIONS.equals( mAccountInfoType ) ) {
+            ((AutoCompleteTextView)view.findViewById(R.id.et_pos)).setText("-1");
+            ((AutoCompleteTextView)view.findViewById(R.id.et_offset)).setText("-20");
+        }
+        else {
+            view.findViewById(R.id.et_pos).setVisibility( View.GONE );
+            view.findViewById(R.id.et_offset).setVisibility( View.GONE );
+        }
+
         // title
         ((TextView)view.findViewById( R.id.tv_title)).setText( mAccountInfoType.getTitleId());
 
@@ -104,7 +106,18 @@ public class InputAccountDialog extends BaseDialog {
 
         // ok
         view.findViewById( R.id.btn_ok ).setOnClickListener( v -> {
-            if ( null != mCallback) mCallback.onAccountEntered( mEtAccount.getText().toString(), mAccountInfoType);
+
+            if ( null != mCallback) {
+                if ( AccountInfoType.ACTIONS.equals( mAccountInfoType ) ) {
+                    mCallback.onAccountEntered(mEtAccount.getText().toString()
+                            , Utils.parseIntSafely( ((AutoCompleteTextView)view.findViewById(R.id.et_pos)).getText().toString(), -1 )
+                            , Utils.parseIntSafely( ((AutoCompleteTextView)view.findViewById(R.id.et_offset)).getText().toString(), -20 )
+                            , mAccountInfoType);
+                }
+                else {
+                    mCallback.onAccountEntered(mEtAccount.getText().toString(), -1, -1, mAccountInfoType);
+                }
+            }
 
             dismiss();
         });
@@ -113,17 +126,18 @@ public class InputAccountDialog extends BaseDialog {
         view.findViewById( R.id.btn_cancel ).setOnClickListener( v -> dismiss());
     }
 
+
+
     public void show(FragmentManager fragmentManager) {
         super.show(fragmentManager, TAG );
     }
 
     @Override
     public void onDestroyView() {
-        mCompositeDisposable.clear();
         super.onDestroyView();
     }
 
     public interface Callback {
-        void onAccountEntered( String account, AccountInfoType infoType );
+        void onAccountEntered( String account, int position, int offset, AccountInfoType infoType );
     }
 }

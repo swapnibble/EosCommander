@@ -60,7 +60,7 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
         getMvpView().openCreateAccountDialog();
     }
 
-    public void loadAccountInfo(String account, AccountInfoType infoType ){
+    public void loadAccountInfo(String account, int position, int offset, AccountInfoType infoType ){
         if (StringUtils.isEmpty(account)) {
             return;
         }
@@ -71,11 +71,15 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
                 break;
 
             case TRANSACTIONS:
-                getTransactions( account );
+                getMvpView().showToast("Not implemented, coming soon.");
                 break;
 
             case SERVANTS:
                 getServents( account );
+                break;
+
+            case ACTIONS:
+                getActions( account, position, offset );
                 break;
         }
     }
@@ -112,11 +116,11 @@ public class AccountMainPresenter extends BasePresenter<AccountMainMvpView> {
         );
     }
 
-    private void getTransactions( String account ) {
+    private void getActions(String account, int pos, int offset ) {
         getMvpView().showLoading( true );
 
         addDisposable( mDataManager
-                .getTransactions( account )
+                .getActions( account, pos, offset )
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn( getSchedulerProvider().ui())
                 .subscribeWith( new RxCallbackWrapper<JsonObject>( this) {
