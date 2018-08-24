@@ -32,7 +32,7 @@ import io.plactal.eoscommander.util.StringUtils;
 public class TypeAccountName extends TypeName {
     private static final int MAX_ACCOUNT_NAME_LEN = 12;
 
-    private static final char CHAR_NOT_ALLOWED = '.';
+    //private static final char CHAR_NOT_ALLOWED = '.';
 
     public TypeAccountName(String name) {
         super(name);
@@ -42,9 +42,9 @@ public class TypeAccountName extends TypeName {
                 throw new IllegalArgumentException("account name can only be 12 chars long: " + name) ; // changed from dawn3
             }
 
-            if ( (name.indexOf( CHAR_NOT_ALLOWED) >= 0) && ! name.startsWith("eosio.") ){
-                throw new IllegalArgumentException("account name must not contain '.': " + name);
-            }
+//            if ( (name.indexOf( CHAR_NOT_ALLOWED) >= 0) && ! name.startsWith("eosio.") ){
+//                throw new IllegalArgumentException("account name must not contain '.': " + name);
+//            }
         }
     }
 }
