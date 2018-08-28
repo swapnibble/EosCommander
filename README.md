@@ -4,12 +4,13 @@
   <img src="https://github.com/playerone-id/files/blob/master/eos_commander/eosc_icon.png?raw=true">
 </p>
 
-EOS commander is an Android client for EOSIO DApp developer. 
+EOS commander is an Android client for EOSIO DApp developer.  
 It includes functions of wallet. Developers can test wallet, account, transaction, contract, etc. on the Android device.
   
 EOS Commander is designed with MVP pattern.  
-You can use "io.plactal.eoscommander.data" and "io.plactal.eoscommander.crypto" package to any JAVA projects.    
+You can use "data" and "crypto" package to any JAVA projects.    
  
+### PlayerOne is new name of Plactal.
 
 # Table of contents
 - [Getting Started](#getting_started)
@@ -19,7 +20,7 @@ You can use "io.plactal.eoscommander.data" and "io.plactal.eoscommander.crypto" 
 - [Transfer](#transfer)
 - [Currency](#currency)
 - [Push](#push)
-- [Get table](#get_tabel)
+- [Get table](#get_table)
 - [Apps using EOS Commander code](#using_code)
 - [About PlayerOne](#about_playerone)
 - [Contact](#contact) 
@@ -121,9 +122,9 @@ Please [ping](mailto:eric.song@playerone.id) me or send a pull request if you wo
 
 
 <a name="about_playerone"></a>
-## About playerone
-Plactal has been renamed to PlayerOne.
-[PlayerOne](https://playerone.id) is a decentralized gamer identity protocol. And runs on EOSIO. 
+## About PlayerOne
+
+[PlayerOne](https://playerone.id) is a decentralized gamer identity protocol. 
 
 <a name="contact"></a>
 ## Contact
