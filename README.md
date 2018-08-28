@@ -1,7 +1,7 @@
 # EOS commander for developer 
 
 <p align="center">
-  <img src="https://github.com/plactal/files/blob/master/eos_commander/eosc_icon.png?raw=true">
+  <img src="https://github.com/playerone-id/files/blob/master/eos_commander/eosc_icon.png?raw=true">
 </p>
 
 EOS commander is an Android client for EOSIO DApp developer. 
@@ -21,7 +21,7 @@ You can use "io.plactal.eoscommander.data" and "io.plactal.eoscommander.crypto" 
 - [Push](#push)
 - [Get table](#get_tabel)
 - [Apps using EOS Commander code](#using_code)
-- [About PLACTAL](#about_plactal)
+- [About PlayerOne](#about_playerone)
 - [Contact](#contact) 
 - [License](#license)
 
@@ -42,7 +42,7 @@ See [EOSIO github](https://github.com/EOSIO/eos).
 ### Build
 On the console type:
 
-	git clone https://github.com/plactal/eoscommander.git
+	git clone https://github.com/playerone-id/eoscommander.git
 
 Open in Android studio 3.0 or later.
 
@@ -50,7 +50,7 @@ Open in Android studio 3.0 or later.
   
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)
 
-Or download apk : [link](https://github.com/plactal/files/blob/master/eos_commander/EosCommander-v2.4.0-release.apk?raw=true)  
+Or download apk : [link](https://github.com/playerone-id/files/blob/master/eos_commander/EosCommander-v2.4.0-release.apk?raw=true)  
 SHA1 : 07102dcf7677a4fec36dc068f8beb8a5bcea8933  
 SHA256: fca9e5611ea6537565d54c0df21b27d592388413da5c5a03b48d08863598fc34   
 
@@ -115,23 +115,24 @@ Lists the contract table.
 
 <a name="using_code"></a>
 ## Apps using EOS Commander source
-Please [ping](mailto:eric.song@plactal.io) me or send a pull request if you would like to be added here.  
+Please [ping](mailto:eric.song@playerone.id) me or send a pull request if you would like to be added here.  
 
 [PocketEOS-Android]( https://github.com/OracleChain/PocketEOS-Android ) by orcalechain.io
 
 
-<a name="about_plactal"></a>
-## About plactal.io
-[PLACTAL](https://plactal.io) is a platform for tokenizing billions of gamers's experience. And runs on EOS network as smart contract. PLACTAL aims to dramatically improve ad efficiency by eliminating middlemen intervention and connecting game devs and gamers directly based on game data.
+<a name="about_playerone"></a>
+## About playerone
+Plactal has been renamed to PlayerOne.
+[PlayerOne](https://playerone.id) is a decentralized gamer identity protocol. And runs on EOSIO. 
 
 <a name="contact"></a>
 ## Contact
-eric.song@plactal.io
+eric.song@playerone.id
   
 <a name="lincense"></a>
 ## License
 
-    Copyright (c) 2017-2018 PLACTAL.
+    Copyright (c) 2017-2018 PlayerOne.
 
     The MIT License
 
