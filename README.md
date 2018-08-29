@@ -51,9 +51,7 @@ Open in Android studio 3.0 or later.
   
 You can install the latest version from the Play store at: [link](https://play.google.com/store/apps/details?id=io.plactal.eoscommander)
 
-Or download apk : [link](https://github.com/playerone-id/files/blob/master/eos_commander/EosCommander-v2.4.0-release.apk?raw=true)  
-SHA1 : 07102dcf7677a4fec36dc068f8beb8a5bcea8933  
-SHA256: fca9e5611ea6537565d54c0df21b27d592388413da5c5a03b48d08863598fc34   
+Or download apk : [releases](https://github.com/playerone-id/EosCommander/releases)  
 
 
 
