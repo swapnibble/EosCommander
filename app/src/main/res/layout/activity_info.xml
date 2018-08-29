@@ -30,16 +30,16 @@
         android:text="@string/app_title_with_ver_fmt"/>
 
     <ImageView
-        android:id="@+id/iv_plactal_logo"
+        android:id="@+id/iv_player_one_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:scaleType="fitXY"
         android:layout_gravity="center"
         android:tint="@color/colorWhite"
-        app:srcCompat="@drawable/ic_plactal_logo" />
+        app:srcCompat="@drawable/ic_playerone_logo" />
 
     <TextView
-        android:id="@+id/iv_plactal_logo_txt"
+        android:id="@+id/iv_player_one_logo_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10sp"
@@ -47,10 +47,10 @@
         android:paddingBottom="48dp"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:text="@string/plactal_io"/>
+        android:text="@string/player_one"/>
 
     <TextView
-        android:id="@+id/iv_plactal_web"
+        android:id="@+id/iv_player_one_web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -60,10 +60,10 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_plactal_web"/>
+        android:text="@string/info_player_one_web"/>
 
     <TextView
-        android:id="@+id/iv_plactal_github"
+        android:id="@+id/iv_player_one_github"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_plactal_github"/>
+        android:text="@string/info_player_one_github"/>
 
     <TextView
         android:id="@+id/iv_plactal_telegram"
@@ -86,10 +86,10 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_plactal_telegram"/>
+        android:text="@string/info_player_one_telegram"/>
 
     <TextView
-        android:id="@+id/iv_plactal_facebook"
+        android:id="@+id/iv_player_one_facebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -99,6 +99,6 @@
         android:gravity="center"
         android:autoLink="web"
         android:textColorLink="@color/colorWhite"
-        android:text="@string/info_plactal_facebook"/>
+        android:text="@string/info_player_one_facebook"/>
 
 </LinearLayout>

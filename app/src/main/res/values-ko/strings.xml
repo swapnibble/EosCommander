@@ -16,7 +16,7 @@
     <string name="desc_for_connect_result">연결하면, EOS 네트워크의 상태 정보가 표시됩니다.</string>
 
     <string name="app_title_with_ver_fmt">개발자용 EOS Commander %s\n\nby</string>
-    <string name="plactal_io">plactal.io</string>
+    <string name="player_one">PlayerOne</string>
 
     <string name="input_account">계정 입력</string>
     <string name="create_account">계정 생성</string>

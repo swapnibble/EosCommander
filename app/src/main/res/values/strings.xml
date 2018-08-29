@@ -16,12 +16,12 @@
     <string name="desc_for_connect_result">EOS network information will be displayed here when you connect.</string>
 
     <string name="app_title_with_ver_fmt">EOS Commander %s for developers\n\nby</string>
-    <string name="plactal_io">plactal.io</string>
+    <string name="player_one">PlayerOne</string>
 
-    <string name="info_plactal_web">Web\nhttps://plactal.io</string>
-    <string name="info_plactal_github">Github\nhttps://github.com/plactal</string>
-    <string name="info_plactal_telegram">Telegram\nhttps://t.me/plactal_io</string>
-    <string name="info_plactal_facebook">Facebook\nhttps://www.facebook.com/plactal.io</string>
+    <string name="info_player_one_web">Web\nhttps://playerone.id</string>
+    <string name="info_player_one_github">Github\nhttps://github.com/playerone-id</string>
+    <string name="info_player_one_telegram">Telegram\nhttps://t.me/playerone_id</string>
+    <string name="info_player_one_facebook">Facebook\nhttps://www.facebook.com/playerone.id</string>
 
     <string name="input_account">Input account</string>
     <string name="account_info_title_fmt">%s: %s</string>

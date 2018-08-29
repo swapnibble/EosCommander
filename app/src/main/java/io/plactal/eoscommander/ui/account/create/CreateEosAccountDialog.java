@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 PLACTAL.
+ * Copyright (c) 2017-2018 PlayerOne.
  *
  * The MIT License
  *
