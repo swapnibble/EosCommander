@@ -8,11 +8,18 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GetCodeRequest {
-    @SerializedName("account_name")
     @Expose
-    private String name;
+    private String account_name;
+
+    @Expose
+    private boolean code_as_wasm ;
 
     public GetCodeRequest(String accountName){
-        name = accountName;
+        this(accountName, true);
+    }
+
+    public GetCodeRequest(String accountName, boolean code_as_wasm){
+        this.account_name = accountName;
+        this.code_as_wasm = code_as_wasm;
     }
 }
