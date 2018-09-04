@@ -39,7 +39,7 @@ public class EcTest {
     }
 
     private void recover_by_paramType( int curveParamType, String msgOnFailure ) {
-        String payload = "PLACTAL";
+        String payload = "PlayerOne";
         Sha256 digest = Sha256.from( payload.getBytes());
         EosPrivateKey privateKey = new EosPrivateKey(curveParamType);
         EosPublicKey  publicKey  = privateKey.getPublicKey();
