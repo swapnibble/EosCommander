@@ -138,4 +138,7 @@
     <string name="get_actions">Get actions</string>
     <string name="position">Position</string>
     <string name="offset">Offset</string>
+
+    <string name="symbol_name">symbol name</string>
+    <string name="decimal">decimal</string>
 </resources>

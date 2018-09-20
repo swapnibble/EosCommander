@@ -154,6 +154,8 @@ public class AbiViewBuilder implements AbiViewCallback {
 
         // public key : hex string, len 33 제한
         mBuiltinTypeToVH.put( "public_key", AbiStringViewHolder.class);
+
+        mBuiltinTypeToVH.put( "symbol", AbiSymbolViewHolder.class);
     }
 
 
@@ -300,7 +302,7 @@ public class AbiViewBuilder implements AbiViewCallback {
                 abiViewHolder.attachContainerToParent(parentView);
             }
             else {
-                parentView.addView( getErrorMsgTextView( parentView, "Error creating view: "+ abiFiled.name));
+                parentView.addView( getErrorMsgTextView( parentView, "Error creating view: "+ abiFiled.name + ", " + abiFiled.type));
             }
         }
     }
