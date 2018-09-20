@@ -27,6 +27,7 @@ package io.plactal.eoscommander.data.remote;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import io.plactal.eoscommander.data.remote.model.api.GetAbiResponse;
 import io.plactal.eoscommander.data.remote.model.api.GetBalanceRequest;
 import io.plactal.eoscommander.data.remote.model.api.GetRequestForCurrency;
 import io.plactal.eoscommander.data.remote.model.api.JsonToBinRequest;
@@ -84,6 +85,9 @@ public interface NodeosApi {
 
     @POST("/v1/chain/get_code")
     Observable<GetCodeResponse> getCode(@Body GetCodeRequest body);
+
+    @POST("/v1/chain/get_abi")
+    Observable<GetAbiResponse> getAbi(@Body GetCodeRequest body);
 
     @POST("/v1/history/get_controlled_accounts")
     Observable<JsonObject> getServants(@Body JsonObject body);

@@ -344,6 +344,12 @@ public class EoscDataManager {
                         .create().fromJson(result.getAbi(), EosAbiMain.class) );
     }
 
+    public Observable<EosAbiMain> getAbi( String contract ) {
+        return mNodeosApi.getAbi( new GetCodeRequest(contract))
+                .map( result -> new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                        .create().fromJson(result.getAbi(), EosAbiMain.class) );
+    }
+
     public Observable<EosAbiMain> getAbiMainFromJson( String jsonStr ) {
         return Observable.just( new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
                 .create().fromJson(jsonStr, EosAbiMain.class));

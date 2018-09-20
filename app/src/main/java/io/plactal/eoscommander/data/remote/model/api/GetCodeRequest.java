@@ -12,7 +12,7 @@ public class GetCodeRequest {
     private String account_name;
 
     @Expose
-    private boolean code_as_wasm ;
+    private boolean code_as_wasm ; // not used when get_abi
 
     public GetCodeRequest(String accountName){
         this(accountName, true);
