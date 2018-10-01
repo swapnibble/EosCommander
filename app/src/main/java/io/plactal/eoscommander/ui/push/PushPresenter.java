@@ -65,7 +65,7 @@ public class PushPresenter extends BasePresenter<PushMvpView> {
 
     public void onGetAbiClicked( String contract){
         getMvpView().showLoading( true );
-        addDisposable( mDataManager.getCodeAbi( contract )
+        addDisposable( mDataManager.getAbi( contract )
                         .doOnNext( abi -> mDataManager.addAccountHistory( contract))
                         .subscribeOn( getSchedulerProvider().io())
                         .observeOn( getSchedulerProvider().ui())

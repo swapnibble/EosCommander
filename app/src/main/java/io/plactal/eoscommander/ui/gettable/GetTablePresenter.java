@@ -72,7 +72,7 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
 
         getMvpView().showLoading( true );
 
-        addDisposable( mDataManager.getCodeAbi( contract )
+        addDisposable( mDataManager.getAbi( contract )
                 .map( abi -> {
                     mDataManager.addAccountHistory( contract);
                     return getTableNames( abi.tables);
