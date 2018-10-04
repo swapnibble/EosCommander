@@ -23,7 +23,6 @@ import io.plactal.eoscommander.util.StringUtils;
 import io.plactal.eoscommander.util.rx.EoscSchedulerProvider;
 import io.plactal.eoscommander.util.rx.SchedulerProvider;
 import io.reactivex.Completable;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2018-01-15.

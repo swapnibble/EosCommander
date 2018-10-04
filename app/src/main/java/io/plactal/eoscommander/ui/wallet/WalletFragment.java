@@ -24,6 +24,7 @@
 package io.plactal.eoscommander.ui.wallet;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -149,6 +150,22 @@ public class WalletFragment extends BaseFragment
     @Override
     public void onClickChangeLockStatus(String walletName){
         mPresenter.changeLockStatus( walletName );
+    }
+
+    @Override
+    public void onClickDelete(String walletName) {
+        mPresenter.onRequestDeleteWallet( walletName );
+    }
+
+    @Override
+    public void showDeleteConfirm(String walletName, Runnable runnableOnOk) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle( R.string.delete_confirm)
+                .setMessage( String.format( getContext().getString(R.string.ru_sure_delete), walletName))
+                .setPositiveButton(android.R.string.yes, ( dlg, btnId) -> runnableOnOk.run())
+                .setNegativeButton(android.R.string.no, null);
+
+        alertDialog.create().show();
     }
 
 

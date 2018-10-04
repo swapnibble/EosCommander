@@ -34,7 +34,6 @@ import io.plactal.eoscommander.ui.base.RxCallbackWrapper;
 import io.plactal.eoscommander.util.Consts;
 import io.plactal.eoscommander.util.StringUtils;
 import io.reactivex.Observable;
-import timber.log.Timber;
 
 /**
  * Created by swapnibble on 2017-11-08.
@@ -179,5 +178,30 @@ public class WalletPresenter extends BasePresenter<WalletMvpView> {
         mDataManager.getPreferenceHelper().putWalletPassword( walletName, password );
 
         loadWallets();
+    }
+
+    public void onRequestDeleteWallet( String walletName ) {
+        if ( Consts.DEFAULT_WALLET_NAME.equals( walletName) ) {
+            return;
+        }
+
+        if ( mDataManager.getWalletManager().isLocked(walletName) ) {
+            getMvpView().showDeleteConfirm( walletName, () -> {
+                try {
+
+                    getMvpView().showToast( mDataManager.getWalletManager().deleteFile(walletName) ?
+                            R.string.deleted : R.string.error );
+                }
+                catch (Exception e) {
+                    getMvpView().showToast( e.getMessage() );
+                }
+
+                loadWallets();
+            });
+
+        }
+        else {
+            getMvpView().showToast( R.string.cannot_del_wallet_unlocked);
+        }
     }
 }

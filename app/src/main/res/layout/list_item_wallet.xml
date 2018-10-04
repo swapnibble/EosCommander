@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_marginStart="16dp"
@@ -39,6 +40,7 @@
         android:padding="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/tv_wallet_name"
         android:background="@drawable/round_box_btn"
         android:textColor="@color/colorDarkGray"
@@ -46,4 +48,17 @@
         android:textStyle="bold"
         android:textSize="12sp"
         android:text="@string/import_key" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="18dp"
+        android:padding="4dp"
+        android:layout_below="@id/tv_wallet_name"
+        android:layout_toRightOf="@id/btn_import"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_delete_white_24px"
+        android:tint="@color/colorPlactal"/>
 </RelativeLayout>

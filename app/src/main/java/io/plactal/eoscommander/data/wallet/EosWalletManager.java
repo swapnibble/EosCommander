@@ -324,6 +324,28 @@ public class EosWalletManager {
         eosWallet.saveFile(null);
     }
 
+    public boolean deleteFile( String walletName ) {
+        if (! mWallets.containsKey(walletName) ) {
+            throw new IllegalArgumentException("Wallet not found: " + walletName);
+        }
+
+        if ( Consts.DEFAULT_WALLET_NAME.equals( walletName )) {
+            throw new IllegalArgumentException("You cannot delete default wallet!");
+        }
+
+        EosWallet eosWallet = mWallets.get( walletName );
+        if ( ! eosWallet.isLocked() ) {
+            throw new IllegalStateException("Wallet is unlocked: " + walletName);
+        }
+
+        if ( eosWallet.deleteFile( null ) ) {
+            mWallets.remove(walletName);
+            return true;
+        }
+
+        return false;
+    }
+
     public SignedTransaction signTransaction(final SignedTransaction txn,
                final List<EosPublicKey> keys, final TypeChainId id) throws IllegalStateException{
 

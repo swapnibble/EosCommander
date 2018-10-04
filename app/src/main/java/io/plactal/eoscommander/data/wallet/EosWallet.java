@@ -23,6 +23,7 @@
  */
 package io.plactal.eoscommander.data.wallet;
 
+
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -221,6 +222,18 @@ public class EosWallet implements EosType.Packer, EosType.Unpacker {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean deleteFile( String filePath ) {
+        if ( StringUtils.isEmpty( filePath )) {
+            if ( StringUtils.isEmpty( mFilePath )) {
+                return false;
+            }
+
+            filePath = mFilePath;
+        }
+
+        return new File( filePath ).delete();
     }
 
 

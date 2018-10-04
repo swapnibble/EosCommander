@@ -27,12 +27,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import io.plactal.eoscommander.R;
 import io.plactal.eoscommander.data.wallet.EosWallet;
+import io.plactal.eoscommander.util.Consts;
 
 /**
  * Created by swapnibble on 2017-11-13.
@@ -59,6 +61,8 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
 
         EosWallet.Status walletStatus = mWalletList.get( position );
 
+        holder.ivDelete.setVisibility( Consts.DEFAULT_WALLET_NAME.equals( walletStatus.walletName ) ? View.GONE : View.VISIBLE );
+
         holder.tvWalletName.setText( walletStatus.walletName );
         holder.tvLockStatus.setText( walletStatus.locked ? R.string.locked : R.string.unlocked );
         holder.tvLockStatus.setTag( walletStatus.locked );
@@ -84,7 +88,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     class WalletVH extends RecyclerView.ViewHolder {
         TextView tvWalletName;
         TextView tvLockStatus;
-
+        ImageView ivDelete;
 
         public WalletVH( View itemView) {
             super(itemView);
@@ -93,6 +97,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
 
             tvWalletName = itemView.findViewById( R.id.tv_wallet_name);
             tvLockStatus = itemView.findViewById( R.id.tv_lock_status );
+            ivDelete     = itemView.findViewById( R.id.iv_delete );
 
             // import
             itemView.findViewById( R.id.btn_import)
@@ -101,10 +106,16 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
                     });
 
             // lock/unlock
-            itemView.findViewById( R.id.tv_lock_status)
-                    .setOnClickListener( v -> {
+            tvLockStatus.setOnClickListener( v -> {
                         if ( null != mCallback) {
                             mCallback.onClickChangeLockStatus( tvWalletName.getText().toString());
+                        }
+                    });
+
+            // delete
+            ivDelete.setOnClickListener( v -> {
+                        if ( null != mCallback) {
+                            mCallback.onClickDelete( tvWalletName.getText().toString());
                         }
                     });
         }
@@ -114,5 +125,6 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     interface ItemCallback {
         void onClickImportKey(String walletName);
         void onClickChangeLockStatus(String walletName);
+        void onClickDelete( String walletName );
     }
 }

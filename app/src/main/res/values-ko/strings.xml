@@ -94,7 +94,7 @@
     <string name="no_keys">키가 없습니다!</string>
 
     <string name="delete_confirm">삭제 확인</string>
-    <string name="ru_sure_delete">"계정: '%s' 의 입력 기록을 삭제할까요?"</string>
+    <string name="ru_sure_delete">"'%s' 을 삭제할까요?"</string>
     <string name="deleted">삭제되었습니다.</string>
 
     <string name="get_abi">ABI 가져오기</string>

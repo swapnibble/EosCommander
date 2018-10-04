@@ -45,4 +45,6 @@ public interface WalletMvpView extends MvpView {
     void getKeyToImport( String walletName);
 
     void showCreateDefaultWalletButton( boolean show );
+
+    void showDeleteConfirm(String walletName, Runnable runnableOnOk);
 }

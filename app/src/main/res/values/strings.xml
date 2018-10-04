@@ -50,7 +50,7 @@
     <string name="import_json">Import json</string>
     <string name="import_msg_json">Import message json file and edit.</string>
     <string name="push_message_hint">Contract message\n(Create message from ui or json file.)</string>
-    <string name="view_keys_unlocked_wallet">Keys in unlocked wallets</string>
+    <string name="view_keys_unlocked_wallet">Keys in wallets unlocked</string>
     <string name="wallet_list">Wallet list</string>
     <string name="get_account">Get account</string>
     <string name="unlocked">Unlocked</string>
@@ -101,7 +101,7 @@
     <string name="no_keys">No keys!</string>
 
     <string name="delete_confirm">Delete confirmation</string>
-    <string name="ru_sure_delete">"Are you sure to delete history: '%s' ?"</string>
+    <string name="ru_sure_delete">"Are you sure to delete : '%s' ?"</string>
     <string name="deleted">Deleted</string>
 
     <string name="get_abi">Get abi</string>
@@ -141,4 +141,6 @@
 
     <string name="symbol_name">symbol name</string>
     <string name="decimal">decimal</string>
+
+    <string name="cannot_del_wallet_unlocked">You cannot delete wallet unlocked!</string>
 </resources>
