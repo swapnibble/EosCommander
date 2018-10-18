@@ -88,7 +88,7 @@ public class TypeSymbol implements EosType.Packer {
             int value = (int) name.charAt( index );
 
             // check range 'A' to 'Z'
-            if ( (value < 97) || ( value > 122)) {
+            if ( (value < 65) || ( value > 90)) {
                 return false;
             }
         }
