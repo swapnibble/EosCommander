@@ -28,6 +28,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -54,6 +55,10 @@ public class GetTableFragment extends BaseFragment implements GetTableMvpView {
 
     private AppCompatSpinner        mTableNameSpinner;
     private ArrayAdapter<String>    mTableNameAdapter;
+
+    private AppCompatSpinner    mIndexPosSpinner;
+    private AppCompatSpinner    mIndexTypeSpinner;
+    private AppCompatSpinner    mIndexEncodingSpinner;
 
     private View mRootView;
 
@@ -93,6 +98,63 @@ public class GetTableFragment extends BaseFragment implements GetTableMvpView {
         mTableNameSpinner = view.findViewById( R.id.sp_table_list);
 
         setupAccountHistory();
+
+        mPresenter.onFinishedSetupView();
+    }
+
+    @Override
+    public void populateKeyInfo( List<String> posNames, List<String> types, List<String> typeEncodings) {
+
+        // index position
+        mIndexPosSpinner = setDropDownList( R.id.sp_key_pos_list, posNames, null );
+
+
+        AdapterView.OnItemSelectedListener typeOrEncodingSelectionListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.onIndexTypeOrEncodingSelected( mIndexTypeSpinner.getSelectedItemPosition(), mIndexEncodingSpinner.getSelectedItemPosition());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+
+        // index type
+        mIndexTypeSpinner = setDropDownList(R.id.sp_key_type_list, types, typeOrEncodingSelectionListener );
+
+        // index encoding
+        mIndexEncodingSpinner = setDropDownList( R.id.sp_key_type_encode_list, typeEncodings, typeOrEncodingSelectionListener );
+
+
+        // initialize spinner selection.
+        if ( mIndexPosSpinner != null ) mIndexPosSpinner.setSelection(0);
+
+        if ( mIndexTypeSpinner != null ) mIndexTypeSpinner.setSelection(0);
+
+
+        if ( mIndexEncodingSpinner != null ) mIndexEncodingSpinner.setSelection(0);
+    }
+
+    private AppCompatSpinner setDropDownList(int dropDownListId, List<String> data, AdapterView.OnItemSelectedListener itemSelectedListener) {
+        AppCompatSpinner spinner = mRootView.findViewById( dropDownListId );
+        if ( spinner == null ) {
+            return null;
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, data);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        spinner.setAdapter( adapter );
+
+        if ( itemSelectedListener != null ) {
+            spinner.setOnItemSelectedListener(itemSelectedListener);
+        }
+
+        return spinner;
+    }
+
+    public void setTypeEncodingSelection( int position ) {
+        if ( mIndexEncodingSpinner != null ) mIndexEncodingSpinner.setSelection( position );
     }
 
     private void onGetTable() {
@@ -102,8 +164,12 @@ public class GetTableFragment extends BaseFragment implements GetTableMvpView {
         }
 
         mPresenter.getTable ( mScope.getText().toString()
-                , mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString(),
-                getEditString( R.id.et_key), getEditString(R.id.et_lower_bound), getEditString(R.id.et_upper_bound), getEditString(R.id.et_limit));
+                , mTvCode.getText().toString(), mTableNameSpinner.getSelectedItem().toString()
+                , mIndexPosSpinner.getSelectedItemPosition()
+                , mIndexTypeSpinner.getSelectedItemPosition()
+                , mIndexEncodingSpinner.getSelectedItemPosition()
+                , getEditString(R.id.et_lower_bound), getEditString(R.id.et_upper_bound), getEditString(R.id.et_limit));
+
     }
 
     private String getEditString( int id ) {
@@ -149,4 +215,5 @@ public class GetTableFragment extends BaseFragment implements GetTableMvpView {
         showToast( R.string.table_loaded );
 
     }
+
 }

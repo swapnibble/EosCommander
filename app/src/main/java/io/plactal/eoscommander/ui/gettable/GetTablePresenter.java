@@ -24,6 +24,7 @@
 package io.plactal.eoscommander.ui.gettable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,8 +47,55 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
     @Inject
     EoscDataManager mDataManager;
 
+    private static final String[] KEY_INDEX_POSITION = { "primary (first)", "2nd", "3rd", "4th", "5th"
+                                  , "6th", "7th", "8th", "9th", "10th"};
+    private static final int FIRST_POS_INDEX_VAL = 1;
+
+
+    private static final String[] KEY_INDEX_TYPES = { "name(account_name)", "i64", "i128", "i256", "float64", "float128", "ripemd160", "sha256" };
+    private static final int KEY_INDEX_TYPES_POSITION_I256 = 3;
+    private static final int KEY_INDEX_TYPES_POSITION_RIPEMD160 = 6;
+
+
+    private static final String[] KEY_INDEX_ENCODINGS = { "dec", "hex" };
+    private static final int KEY_INDEX_ENCODINGS_POS_DEC = 0;
+    private static final int KEY_INDEX_ENCODINGS_POS_HEX = 1;
+
     @Inject
     public GetTablePresenter(){
+    }
+
+    public void onFinishedSetupView(){
+
+        getMvpView().populateKeyInfo( Arrays.asList( KEY_INDEX_POSITION )
+                , Arrays.asList( KEY_INDEX_TYPES ), Arrays.asList( KEY_INDEX_ENCODINGS )  );
+
+    }
+
+    public void onIndexTypeOrEncodingSelected(int typePosSelected, int encodingPosSelected ){
+        // match type and encoding!
+
+        // KEY_INDEX_TYPES = { "name(account_name)", "i64", "i128", "i256", "float64", "float128", "ripemd160", "sha256" }
+
+        // (i64 , i128 , float64, float128) only support "dec" encoding ( encodePos 0 )
+        // i256 - supports both 'dec' and 'hex'
+        // ripemd160 and sha256 is 'hex' only
+
+        if ( typePosSelected >= KEY_INDEX_TYPES_POSITION_RIPEMD160 ) { // ripemd160, sha256
+            // only hex!
+            if ( KEY_INDEX_ENCODINGS_POS_HEX != encodingPosSelected ) {
+                getMvpView().setTypeEncodingSelection( KEY_INDEX_ENCODINGS_POS_HEX );
+            }
+
+            return;
+        }
+
+        if ( KEY_INDEX_TYPES_POSITION_I256 != typePosSelected ) {
+            // only dec !
+            if ( KEY_INDEX_ENCODINGS_POS_DEC != encodingPosSelected ) {
+                getMvpView().setTypeEncodingSelection( KEY_INDEX_ENCODINGS_POS_DEC );
+            }
+        }
     }
 
     private List<String> getTableNames( List<EosAbiTable> abiTables ) {
@@ -92,9 +140,17 @@ public class GetTablePresenter extends BasePresenter<GetTableMvpView> {
         );
     }
 
-    public void getTable(String accountName, String contract, String table, String tableKey, String lowerBound, String upperBound, String limit ) {
+    private int getIndexPosValue( int position) {
+        return position + FIRST_POS_INDEX_VAL;
+    }
+
+    public void getTable(String accountName, String contract, String table,
+                         int keyPosition, int keyType, int keyEncoding, String lowerBound, String upperBound, String limit ) {
+
         addDisposable(
-            mDataManager.getTable( accountName, contract, table, tableKey, lowerBound, upperBound, Utils.parseIntSafely(limit, 0))
+            mDataManager.getTable( accountName, contract, table
+                    , getIndexPosValue( keyPosition ), KEY_INDEX_TYPES[ keyType ], KEY_INDEX_ENCODINGS[ keyEncoding ],
+                                        lowerBound, upperBound, Utils.parseIntSafely(limit, 0))
                     .doOnNext( result -> mDataManager.addAccountHistory( accountName, contract) )
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())

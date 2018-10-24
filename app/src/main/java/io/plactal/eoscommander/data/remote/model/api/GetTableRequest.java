@@ -25,7 +25,13 @@ public class GetTableRequest {
     private String table;
 
     @Expose
-    private String table_key = "";
+    private String key_type = "";
+
+    @Expose
+    private int index_position = 0;
+
+    @Expose
+    private String encode_type = "";
 
     @Expose
     private String lower_bound= "";
@@ -38,12 +44,16 @@ public class GetTableRequest {
 
 
 
-    public GetTableRequest( String scope, String code, String table, String tableKey, String lowerBound, String upperBound, int limit ) {
+    public GetTableRequest( String scope, String code, String table,
+                            int indexPos, String keyType, String encodeType, String lowerBound, String upperBound, int limit ) {
         this.scope = scope;
         this.code = code;
         this.table = table;
 
-        this.table_key = StringUtils.isEmpty( tableKey ) ? "" : tableKey;
+        this.key_type = keyType;
+        this.encode_type = encodeType;
+        this.index_position = indexPos < 0 ? 0 : indexPos;
+
         this.lower_bound = StringUtils.isEmpty( lowerBound) ? "" : lowerBound;
         this.upper_bound = StringUtils.isEmpty( upperBound) ? "" : upperBound;
         this.limit = limit <= 0 ? DEFAULT_FETCH_LIMIT : limit;

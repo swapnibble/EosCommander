@@ -145,10 +145,11 @@ public class EoscDataManager {
         return mNodeosApi.readInfo("get_info");
     }
 
-    public Observable<String> getTable( String accountName, String code, String table,
-                                        String tableKey, String lowerBound, String upperBound, int limit ){
+    public Observable<String> getTable( String accountName, String code, String table
+             ,int indexPos, String keyType, String encodeType,String lowerBound, String upperBound, int limit ){
+
         return mNodeosApi.getTable(
-                new GetTableRequest(accountName, code, table, tableKey, lowerBound, upperBound, limit))
+                new GetTableRequest(accountName, code, table, indexPos , keyType, encodeType, lowerBound, upperBound, limit))
                 .map( tableResult -> Utils.prettyPrintJson(tableResult));
     }
 

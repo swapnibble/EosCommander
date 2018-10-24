@@ -33,5 +33,9 @@ import io.plactal.eoscommander.ui.base.MvpView;
 public interface GetTableMvpView extends MvpView {
     void showTableResult(String result, String statusInfo);
     void showTableList( List<String> tables );
+
+    void populateKeyInfo( List<String> posNames, List<String> types, List<String> typeEncodings);
+
+    void setTypeEncodingSelection( int position );
 }
 

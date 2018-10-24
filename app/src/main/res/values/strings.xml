@@ -143,4 +143,22 @@
     <string name="decimal">decimal</string>
 
     <string name="cannot_del_wallet_unlocked">You cannot delete wallet unlocked!</string>
+    <string name="index">index: </string>
+    <string name="index_type">index type: </string>
+    <string name="encode_type">encode type: </string>
+
+    <!--
+    <string-array name="key_type_array">
+        <item>i64</item>
+        <item>i128</item>
+        <item>i64</item>
+        <item>i64</item>
+        <item>i64</item>
+        <item>i64</item>
+        <item>i64</item>
+    </string-array>
+
+    <string name="dec">dec</string>
+    <string name="hex">hex</string>
+    -->
 </resources>
