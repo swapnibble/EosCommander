@@ -156,14 +156,31 @@ public class EosWalletManager {
         EosWallet eosWallet = new EosWallet();
         eosWallet.setWalletFilePath( walletFile.getAbsolutePath() );
 
-        if (! eosWallet.loadFile( "" )){
-            throw new RuntimeException("Unable to open file: " + walletFile.getName());
+
+        String fileName = walletFile.getName();
+        final String nameWithoutExt;
+
+        int extPos = fileName.lastIndexOf( EOS_WALLET_FILE_EXT );
+        if ( extPos < 0 ) {
+            nameWithoutExt = fileName;
+        }
+        else {
+            nameWithoutExt = fileName.substring(0, extPos);
         }
 
 
-        String fileName = walletFile.getName();
-        String nameWithoutExt = fileName.substring(0, fileName.lastIndexOf(EOS_WALLET_FILE_EXT));
+        if (! eosWallet.loadFile( "" )){
+            if ( walletFile.getName().endsWith(EOS_WALLET_FILE_EXT)) {
+                throw new RuntimeException("Unable to open file: " + walletFile.getName());
+            }
 
+            // fileName without ext. -> try again after appending ext.
+            eosWallet.setWalletFilePath( walletFile.getAbsolutePath() + EOS_WALLET_FILE_EXT );
+
+            if (! eosWallet.loadFile( "" )){
+                throw new RuntimeException("Unable to open file: " + walletFile.getName());
+            }
+        }
 
         // put 은 이미 있으면 replace 한다.
         mWallets.put( nameWithoutExt, eosWallet );
