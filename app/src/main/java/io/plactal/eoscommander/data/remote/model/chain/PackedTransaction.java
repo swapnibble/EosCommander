@@ -60,10 +60,14 @@ public class PackedTransaction {
             return byteWriter.toBytes();
         }
 
+        // context free data is vector<vector<char>> !
+
         byteWriter.putVariableUInt( ctxFreeDataCount);
 
         for ( String hexData : ctxFreeData ) {
-            byteWriter.putBytes( HexUtils.toBytes( hexData));
+            byte [] dataBytes = HexUtils.toBytes( hexData);
+            byteWriter.putVariableUInt( dataBytes.length );
+            byteWriter.putBytes( dataBytes);
         }
 
         return  compress( byteWriter.toBytes(), compressType ) ;
