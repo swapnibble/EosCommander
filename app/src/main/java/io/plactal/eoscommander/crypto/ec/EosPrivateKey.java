@@ -105,6 +105,21 @@ public class EosPrivateKey {
     }
 
 
+    public String getSharedSecret(EosPublicKey eosPublicKey) {
+        byte[] r = getBytes();
+        byte[] publicKeybytes = eosPublicKey.getBytes();
+        CurveParam param = EcTools.getCurveParam(CurveParam.SECP256_K1);
+        EcPoint publicKeyPoint = param.getCurve().decodePoint(publicKeybytes);
+        EcPoint p = EcTools.multiply(publicKeyPoint, toUnsignedBigInteger(r));
+        byte[] encodedx = p.getX().toBigInteger().toByteArray();
+        if (encodedx.length > 32) {
+            encodedx = Arrays.copyOfRange(encodedx, 1, encodedx.length);
+        }
+        Sha512 sha512 = Sha512.from(encodedx);
+        String hexShared = HexUtils.toHex(sha512.getBytes());
+        return hexShared;
+    }
+
     public void clear(){
         mPrivateKey.multiply( BigInteger.ZERO );
     }
