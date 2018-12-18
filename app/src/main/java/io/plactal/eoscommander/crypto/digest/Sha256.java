@@ -1,8 +1,6 @@
 package io.plactal.eoscommander.crypto.digest;
 
 
-import com.google.common.base.Preconditions;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -25,7 +23,10 @@ public class Sha256 {
     * @param bytes
     */
    public Sha256(byte[] bytes) {
-      Preconditions.checkArgument(bytes.length == HASH_LENGTH);
+      if (bytes.length != HASH_LENGTH) {
+         throw new IllegalArgumentException();
+      }
+
       this.mHashBytes = bytes;
    }
 

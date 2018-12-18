@@ -1,8 +1,5 @@
 package io.plactal.eoscommander.crypto.digest;
 
-import com.google.common.base.Preconditions;
-import com.google.common.primitives.Ints;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -17,7 +14,10 @@ public class Sha512 implements Comparable<Sha512> {
    final private byte[] mHashBytes;
 
    public Sha512(byte[] bytes) {
-      Preconditions.checkArgument(bytes.length == HASH_LENGTH);
+      if (bytes.length != HASH_LENGTH) {
+         throw new IllegalArgumentException();
+      }
+
       this.mHashBytes = bytes;
    }
 
@@ -61,13 +61,14 @@ public class Sha512 implements Comparable<Sha512> {
       return mHashBytes;
    }
 
+
    @Override
    public int compareTo(Sha512 o) {
       for (int i = 0; i < HASH_LENGTH; i++) {
          byte myByte = mHashBytes[i];
          byte otherByte = o.mHashBytes[i];
 
-         final int compare = Ints.compare(myByte, otherByte);
+         final int compare = (myByte < otherByte) ? -1 : ((myByte > otherByte) ? 1 : 0);
          if (compare != 0)
             return compare;
       }

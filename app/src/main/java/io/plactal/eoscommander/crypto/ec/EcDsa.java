@@ -24,8 +24,6 @@
 
 package io.plactal.eoscommander.crypto.ec;
 
-import com.google.common.base.Preconditions;
-
 import java.math.BigInteger;
 import java.util.Arrays;
 
@@ -180,10 +178,28 @@ public class EcDsa {
 
     public static EosPublicKey recoverPubKey(CurveParam curveParam, byte[] messageSigned, EcSignature signature, int recId ) {
 
-        Preconditions.checkArgument(recId >= 0, "recId must be positive");
-        Preconditions.checkArgument(signature.r.compareTo(BigInteger.ZERO) >= 0, "r must be positive");
-        Preconditions.checkArgument(signature.s.compareTo(BigInteger.ZERO) >= 0, "s must be positive");
-        Preconditions.checkNotNull(messageSigned);
+        // Preconditions.checkArgument(recId >= 0, "recId must be positive");
+        if ( recId < 0) {
+            throw new IllegalArgumentException("recId must be positive");
+        }
+
+
+        //Preconditions.checkArgument(signature.r.compareTo(BigInteger.ZERO) >= 0, "r must be positive");
+        if ( signature.r.compareTo(BigInteger.ZERO) < 0) {
+            throw new IllegalArgumentException("r must be positive");
+        }
+
+        //Preconditions.checkArgument(signature.s.compareTo(BigInteger.ZERO) >= 0, "s must be positive");
+        if ( signature.s.compareTo(BigInteger.ZERO) < 0) {
+            throw new IllegalArgumentException("s must be positive");
+        }
+
+        //Preconditions.checkNotNull(messageSigned);
+        if ( messageSigned == null ) {
+            throw new NullPointerException();
+        }
+
+
         // 1.0 For j from 0 to h (h == recId here and the loop is outside this
         // function)
         // 1.1 Let x = r + jn
@@ -256,10 +272,28 @@ public class EcDsa {
 
 
     private static boolean isSignerOf(CurveParam curveParam, byte[] messageSigned, int recId, EcSignature sig, byte[] pubKeyBytes ) {
-        Preconditions.checkArgument(recId >= 0, "recId must be positive");
-        Preconditions.checkArgument(sig.r.compareTo(BigInteger.ZERO) >= 0, "r must be positive");
-        Preconditions.checkArgument(sig.s.compareTo(BigInteger.ZERO) >= 0, "s must be positive");
-        Preconditions.checkNotNull(messageSigned);
+        // Preconditions.checkArgument(recId >= 0, "recId must be positive");
+        if ( recId < 0) {
+            throw new IllegalArgumentException("recId must be positive");
+        }
+
+
+        //Preconditions.checkArgument(sig.r.compareTo(BigInteger.ZERO) >= 0, "r must be positive");
+        if ( sig.r.compareTo(BigInteger.ZERO) < 0) {
+            throw new IllegalArgumentException("r must be positive");
+        }
+
+        //Preconditions.checkArgument(sig.s.compareTo(BigInteger.ZERO) >= 0, "s must be positive");
+        if ( sig.s.compareTo(BigInteger.ZERO) < 0) {
+            throw new IllegalArgumentException("s must be positive");
+        }
+
+        //Preconditions.checkNotNull(messageSigned);
+        if ( messageSigned == null ) {
+            throw new NullPointerException();
+        }
+
+
         // 1.0 For j from 0 to h (h == recId here and the loop is outside this
         // function)
         // 1.1 Let x = r + jn

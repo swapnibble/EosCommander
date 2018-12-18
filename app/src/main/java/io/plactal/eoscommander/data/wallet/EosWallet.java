@@ -24,7 +24,7 @@
 package io.plactal.eoscommander.data.wallet;
 
 
-import com.google.common.base.Preconditions;
+//import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -334,7 +334,10 @@ public class EosWallet implements EosType.Packer, EosType.Unpacker {
     }
 
     public void unlock( String password ) {
-        Preconditions.checkArgument( (password != null ) && ( password.length() > 0) );
+//        Preconditions.checkArgument( (password != null ) && ( password.length() > 0) );
+        if ( ( password == null ) || ( password.length() <= 0)) {
+            throw new IllegalArgumentException();
+        }
 
         Sha512 pw = Sha512.from( password.getBytes() );
 

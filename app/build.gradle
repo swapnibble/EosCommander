@@ -120,8 +120,5 @@ dependencies {
 
     implementation "com.jraska:console:${consoleViewVer}"
 
-    // 구글 guava
-    implementation 'com.google.guava:guava:23.0-android'
-
     testImplementation "junit:junit:${junitVer}"
 }
