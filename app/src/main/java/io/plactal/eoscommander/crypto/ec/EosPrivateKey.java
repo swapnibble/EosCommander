@@ -141,8 +141,11 @@ public class EosPrivateKey {
         return mCurveParam;
     }
 
+    public EcSignature sign( Sha256 digest ,boolean random) {
+        return EcDsa.sign( digest, this,random);
+    }
     public EcSignature sign( Sha256 digest ) {
-        return EcDsa.sign( digest, this);
+        return sign(digest,false);
     }
 
     @Override

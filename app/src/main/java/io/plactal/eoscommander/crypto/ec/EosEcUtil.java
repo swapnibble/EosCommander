@@ -30,6 +30,7 @@ import io.plactal.eoscommander.crypto.digest.Ripemd160;
 import io.plactal.eoscommander.crypto.digest.Sha256;
 import io.plactal.eoscommander.crypto.util.Base58;
 import io.plactal.eoscommander.crypto.util.BitUtils;
+import io.plactal.eoscommander.data.remote.model.types.EosByteWriter;
 import io.plactal.eoscommander.util.RefValue;
 import io.plactal.eoscommander.util.StringUtils;
 
@@ -170,6 +171,45 @@ public class EosEcUtil {
 //        return EOS_PREFIX + ( isR1 ? PREFIX_R1 : "") + Base58.encode( result );
 //    }
 
+//    public static String encodeEosCrypto(String prefix, CurveParam curveParam, byte[] data ) {
+//        String typePart = "";
+//        if ( curveParam != null ) {
+//            if ( curveParam.isType( CurveParam.SECP256_K1)) {
+//                typePart = PREFIX_K1;
+//            }
+//            else
+//            if ( curveParam.isType( CurveParam.SECP256_R1)){
+//                typePart = PREFIX_R1;
+//            }
+//        }
+//
+//        byte[] toHashData = new byte[ data.length + typePart.length() ];
+//        System.arraycopy( data, 0, toHashData, 0, data.length);
+//        if ( typePart.length() > 0 ) {
+//            System.arraycopy( typePart.getBytes(), 0, toHashData, data.length, typePart.length());
+//        }
+//
+//        byte[] dataToEncodeBase58 = new byte[ data.length + 4 ];
+//
+//        Ripemd160 ripemd160 = Ripemd160.from( toHashData);
+//        byte[] checksumBytes = ripemd160.bytes();
+//
+//        System.arraycopy( data, 0, dataToEncodeBase58, 0, data.length); // copy source data
+//        System.arraycopy( checksumBytes, 0, dataToEncodeBase58, data.length, 4); // copy checksum data
+//
+//
+//        String result;
+//        if ( StringUtils.isEmpty( typePart)) {
+//            result = prefix;
+//        }
+//        else {
+//            result = prefix + EOS_CRYPTO_STR_SPLITTER + typePart + EOS_CRYPTO_STR_SPLITTER;
+//        }
+//
+//        return result + Base58.encode( dataToEncodeBase58 );
+//    }
+
+
     public static String encodeEosCrypto(String prefix, CurveParam curveParam, byte[] data ) {
         String typePart = "";
         if ( curveParam != null ) {
@@ -182,20 +222,34 @@ public class EosEcUtil {
             }
         }
 
-        byte[] toHashData = new byte[ data.length + typePart.length() ];
-        System.arraycopy( data, 0, toHashData, 0, data.length);
-        if ( typePart.length() > 0 ) {
-            System.arraycopy( typePart.getBytes(), 0, toHashData, data.length, typePart.length());
+//        byte[] toHashData = new byte[ data.length + typePart.length() ];
+//        System.arraycopy( data, 0, toHashData, 0, data.length);
+//        if ( typePart.length() > 0 ) {
+//            System.arraycopy( typePart.getBytes(), 0, toHashData, data.length, typePart.length());
+//        }
+//
+//        byte[] dataToEncodeBase58 = new byte[ data.length + 4 ];
+//
+//        Ripemd160 ripemd160 = Ripemd160.from( toHashData);
+//        byte[] checksumBytes = ripemd160.bytes();
+//
+//        System.arraycopy( data, 0, dataToEncodeBase58, 0, data.length); // copy source data
+//        System.arraycopy( checksumBytes, 0, dataToEncodeBase58, data.length, 4); // copy checksum data
+
+        EosByteWriter first = new EosByteWriter(255);
+        first.putBytes(data);
+        if (typePart.length() > 0)
+        {
+            first.putBytes(typePart.getBytes());
         }
+        Ripemd160 ripemd160 = Ripemd160.from(first.toBytes());
 
-        byte[] dataToEncodeBase58 = new byte[ data.length + 4 ];
+        byte[] rmd = new byte[4];
+        System.arraycopy(ripemd160.bytes(), 0, rmd, 0, rmd.length);
 
-        Ripemd160 ripemd160 = Ripemd160.from( toHashData);
-        byte[] checksumBytes = ripemd160.bytes();
-
-        System.arraycopy( data, 0, dataToEncodeBase58, 0, data.length); // copy source data
-        System.arraycopy( checksumBytes, 0, dataToEncodeBase58, data.length, 4); // copy checksum data
-
+        EosByteWriter last = new EosByteWriter(255);
+        last.putBytes(data);
+        last.putBytes(rmd);
 
         String result;
         if ( StringUtils.isEmpty( typePart)) {
@@ -205,9 +259,8 @@ public class EosEcUtil {
             result = prefix + EOS_CRYPTO_STR_SPLITTER + typePart + EOS_CRYPTO_STR_SPLITTER;
         }
 
-        return result + Base58.encode( dataToEncodeBase58 );
+        return result + Base58.encode( last.toBytes() );
     }
-
 
 
 
