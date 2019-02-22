@@ -124,8 +124,12 @@ public class EosByteWriter implements EosType.Writer {
         }
 
         // array count 는 variable int 로 넣어야 한다.
-        putVariableUInt( value.length() );
-        putBytes( value.getBytes() );
+        byte[] strBytes = value.getBytes(); // don't value.length() ! because str.length() != bytes.length for multi-byte chars. ( asian characters )
+        putVariableUInt( strBytes.length );
+
+        if ( strBytes.length > 0 ) {
+            putBytes(strBytes);
+        }
     }
 
     @Override

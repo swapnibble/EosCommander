@@ -119,7 +119,7 @@ public class PushFragment extends BaseFragment
         // NEW_ACCOUNT_SUGGEST
         setupAccountHistory();
 
-        Console.writeLine("Hello Console!");
+//        Console.writeLine("Hello Console!");
     }
 
     @Override

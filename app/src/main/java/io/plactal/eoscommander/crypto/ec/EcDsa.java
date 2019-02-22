@@ -267,7 +267,7 @@ public class EcDsa {
         // lost when multiply() is used.
         q = new EcPoint(curve, q.getX(), q.getY(), true);
 
-        return new EosPublicKey( q.getEncoded() );
+        return new EosPublicKey( q.getEncoded(), curveParam );
     }
 
 

@@ -39,7 +39,7 @@ public class EosPublicKey {
     private static final String LEGACY_PREFIX = "EOS";
     private static final String PREFIX = "PUB";
 
-    private static final int CHECK_BYTE_LEN = 4;
+//    private static final int CHECK_BYTE_LEN = 4;
 
     private final long mCheck;
     private final CurveParam mCurveParam;
@@ -135,6 +135,10 @@ public class EosPublicKey {
 
         if ( null == other || getClass() != other.getClass())
             return false;
+
+        if ( this.isCurveParamK1() != ((EosPublicKey)other).isCurveParamK1()) {
+            return false;
+        }
 
         return BitUtils.areEqual( this.mData, ((EosPublicKey)other).mData);
     }
