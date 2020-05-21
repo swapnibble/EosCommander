@@ -112,19 +112,14 @@ Lists the contract table.
 
 <a name="using_code"></a>
 ## Apps using EOS Commander source
-Please [ping](mailto:eric.song@playerone.id) me or send a pull request if you would like to be added here.  
+Please [ping](mailto:swapnibble@gmail.com) me or send a pull request if you would like to be added here.  
 
 [PocketEOS-Android]( https://github.com/OracleChain/PocketEOS-Android ) by orcalechain.io
 
 
-<a name="about_playerone"></a>
-## About PlayerOne
-
-[PlayerOne](https://playerone.id) is a decentralized gamer identity protocol. 
-
 <a name="contact"></a>
 ## Contact
-eric.song@playerone.id
+swapnibble@gmail.com
   
 <a name="lincense"></a>
 ## License
