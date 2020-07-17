@@ -25,6 +25,7 @@
 package io.plactal.eoscommander.crypto.ec;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 import io.plactal.eoscommander.data.remote.model.types.EosByteWriter;
@@ -36,7 +37,11 @@ import io.plactal.eoscommander.crypto.digest.Sha256;
  */
 
 public class EcDsa {
+    private static final SecureRandom mSecRandom;
 
+    static {
+        mSecRandom = new SecureRandom();
+    }
     private static class SigChecker {
         BigInteger e;
         BigInteger privKey;
@@ -73,7 +78,7 @@ public class EcDsa {
     }
 
 
-    private static BigInteger deterministicGenerateK(CurveParam curveParam, byte[] hash, BigInteger d, SigChecker checker, int nonce ){
+    private static BigInteger deterministicGenerateK(CurveParam curveParam, byte[] hash, BigInteger d, SigChecker checker, int nonce,boolean random ){
         if ( nonce > 0 ){
             hash = Sha256.from(hash, BigInteger.valueOf(nonce).toByteArray()).getBytes();
         }
@@ -86,7 +91,11 @@ public class EcDsa {
 
         // Step c
         byte [] k = new byte[32];
-        Arrays.fill(k, (byte)0x00);
+        if (random){
+            mSecRandom.nextBytes(k);
+        }else {
+            Arrays.fill(k, (byte)0x00);
+        }
 
         // Step d
         EosByteWriter bwD = new EosByteWriter(32 + 1 + 32 + 32);
@@ -132,7 +141,11 @@ public class EcDsa {
         return t;
     }
 
-    public static EcSignature sign(Sha256 hash, EosPrivateKey key ) {
+    public static EcSignature sign(Sha256 sha256,EosPrivateKey key){
+        return sign(sha256, key,false);
+    }
+
+    public static EcSignature sign(Sha256 hash, EosPrivateKey key,boolean random ) {
         BigInteger privAsBI = key.getAsBigInteger();
         SigChecker checker = new SigChecker(hash.getBytes(), privAsBI);
 
@@ -140,7 +153,7 @@ public class EcDsa {
 
         int nonce = 0;
         while ( true ) {
-            deterministicGenerateK(curveParam, hash.getBytes(), privAsBI, checker, nonce++);
+            deterministicGenerateK(curveParam, hash.getBytes(), privAsBI, checker, nonce++,random);
 
             if (checker.s.compareTo( curveParam.halfCurveOrder() ) > 0) {//  Secp256k1Param.HALF_CURVE_ORDER) > 0) {
                 checker.s = curveParam.n().subtract(checker.s);//   Secp256k1Param.n.subtract(checker.s);
